@@ -1,18 +1,19 @@
-import React from 'react';
-import './App.css';
-import AppHeader from './components/AppHeader/AppHeader'
-import BurgerConstructor from './components/BurgerConstructor/BurgerConstructor'
-import BurgerIngredients from './components/BurgerIngredients/BurgerIngredients'
-
+import React from "react";
+import "./App.css";
+import AppHeader from "./components/AppHeader/AppHeader";
+import BurgerConstructor from "./components/BurgerConstructor/BurgerConstructor";
+import BurgerIngredients from "./components/BurgerIngredients/BurgerIngredients";
 
 function App() {
   return (
     <div className="App">
-      <AppHeader/>
-      <section>
-        <BurgerConstructor/>
-        <BurgerIngredients/>
-      </section>
+      <header>
+        <AppHeader />
+      </header>
+      <main>
+        <BurgerConstructor />
+        <BurgerIngredients />
+      </main>
     </div>
   );
 }
