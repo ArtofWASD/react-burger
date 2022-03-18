@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'JetBrainsMono-Regular';
+    src: url("/src/fonts/JetBrainsMono-Regular.woff2") format("woff2");
+  }
+
+.header-text{
+    color: #8585AD;
+    font-family: 'JetBrainsMono-Regular';
+}
+
+.header-text_active{
+    font-family: 'JetBrainsMono-Regular';
+}
