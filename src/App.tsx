@@ -10,9 +10,10 @@ function App() {
       <header>
         <AppHeader />
       </header>
-      <main>
-        <BurgerConstructor />
-        <BurgerIngredients />
+      <main className="flex justify-around mx-24">
+      <BurgerIngredients />
+      <BurgerConstructor />
+        
       </main>
     </div>
   );
