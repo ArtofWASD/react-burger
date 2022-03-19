@@ -10,10 +10,9 @@ function App() {
       <header>
         <AppHeader />
       </header>
-      <main className="flex justify-around mx-24">
+      <main className="flex justify-center gap-24">
       <BurgerIngredients />
       <BurgerConstructor />
-        
       </main>
     </div>
   );

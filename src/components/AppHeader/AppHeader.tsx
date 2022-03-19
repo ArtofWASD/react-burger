@@ -13,14 +13,14 @@ function AppHeader() {
           <BurgerIcon type="primary" />
           <p className="px-2 header-text_active">Конструктор</p>
         </section>
-        <section className="flex mr-28">
+        <section className="flex mr-56">
           <ListIcon type="secondary" />
           <p className="px-2 header-text">Лента заказов</p>
         </section>
         <section className="flex">
           <Logo />
         </section>
-        <section className="flex ml-72">
+        <section className="flex ml-96">
           <ProfileIcon type="secondary" />
           <p className="px-2 header-text">Личный кабинет</p>
         </section>
