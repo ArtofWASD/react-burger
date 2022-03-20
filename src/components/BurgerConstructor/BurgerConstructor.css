@@ -15,6 +15,13 @@
     border-radius: 10px;
     background-color: #8585AD;
   }
-.ConstructorElement{
-  max-width: 530px!important;
+.constructor-element{
+  max-width: 520px!important;
+  min-width: 520px!important;
+
+}
+.burger-constructor_price{
+  font-family: 'Iceland';
+  font-size: 36px;
+  font-weight: 500;
 }  

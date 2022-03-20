@@ -2,9 +2,18 @@
     font-family: 'JetBrainsMono-Regular';
     src: url("/src/fonts/JetBrainsMono-Regular.woff2") format("woff2");
 }
+@font-face {
+    font-family: 'Iceland';
+    src: url("/src/fonts/iceland.woff2") format("woff2");
+}
 .burger-ingredients_items{
     font-family: 'JetBrainsMono-Regular';
     max-height: 650px;
+    max-width: 650px;
+}
+.card_price{
+    font-family: 'Iceland';
+    font-size: 24px;
 }
 .burger-ingredients_items::-webkit-scrollbar {
     width: 10px;

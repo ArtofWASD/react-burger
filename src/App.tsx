@@ -10,7 +10,7 @@ function App() {
       <header>
         <AppHeader />
       </header>
-      <main className="flex justify-center gap-24">
+      <main className="flex justify-center gap-32">
       <BurgerIngredients />
       <BurgerConstructor />
       </main>
