@@ -6,24 +6,27 @@
     font-family: 'Iceland';
     src: url("/src/fonts/iceland.woff2") format("woff2");
 }
-.burger-ingredients_items{
+.burgerIngredientsItems{
     font-family: 'JetBrainsMono-Regular';
     max-height: 650px;
-    max-width: 650px;
+    max-width: 700px;
+    overflow: auto;
+    scroll-behavior: smooth;
+    padding-right: 20px;
 }
-.card_price{
-    font-family: 'Iceland';
-    font-size: 24px;
-}
-.burger-ingredients_items::-webkit-scrollbar {
+.burgerIngredientsItems::-webkit-scrollbar {  
     width: 10px;
     background-color: #a1a1f1;
 }
-.burger-ingredients_items::-webkit-scrollbar-track {
+.burgerIngredientsItems::-webkit-scrollbar-track {
     background-color: #2F2F37;
     color:#a1a1f1
   }
-  .burger-ingredients_items::-webkit-scrollbar-thumb {
+.burgerIngredientsItems::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: #8585AD;
-  }
+}
+.cardPrice{
+    font-family: 'Iceland';
+    font-size: 24px;
+}

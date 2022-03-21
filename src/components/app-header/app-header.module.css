@@ -3,11 +3,11 @@
     src: url("/src/fonts/JetBrainsMono-Regular.woff2") format("woff2");
 }
 
-.header-text{
+.headerText{
     color: #8585AD;
     font-family: 'JetBrainsMono-Regular';
 }
 
-.header-text_active{
+.headerTextActive{
     font-family: 'JetBrainsMono-Regular';
 }

@@ -2,11 +2,11 @@ import React from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from 'prop-types';
 
-import data from "../../utils/data";
-import "../BurgerIngredients/BurgerIngredients.css";
-function BurgerIngredients() {
+import styles from "./burger-ingredients.module.css";
 
+function BurgerIngredients({ data }) {
   const [current, setCurrent] = React.useState("one");
   return (
     <div className="burger-ingredients flex flex-col ">
@@ -15,7 +15,6 @@ function BurgerIngredients() {
       </section>
       <section className="burger-ingredients_tabs">
         <div className="flex justify-around py-4">
-          
           <Tab value="one" active={current === "one"} onClick={setCurrent}>
             Булки
           </Tab>
@@ -27,7 +26,7 @@ function BurgerIngredients() {
           </Tab>
         </div>
         <div>
-          <section className="burger-ingredients_items overflow-auto scroll-smooth pr-5">
+          <section className={styles.burgerIngredientsItems}>
             <div className="flex flex-col py-4">
               <div>
                 <p className="text-3xl py-4">Булки</p>
@@ -42,17 +41,13 @@ function BurgerIngredients() {
                   })
                   .map((item) => (
                     <div
-                      className="relative flex flex-col justify-center items-center gap-2"
+                      className="ingr-item relative flex flex-col justify-center items-center gap-2"
                       key={item._id}
                     >
                       <Counter count={1} size="default" />
-                      <img
-                        src={item.image_large}
-                        alt={item.name}
-                        style={{ width: 240 }}
-                      />
+                      <img src={item.image_large} alt={item.name} />
                       <div className="flex items-center justify-center gap-2">
-                        <p className="card_price">{item.price}</p>
+                        <p className={styles.cardPrice}>{item.price}</p>
                         <CurrencyIcon type="primary" />
                       </div>
                       <p className=" text-center text-base pt-2">{item.name}</p>
@@ -74,17 +69,13 @@ function BurgerIngredients() {
                   })
                   .map((item) => (
                     <div
-                      className="relative flex flex-col justify-center items-center gap-2"
+                      className="ingr-item relative flex flex-col justify-center items-center gap-2"
                       key={item._id}
                     >
                       <Counter count={1} size="default" />
-                      <img
-                        src={item.image_large}
-                        alt={item.name}
-                        style={{ width: 240 }}
-                      />
+                      <img src={item.image_large} alt={item.name} />
                       <div className="flex items-center justify-center gap-2">
-                        <p className="card_price">{item.price}</p>
+                        <p className={styles.cardPrice}>{item.price}</p>
                         <CurrencyIcon type="primary" />
                       </div>
                       <p className=" text-center text-base pt-2">{item.name}</p>
@@ -106,17 +97,13 @@ function BurgerIngredients() {
                   })
                   .map((item) => (
                     <div
-                      className="relative flex flex-col justify-center items-center gap-2"
+                      className="ingr-item relative flex flex-col justify-center items-center gap-2"
                       key={item._id}
                     >
                       <Counter count={1} size="default" />
-                      <img
-                        src={item.image_large}
-                        alt={item.name}
-                        style={{ width: 240 }}
-                      />
+                      <img src={item.image_large} alt={item.name} />
                       <div className="flex items-center justify-center gap-2">
-                        <p className="card_price">{item.price}</p>
+                        <p className={styles.cardPrice}>{item.price}</p>
                         <CurrencyIcon type="primary" />
                       </div>
                       <p className=" text-center text-base pt-2">{item.name}</p>
@@ -130,4 +117,25 @@ function BurgerIngredients() {
     </div>
   );
 }
+
+BurgerIngredients.propTypes ={
+  _id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  image_large: PropTypes.string.isRequired,
+}
+
+Counter.propTypes={
+  count:PropTypes.number.isRequired,
+}
+
+CurrencyIcon.propTypes={
+  type: PropTypes.string.isRequired,
+}
+
+Tab.propTypes={
+  value: PropTypes.string.isRequired,
+  active: PropTypes.string.isRequired,
+}
+
 export default BurgerIngredients;
