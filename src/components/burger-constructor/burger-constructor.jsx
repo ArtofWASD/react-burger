@@ -5,7 +5,6 @@ import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import PropTypes from 'prop-types';
 
 function BurgerConstructor({data}) {
   const firstArrElem = data[0];
@@ -70,12 +69,5 @@ function BurgerConstructor({data}) {
   );
 }
 
-ConstructorElement.propTypes = {
-  _id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-}
 
 export default BurgerConstructor;
