@@ -1,0 +1,32 @@
+@font-face {
+    font-family: 'JetBrainsMono-Regular';
+    src: url("/src/fonts/JetBrainsMono-Regular.woff2") format("woff2");
+}
+@font-face {
+    font-family: 'Iceland';
+    src: url("/src/fonts/iceland.woff2") format("woff2");
+}
+.burgerIngredientsItems{
+    font-family: 'JetBrainsMono-Regular';
+    max-height: 650px;
+    max-width: 700px;
+    overflow: auto;
+    scroll-behavior: smooth;
+    padding-right: 20px;
+}
+.burgerIngredientsItems::-webkit-scrollbar {  
+    width: 10px;
+    background-color: #a1a1f1;
+}
+.burgerIngredientsItems::-webkit-scrollbar-track {
+    background-color: #2F2F37;
+    color:#a1a1f1
+  }
+.burgerIngredientsItems::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #8585AD;
+}
+.cardPrice{
+    font-family: 'Iceland';
+    font-size: 24px;
+}
