@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import {useState, useEffect} from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -8,17 +8,19 @@ import styles from "./burger-ingredients.module.css";
 
 function BurgerIngredients({ data }) {
   const [current, setCurrent] = useState("one");
+
   const [modalActive, setModalActive] = useState(false);
+
   const [state, setState] = useState({
-    id : null
+    ingridientId:null
   })
-  
+
   return (
-    <div className="burger-ingredients flex flex-col ">
-      <section className="burger-ingredients_title pt-10">
+    <section className="burger-ingredients flex flex-col ">
+      <div className="burger-ingredients_title pt-10">
         <h1 className="text text_type_main-large">Соберите бургер</h1>
-      </section>
-      <section className="burger-ingredients_tabs">
+      </div>
+      <div className="burger-ingredients_tabs">
         <div className="flex justify-around py-4">
           <Tab value="one" active={current === "one"} onClick={setCurrent}>
             Булки
@@ -46,10 +48,10 @@ function BurgerIngredients({ data }) {
                   })
                   .map((item) => (
                     <div
-                      className="ingr-item relative flex flex-col justify-center items-center gap-2"
+                      className="ingr-item relative gap-2"
                       key={item._id} onClick={()=>setModalActive(true)}
                     > 
-                      <div>
+                      <div className="flex flex-col items-center" onClick={()=>{setState({ingridientId:item._id})}}>
                       <Counter count={1} size="default" />
                       <img src={item.image_large} alt={item.name} />
                       <div className="flex items-center justify-center gap-2">
@@ -60,7 +62,7 @@ function BurgerIngredients({ data }) {
                       </div> 
                     </div>
                   ))}
-                  <Modal active={modalActive} setActive={setModalActive}/>
+                  <Modal active={modalActive} setActive={setModalActive} id={state.ingridientId} data={data}/>
               </div>
             </div>
             <div className="flex flex-col py-4">
@@ -77,23 +79,26 @@ function BurgerIngredients({ data }) {
                   })
                   .map((item) => (
                     <div
-                      className="ingr-item relative flex flex-col justify-center items-center gap-2"
-                      key={item._id}
-                    >
+                      className="ingr-item relative gap-2"
+                      key={item._id} onClick={()=>setModalActive(true)}
+                    > 
+                      <div className="flex flex-col items-center" onClick={()=>{setState({ingridientId:item._id})}}>
                       <Counter count={1} size="default" />
                       <img src={item.image_large} alt={item.name} />
                       <div className="flex items-center justify-center gap-2">
                         <p className={styles.cardPrice}>{item.price}</p>
                         <CurrencyIcon type="primary" />
                       </div>
-                      <p className=" text-center text-base pt-2">{item.name}</p>
+                      <p className="text-center text-base pt-2">{item.name}</p>
+                      </div> 
                     </div>
                   ))}
+                  <Modal active={modalActive} setActive={setModalActive} id={state.ingridientId} data={data}/>
               </div>
             </div>
             <div className="flex flex-col py-4">
               <div>
-                <p className="text-3xl py-4">Начинка</p>
+                <p className="text-3xl py-4">Начинки</p>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 {data
@@ -105,24 +110,28 @@ function BurgerIngredients({ data }) {
                   })
                   .map((item) => (
                     <div
-                      className="ingr-item relative flex flex-col justify-center items-center gap-2"
-                      key={item._id}
-                    >
+                      className="ingr-item relative gap-2"
+                      key={item._id} onClick={()=>setModalActive(true)}
+                    > 
+                      <div className="flex flex-col items-center" onClick={()=>{setState({ingridientId:item._id})}}>
                       <Counter count={1} size="default" />
                       <img src={item.image_large} alt={item.name} />
                       <div className="flex items-center justify-center gap-2">
                         <p className={styles.cardPrice}>{item.price}</p>
                         <CurrencyIcon type="primary" />
                       </div>
-                      <p className=" text-center text-base pt-2">{item.name}</p>
+                      <p className="text-center text-base pt-2">{item.name}</p>
+                      </div> 
                     </div>
                   ))}
+                  <Modal active={modalActive} setActive={setModalActive} id={state.ingridientId} data={data}/>
               </div>
             </div>
+       
           </section>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }
 
