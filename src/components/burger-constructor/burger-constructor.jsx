@@ -1,13 +1,15 @@
-import React from "react";
+import {useState} from "react";
+import PropTypes from 'prop-types';
 import styles from "./burger-constructor.module.css";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-
+import Modal from "../modal/modal"
 
 
 function BurgerConstructor({data}) {
+  const [modalActive, setModalActive] = useState(false);
   const firstArrElem = data[0];
   const latestArrElem = data[data.length - 1];
   const restArr = data.slice(1, data.length - 1);
@@ -51,9 +53,9 @@ function BurgerConstructor({data}) {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text="Флюоресцентная булка R2-D3 (низ)"
-            price={latestArrElem.price}
-            thumbnail={latestArrElem.image}
+            text="Краторная булка N-200i (низ)"
+            price={firstArrElem.price}
+            thumbnail={firstArrElem.image}
           />
         </section>
       </section>
@@ -62,12 +64,30 @@ function BurgerConstructor({data}) {
         <span className="pr-8">
           <CurrencyIcon type="primary" />
         </span>
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" onClick={()=>setModalActive(true)}>
           Нажми на меня
         </Button>
+        <Modal active={modalActive} setActive={setModalActive}/>
       </div>
     </section>
   );
+}
+
+BurgerConstructor.propType={
+  data: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    proteins: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
+    calories: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    image_mobile: PropTypes.string.isRequired,
+    image_large: PropTypes.string.isRequired,
+    __v: PropTypes.number.isRequired,
+  })
 }
 
 

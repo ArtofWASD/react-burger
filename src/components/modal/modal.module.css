@@ -11,8 +11,7 @@
     top: 0;
     left: 0;
     opacity: 0;
-    pointer-events:none
-      
+    pointer-events:none;
 }
 
 .modalActive{
@@ -20,7 +19,7 @@
     top: 0;
     left: 0;
     opacity: 1;
-    width:720px;
+    width:750px;
     height:600px;
     border-radius: 40px;
 }   
@@ -35,10 +34,55 @@
     opacity: 1;
     display: grid;
     align-items: center;
-    justify-content:center;
+    justify-content:center; 
 }
-
 .modalOverlay{
     width: 0px;
     height: 0px;
+}
+.modalIngrTitle{
+    font-family: 'JetBrainsMono-Regular';
+    font-size: 30px;
+}
+
+.modalIngrElems {
+    font-family: 'JetBrainsMono-Regular';
+    font-size: 16px;
+    color:#8585AD;
+}
+.modalIngrWeight{
+    font-family: 'Iceland';
+    font-size: 28px;
+    color:#8585AD;
+}
+
+.modalDone{
+    margin-top: 60px;
+    width: 120px;
+    height: 120px;
+}
+.modalDoneId{
+    font-family: 'Iceland';
+    font-size: 144px;
+    color:#F2F2F3;
+    line-height: 1;
+}
+
+.modalDoneIdTitle{
+    font-family: 'JetBrainsMono-Regular';
+    font-size: 24px;
+    color:#F2F2F3;
+}
+
+.modalDoneCocked{
+    margin-top: 60px;
+    font-family: 'JetBrainsMono-Regular';
+    font-size: 16px;
+    color:#F2F2F3;
+}
+.modalDoneWait{
+    margin-top: 8px;
+    font-family: 'JetBrainsMono-Regular';
+    font-size: 16px;
+    color:#8585AD;
 }
