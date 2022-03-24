@@ -6,6 +6,7 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 
+
 function BurgerConstructor({data}) {
   const firstArrElem = data[0];
   const latestArrElem = data[data.length - 1];

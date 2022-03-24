@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -7,7 +7,12 @@ import Modal from "../modal/modal"
 import styles from "./burger-ingredients.module.css";
 
 function BurgerIngredients({ data }) {
-  const [current, setCurrent] = React.useState("one");
+  const [current, setCurrent] = useState("one");
+  const [modalActive, setModalActive] = useState(false);
+  const [state, setState] = useState({
+    id : null
+  })
+  
   return (
     <div className="burger-ingredients flex flex-col ">
       <section className="burger-ingredients_title pt-10">
@@ -42,17 +47,20 @@ function BurgerIngredients({ data }) {
                   .map((item) => (
                     <div
                       className="ingr-item relative flex flex-col justify-center items-center gap-2"
-                      key={item._id}
-                    >
+                      key={item._id} onClick={()=>setModalActive(true)}
+                    > 
+                      <div>
                       <Counter count={1} size="default" />
                       <img src={item.image_large} alt={item.name} />
                       <div className="flex items-center justify-center gap-2">
                         <p className={styles.cardPrice}>{item.price}</p>
                         <CurrencyIcon type="primary" />
                       </div>
-                      <p className=" text-center text-base pt-2">{item.name}</p>
+                      <p className="text-center text-base pt-2">{item.name}</p>
+                      </div> 
                     </div>
                   ))}
+                  <Modal active={modalActive} setActive={setModalActive}/>
               </div>
             </div>
             <div className="flex flex-col py-4">

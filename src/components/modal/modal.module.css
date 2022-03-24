@@ -1,0 +1,43 @@
+@font-face {
+    font-family: 'Iceland';
+    src: url("/src/fonts/iceland.woff2") format("woff2");
+}
+@font-face {
+    font-family: 'JetBrainsMono-Regular';
+    src: url("/src/fonts/JetBrainsMono-Regular.woff2") format("woff2");
+}
+
+.modal {
+    top: 0;
+    left: 0;
+    opacity: 0;
+    pointer-events:none
+      
+}
+
+.modalActive{
+    background-color:#1C1C21;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    width:720px;
+    height:600px;
+    border-radius: 40px;
+}   
+.modalTitle{
+    font-family: 'JetBrainsMono-Regular';
+    font-size: 36px;
+}
+.modalOverlayActive{
+    height:90vh;
+    width: 99vw;
+    background-color: transparent;
+    opacity: 1;
+    display: grid;
+    align-items: center;
+    justify-content:center;
+}
+
+.modalOverlay{
+    overflow: hidden;
+}

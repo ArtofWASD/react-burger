@@ -1,29 +1,34 @@
-import React, {useState} from "react";
-import ReactDOM from 'react-dom'
-import closeBtn from '../../images/cancel.png'
-import ModalOverlay from '../modal-overlay/modal-overlay'
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
+import closeBtn from "../../images/close.svg";
+import ModalOverlay from "../modal-overlay/modal-overlay";
+import styles from "./modal.module.css";
 
-export default function Modal(props){
-    const [showModal, setShowModal] = useState({
-        showModal:false
-    })
-    
-    const showModalFunc =() =>{
-        setShowModal({showModal:true})
+function Modal({ active, setActive }) {
+  const closeModal = () => {
+    setActive(false);
+  };
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        closeModal();
     }
-    const closeModalFunc = () =>{
-        setShowModal({showModal:false})
-    }
-    return ReactDOM.createPortal(
-        <section className="modal">
-            <div className="modal-title">
-                <p>{props.name}</p>
-            </div>
-            <div className="modal-close">       
-            <img src={closeBtn} alt="Закрыть" onClick={closeModalFunc}/>
-            </div>
-            <ModalOverlay/>
-        </section>,
-        document.querySelector('root')
-    )
+  });
+  return (
+    <ModalOverlay
+      className={active ? styles.modalOverlayActive : styles.ModalOverlay}
+      closeModal={closeModal}
+    >
+      <section className={active ? styles.modalActive : styles.modal}>
+        <div className="modal-content flex justify-between items-center px-8 pt-8">
+          <div className="modal-title">
+            <p className={styles.modalTitle}>Модальное окно</p>
+          </div>
+          <div className="modal-close">
+            <img src={closeBtn} alt="Закрыть" onClick={closeModal} />
+          </div>
+        </div>
+      </section>
+    </ModalOverlay>
+  );
 }
+export default Modal;
