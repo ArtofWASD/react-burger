@@ -1,14 +1,13 @@
-import {useState} from "react";
-import PropTypes from 'prop-types';
+import { useState } from "react";
+import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from "../modal/modal"
+import Modal from "../modal/modal";
 
-
-function BurgerConstructor({data}) {
+function BurgerConstructor({ data }) {
   const [modalActive, setModalActive] = useState(false);
   const firstArrElem = data[0];
   const latestArrElem = data[data.length - 1];
@@ -64,16 +63,24 @@ function BurgerConstructor({data}) {
         <span className="pr-8">
           <CurrencyIcon type="primary" />
         </span>
-        <Button type="primary" size="medium" onClick={()=>setModalActive(true)}>
+        <Button
+          type="primary"
+          size="medium"
+          onClick={() => setModalActive(true)}
+        >
           Нажми на меня
         </Button>
-        <Modal active={modalActive} setActive={setModalActive}/>
       </div>
+      <Modal
+        active={modalActive}
+        setActive={setModalActive}
+        isConstructor={true}
+      />
     </section>
   );
 }
 
-BurgerConstructor.propType={
+BurgerConstructor.propType = {
   data: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -87,8 +94,7 @@ BurgerConstructor.propType={
     image_mobile: PropTypes.string.isRequired,
     image_large: PropTypes.string.isRequired,
     __v: PropTypes.number.isRequired,
-  })
-}
-
+  }),
+};
 
 export default BurgerConstructor;

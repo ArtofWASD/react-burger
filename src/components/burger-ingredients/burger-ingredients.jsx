@@ -63,7 +63,7 @@ function BurgerIngredients({ data }) {
                       </div> 
                     </div>
                   ))}
-                  <Modal active={modalActive} setActive={setModalActive} id={state.ingridientId} data={data}/>
+                  
               </div>
             </div>
             <div className="flex flex-col py-4">
@@ -94,7 +94,6 @@ function BurgerIngredients({ data }) {
                       </div> 
                     </div>
                   ))}
-                  <Modal active={modalActive} setActive={setModalActive} id={state.ingridientId} data={data}/>
               </div>
             </div>
             <div className="flex flex-col py-4">
@@ -125,13 +124,12 @@ function BurgerIngredients({ data }) {
                       </div> 
                     </div>
                   ))}
-                  <Modal active={modalActive} setActive={setModalActive} id={state.ingridientId} data={data}/>
               </div>
             </div>
-       
           </section>
         </div>
       </div>
+      <Modal active={modalActive} setActive={setModalActive} id={state.ingridientId} data={data}/>
     </section>
   );
 }

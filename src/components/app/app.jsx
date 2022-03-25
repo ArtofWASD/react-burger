@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import AppHeader from "../app-header/app-header";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -20,11 +20,10 @@ function App() {
         <AppHeader />
       </header>
       {state.data &&
-      <main className="burger-main grid grid-cols-2 pt-20 absolute gap-16"> 
+      <main className="burger-main grid grid-cols-2 gap-16 pt-20 absolute"> 
         <BurgerIngredients data={state.data} />
         <BurgerConstructor data={state.data} />
       </main>}
-      <div id="modal" className="relative grid justify-center"></div>
     </div>
   );
 }
