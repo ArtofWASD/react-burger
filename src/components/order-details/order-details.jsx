@@ -1,8 +1,9 @@
 import doneImg from "../../images/done.svg";
 import closeBtn from "../../images/close.svg";
 import PropTypes from "prop-types";
+import styles from './order-details.module.css'
 
-function OrderDetails({ onClose, isActive, styles }) {
+function OrderDetails({ onClose, isActive}) {
   return (
     <>
       {isActive && (

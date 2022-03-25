@@ -1,6 +1,7 @@
 import closeBtn from "../../images/close.svg";
 import PropTypes from "prop-types";
-export default function IngredientDetails({ itemData, isActive, style, closeModal, itemId}) {
+import styles from './ingredient-details.module.css'
+export default function IngredientDetails({ itemData, isActive, closeModal, itemId}) {
   return (
     <>
       {itemData &&
@@ -8,13 +9,13 @@ export default function IngredientDetails({ itemData, isActive, style, closeModa
           .filter((item) => item._id === itemId)
           .map((item) => (
             <section
-              className={isActive ? style.modalActive : style.modal}
+              className={isActive ? styles.modalActive : styles.modal}
               key={item._id}
             >
               <div className="modal-content grid px-8 pt-8">
                 <div className="flex justify-between items-center">
                   <div>
-                    <p className={style.modalTitle}>Детали ингридиента</p>
+                    <p className={styles.modalTitle}>Детали ингридиента</p>
                   </div>
                   <div>
                     <img src={closeBtn} alt="Закрыть" onClick={closeModal} />
@@ -23,30 +24,30 @@ export default function IngredientDetails({ itemData, isActive, style, closeModa
                 <div className="flex flex-col justify-center">
                   <img src={item.image_large} alt={item.name} />
                   <div className="flex justify-center">
-                    <p className={style.modalIngrTitle}>{item.name}</p>
+                    <p className={styles.modalIngrTitle}>{item.name}</p>
                   </div>
                   <div className="flex justify-around pt-6">
                     <div className="flex flex-col items-center">
-                      <p className={style.modalIngrElems}>Каллории, ккал.</p>
-                      <span className={style.modalIngrWeight}>
+                      <p className={styles.modalIngrElems}>Каллории, ккал.</p>
+                      <span className={styles.modalIngrWeight}>
                         {item.calories}{" "}
                       </span>
                     </div>
                     <div className="flex flex-col items-center">
-                      <p className={style.modalIngrElems}>Белки, г.</p>
-                      <span className={style.modalIngrWeight}>
+                      <p className={styles.modalIngrElems}>Белки, г.</p>
+                      <span className={styles.modalIngrWeight}>
                         {item.proteins}{" "}
                       </span>
                     </div>
                     <div className="flex flex-col items-center">
-                      <p className={style.modalIngrElems}>Жиры, г.</p>
-                      <span className={style.modalIngrWeight}>
+                      <p className={styles.modalIngrElems}>Жиры, г.</p>
+                      <span className={styles.modalIngrWeight}>
                         {item.fat}{" "}
                       </span>
                     </div>
                     <div className="flex flex-col items-center">
-                      <p className={style.modalIngrElems}>Углеводы, г.</p>
-                      <span className={style.modalIngrWeight}>
+                      <p className={styles.modalIngrElems}>Углеводы, г.</p>
+                      <span className={styles.modalIngrWeight}>
                         {item.carbohydrates}
                       </span>
                     </div>
@@ -61,7 +62,6 @@ export default function IngredientDetails({ itemData, isActive, style, closeModa
 IngredientDetails.propType = {
   id: PropTypes.number.isRequired,
   isActive: PropTypes.bool.isRequired,
-  style:PropTypes.string.isRequired,
   itemData: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

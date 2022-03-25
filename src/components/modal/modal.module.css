@@ -7,25 +7,6 @@
     src: url("/src/fonts/JetBrainsMono-Regular.woff2") format("woff2");
 }
 
-.modal {
-    top: 0;
-    left: 0;
-    opacity: 0;
-    pointer-events:none;
-}
-.modalActive{
-    background-color:#1C1C21;
-    top: 0;
-    left: 0;
-    opacity: 1;
-    width:750px;
-    height:600px;
-    border-radius: 40px;
-}   
-.modalTitle{
-    font-family: 'JetBrainsMono-Regular';
-    font-size: 36px;
-}
 .modalOverlayActive{
     height: 90.6vh;
     width: 100%;
@@ -38,51 +19,4 @@
 .modalOverlay{
     width: 0px;
     height: 0px;
-}
-.modalIngrTitle{
-    font-family: 'JetBrainsMono-Regular';
-    font-size: 28px;
-}
-
-.modalIngrElems {
-    font-family: 'JetBrainsMono-Regular';
-    font-size: 16px;
-    color:#8585AD;
-}
-.modalIngrWeight{
-    font-family: 'Iceland';
-    font-size: 28px;
-    color:#8585AD;
-}
-
-.modalDone{
-    transition: 0.5s;
-    margin-top: 60px;
-    width: 120px;
-    height: 120px;
-}
-.modalDoneId{
-    font-family: 'Iceland';
-    font-size: 144px;
-    color:#F2F2F3;
-    line-height: 1;
-}
-
-.modalDoneIdTitle{
-    font-family: 'JetBrainsMono-Regular';
-    font-size: 24px;
-    color:#F2F2F3;
-}
-
-.modalDoneCocked{
-    margin-top: 60px;
-    font-family: 'JetBrainsMono-Regular';
-    font-size: 16px;
-    color:#F2F2F3;
-}
-.modalDoneWait{
-    margin-top: 8px;
-    font-family: 'JetBrainsMono-Regular';
-    font-size: 16px;
-    color:#8585AD;
 }

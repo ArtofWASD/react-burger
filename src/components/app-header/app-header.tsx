@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./app-header.module.css";
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
 import { BurgerIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -28,5 +27,4 @@ function AppHeader() {
     </nav>
   );
 }
-
 export default AppHeader;
