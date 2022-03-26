@@ -1,0 +1,12 @@
+.modalOverlayActive{
+    position: absolute;
+    z-index: 1;
+    height: 90.6vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.6);
+    opacity: 1;
+}
+.modalOverlay{
+    width: 0px;
+    height: 0px;
+}

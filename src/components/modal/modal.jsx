@@ -1,70 +1,50 @@
 import { useEffect } from "react";
+import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
-import ModalOverlay from "../modal-overlay/modal-overlay";
 import styles from "./modal.module.css";
-import OrderDetails from "../order-details/order-details";
-import IngredientDetails from "../ingredient-details/ingredient-details";
+import ModalOverlay from "../modal-overlay/modal-overlay";
 
-function Modal({ active, setActive, id, data, isConstructor }) {
+function Modal({ active, setActive, id, children }) {
   const closeModal = () => {
     setActive(false);
   };
 
+  const escButtonHandler = (e) => {
+    if (e.key === "Escape") {
+      closeModal();
+    }
+  };
+
   useEffect(() => {
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        closeModal();
-      }
-    });
-  });
+    document.addEventListener("keydown", escButtonHandler);
+    return () => {
+      document.removeEventListener("keydown", escButtonHandler);
+    };
+  }, []);
 
-  return (
+  return ReactDOM.createPortal(
     <>
-      {active && (
-        <ModalOverlay
-          className={active ? styles.modalOverlayActive : styles.modalOverlay}
-          closeModal={closeModal}
-        >
-          {isConstructor && (
-            <OrderDetails
-              isActive={active}
-              onClose={setActive}
-              styles={styles}
-            />
-          )}
-
-          {id && (
-            <IngredientDetails
-              isActive={active}
-              onClose={setActive}
-              style={styles}
-              itemData={data}
-              itemId={id}
-            />
-          )}
-        </ModalOverlay>
-      )}
-    </>
+      <ModalOverlay isActive={active} onClose={closeModal} />
+      <div className={active ? styles.modalActive : styles.modal}>
+      <div className="flex justify-between items-center px-7 pt-10">
+          <div>
+            <p className={id ? styles.modalTitle : styles.modalTitleHide}>Детали ингридиента</p>
+          </div>
+        <div onClick={closeModal} className="flex justify-end">
+          <CloseIcon type="primary" />
+        </div>
+      </div>
+        {children}
+      </div>
+    </>,document.getElementById("modal")
   );
 }
 
-Modal.propType = {
-  id: PropTypes.string.isRequired,
+Modal.propTypes = {
+  id: PropTypes.string,
   active: PropTypes.bool.isRequired,
-  isConstructor: PropTypes.bool.isRequired,
-  data: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired,
-  }),
+  isConstructor: PropTypes.bool,
+  data: PropTypes.arrayOf(PropTypes.object.isRequired),
 };
 export default Modal;

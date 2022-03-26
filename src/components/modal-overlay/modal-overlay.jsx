@@ -1,12 +1,10 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import styles from './modal-overlay.module.css';
 
-function ModalOverlay ({children, className, closeModal}){
-    return ReactDOM.createPortal(
-        <section className={className} onClick={closeModal}>
-            {children}
-        </section>,
-        document.getElementById('modal') 
+function ModalOverlay ({isActive, onClose}){
+    return(
+        <section className={isActive? styles.modalOverlayActive : styles.modalOverlay} onClick={onClose}>
+        </section>
     )
 }
 export default ModalOverlay
+

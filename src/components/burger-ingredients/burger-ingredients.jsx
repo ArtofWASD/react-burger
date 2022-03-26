@@ -4,7 +4,7 @@ import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal"
 import PropTypes from 'prop-types';
-
+import IngredientDetails from '../ingredient-details/ingredient-details'
 import styles from "./burger-ingredients.module.css";
 
 function BurgerIngredients({ data }) {
@@ -12,17 +12,15 @@ function BurgerIngredients({ data }) {
 
   const [modalActive, setModalActive] = useState(false);
 
-  const [state, setState] = useState({
-    ingridientId:null
-  })
+  const [state, setState] = useState()
 
   return (
-    <section className="burger-ingredients flex flex-col ">
-      <div className="burger-ingredients_title pt-10">
+    <section className="flex flex-col ">
+      <div className="pt-10">
         <h1 className="text text_type_main-large">Соберите бургер</h1>
       </div>
-      <div className="burger-ingredients_tabs">
-        <div className="flex justify-around py-4">
+      <div>
+        <div className="grid grid-cols-3 justify-around py-4">
           <Tab value="one" active={current === "one"} onClick={setCurrent}>
             Булки
           </Tab>
@@ -37,7 +35,7 @@ function BurgerIngredients({ data }) {
           <section className={styles.burgerIngredientsItems}>
             <div className="flex flex-col py-4">
               <div>
-                <p className="text-3xl py-4">Булки</p>
+                <p className="text-2xl py-4">Булки</p>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 {data
@@ -49,10 +47,10 @@ function BurgerIngredients({ data }) {
                   })
                   .map((item) => (
                     <div
-                      className="ingr-item relative gap-2"
+                      className="relative gap-2"
                       key={item._id} onClick={()=>setModalActive(true)}
                     > 
-                      <div className="flex flex-col items-center" onClick={()=>{setState({ingridientId:item._id})}}>
+                      <div className="flex flex-col items-center" onClick={()=>{setState(item._id)}}>
                       <Counter count={1} size="default" />
                       <img src={item.image_large} alt={item.name} />
                       <div className="flex items-center justify-center gap-2">
@@ -68,7 +66,7 @@ function BurgerIngredients({ data }) {
             </div>
             <div className="flex flex-col py-4">
               <div>
-                <p className="text-3xl py-4">Соусы</p>
+                <p className="text-2xl py-4">Соусы</p>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 {data
@@ -80,10 +78,10 @@ function BurgerIngredients({ data }) {
                   })
                   .map((item) => (
                     <div
-                      className="ingr-item relative gap-2"
+                      className="relative gap-2"
                       key={item._id} onClick={()=>setModalActive(true)}
                     > 
-                      <div className="flex flex-col items-center" onClick={()=>{setState({ingridientId:item._id})}}>
+                      <div className="flex flex-col items-center" onClick={()=>{setState(item._id)}}>
                       <Counter count={1} size="default" />
                       <img src={item.image_large} alt={item.name} />
                       <div className="flex items-center justify-center gap-2">
@@ -98,7 +96,7 @@ function BurgerIngredients({ data }) {
             </div>
             <div className="flex flex-col py-4">
               <div>
-                <p className="text-3xl py-4">Начинки</p>
+                <p className="text-2xl py-4">Начинки</p>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 {data
@@ -110,10 +108,10 @@ function BurgerIngredients({ data }) {
                   })
                   .map((item) => (
                     <div
-                      className="ingr-item relative gap-2"
+                      className="relative gap-2"
                       key={item._id} onClick={()=>setModalActive(true)}
                     > 
-                      <div className="flex flex-col items-center" onClick={()=>{setState({ingridientId:item._id})}}>
+                      <div className="flex flex-col items-center" onClick={()=>{setState(item._id)}}>
                       <Counter count={1} size="default" />
                       <img src={item.image_large} alt={item.name} />
                       <div className="flex items-center justify-center gap-2">
@@ -129,26 +127,12 @@ function BurgerIngredients({ data }) {
           </section>
         </div>
       </div>
-      <Modal active={modalActive} setActive={setModalActive} id={state.ingridientId} data={data}/>
+      {modalActive && <Modal active={modalActive} setActive={setModalActive} id={state}><IngredientDetails isActive={modalActive} itemData={data} itemId={state}/></Modal>}
     </section>
   );
 }
-
-BurgerIngredients.propType={
-  data: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired,
-  })
+BurgerIngredients.propTypes={
+  data: PropTypes.arrayOf(PropTypes.object.isRequired)
 }
 
 export default BurgerIngredients;

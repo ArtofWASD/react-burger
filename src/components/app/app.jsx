@@ -9,18 +9,19 @@ function App() {
   const [state, setState] = useState([]);
   useEffect(() => {
     fetch(url)
-      .then(res=>res.json())
+    .then((response)=> {
+      if (response.ok) return response.json()})
       .then(data=>setState(data))
       .catch((e) => console.error(e))
-  }, [url]);
+  }, []);
 
   return (
-    <div className="App grid justify-items-center">
+    <div className="grid justify-items-center">
       <header className={styles.header}>
         <AppHeader />
       </header>
       {state.data &&
-      <main className="burger-main grid grid-cols-2 gap-16 pt-20 absolute"> 
+      <main className="grid grid-cols-2 gap-16 pt-20 absolute"> 
         <BurgerIngredients data={state.data} />
         <BurgerConstructor data={state.data} />
       </main>}

@@ -1,8 +1,3 @@
-@font-face {
-    font-family: 'JetBrainsMono-Regular';
-    src: url("/src/fonts/JetBrainsMono-Regular.woff2") format("woff2");
-}
-
 .headerText{
     color: #8585AD;
     font-family: 'JetBrainsMono-Regular';

@@ -6,8 +6,12 @@ import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details"
 
 function BurgerConstructor({ data }) {
+  const closeModal = () => {
+    setModalActive(false);
+  };
   const [modalActive, setModalActive] = useState(false);
   const firstArrElem = data[0];
   const latestArrElem = data[data.length - 1];
@@ -52,13 +56,13 @@ function BurgerConstructor({ data }) {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text="Краторная булка N-200i (низ)"
+            text={`${firstArrElem.name} (низ)`}
             price={firstArrElem.price}
             thumbnail={firstArrElem.image}
           />
         </section>
       </section>
-      <div className="burger-constructor_total flex justify-end items-center pt-10 gap-2">
+      <div className="burger-constructor_total flex justify-end items-center pt-10 pr-12 gap-2">
         <p className={styles.burgerConstructorPrice}>610</p>
         <span className="pr-8">
           <CurrencyIcon type="primary" />
@@ -68,33 +72,16 @@ function BurgerConstructor({ data }) {
           size="medium"
           onClick={() => setModalActive(true)}
         >
-          Нажми на меня
+          <p className="text-base">Оформить заказ</p>
         </Button>
       </div>
-      <Modal
-        active={modalActive}
-        setActive={setModalActive}
-        isConstructor={true}
-      />
+      {modalActive && <Modal active={modalActive} setActive={setModalActive} isConstructor={true}><OrderDetails isActive={modalActive} onClose={closeModal}/></Modal>}
     </section>
   );
 }
 
-BurgerConstructor.propType = {
-  data: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired,
-  }),
+BurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object.isRequired)
 };
 
 export default BurgerConstructor;

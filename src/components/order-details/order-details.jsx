@@ -1,16 +1,12 @@
 import doneImg from "../../images/done.svg";
-import closeBtn from "../../images/close.svg";
 import PropTypes from "prop-types";
 import styles from './order-details.module.css'
 
-function OrderDetails({ onClose, isActive}) {
+function OrderDetails({isActive}) {
   return (
     <>
       {isActive && (
         <div className={isActive ? styles.modalActive : styles.modal }>
-          <div className="flex justify-end pt-8 px-8">
-            <img src={closeBtn} alt="Закрыть" onClick={onClose} />
-          </div>
           <div className="flex flex-col justify-center items-center">
             <span className={styles.modalDoneId}>034536</span>
             <p className={styles.modalDoneIdTitle}>идентификатор заказа</p>
