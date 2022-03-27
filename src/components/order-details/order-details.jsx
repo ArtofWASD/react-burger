@@ -2,11 +2,11 @@ import doneImg from "../../images/done.svg";
 import PropTypes from "prop-types";
 import styles from './order-details.module.css'
 
-function OrderDetails({isActive}) {
+function OrderDetails() {
   return (
     <>
-      {isActive && (
-        <div className={isActive ? styles.modalActive : styles.modal }>
+      { (
+        <div>
           <div className="flex flex-col justify-center items-center">
             <span className={styles.modalDoneId}>034536</span>
             <p className={styles.modalDoneIdTitle}>идентификатор заказа</p>

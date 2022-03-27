@@ -12,7 +12,7 @@ function BurgerIngredients({ data }) {
 
   const [modalActive, setModalActive] = useState(false);
 
-  const [state, setState] = useState()
+  const [currentIngredientId, setCurrentIngredientId] = useState()
 
   return (
     <section className="flex flex-col ">
@@ -50,7 +50,7 @@ function BurgerIngredients({ data }) {
                       className="relative gap-2"
                       key={item._id} onClick={()=>setModalActive(true)}
                     > 
-                      <div className="flex flex-col items-center" onClick={()=>{setState(item._id)}}>
+                      <div className="flex flex-col items-center" onClick={()=>{setCurrentIngredientId(item._id)}}>
                       <Counter count={1} size="default" />
                       <img src={item.image_large} alt={item.name} />
                       <div className="flex items-center justify-center gap-2">
@@ -81,7 +81,7 @@ function BurgerIngredients({ data }) {
                       className="relative gap-2"
                       key={item._id} onClick={()=>setModalActive(true)}
                     > 
-                      <div className="flex flex-col items-center" onClick={()=>{setState(item._id)}}>
+                      <div className="flex flex-col items-center" onClick={()=>{setCurrentIngredientId(item._id)}}>
                       <Counter count={1} size="default" />
                       <img src={item.image_large} alt={item.name} />
                       <div className="flex items-center justify-center gap-2">
@@ -111,7 +111,7 @@ function BurgerIngredients({ data }) {
                       className="relative gap-2"
                       key={item._id} onClick={()=>setModalActive(true)}
                     > 
-                      <div className="flex flex-col items-center" onClick={()=>{setState(item._id)}}>
+                      <div className="flex flex-col items-center" onClick={()=>{setCurrentIngredientId(item._id)}}>
                       <Counter count={1} size="default" />
                       <img src={item.image_large} alt={item.name} />
                       <div className="flex items-center justify-center gap-2">
@@ -127,12 +127,25 @@ function BurgerIngredients({ data }) {
           </section>
         </div>
       </div>
-      {modalActive && <Modal active={modalActive} setActive={setModalActive} id={state}><IngredientDetails isActive={modalActive} itemData={data} itemId={state}/></Modal>}
+      {modalActive && <Modal active={modalActive} setActive={setModalActive} id={currentIngredientId}><IngredientDetails itemData={data} itemId={currentIngredientId}/></Modal>}
     </section>
   );
 }
 BurgerIngredients.propTypes={
-  data: PropTypes.arrayOf(PropTypes.object.isRequired)
+  data: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    proteins: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
+    calories: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    image_mobile: PropTypes.string.isRequired,
+    image_large: PropTypes.string.isRequired,
+    __v: PropTypes.number.isRequired,
+  }))
 }
 
 export default BurgerIngredients;

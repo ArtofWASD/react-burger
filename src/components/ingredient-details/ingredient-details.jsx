@@ -2,8 +2,7 @@ import PropTypes from "prop-types";
 import styles from "./ingredient-details.module.css";
 
 export default function IngredientDetails({
-  itemData,
-  isActive,
+  itemData, 
   itemId,
 })
 
@@ -15,7 +14,7 @@ export default function IngredientDetails({
           .filter((item) => item._id === itemId)
           .map((item) => (
             <section
-              className={isActive ? styles.modalActive : styles.modal}
+              
               key={item._id}
             >
               <div className="modal-content grid px-8 pt-8">
@@ -59,6 +58,18 @@ export default function IngredientDetails({
 }
 IngredientDetails.propTypes = {
   id: PropTypes.number,
-  isActive: PropTypes.bool.isRequired,
-  itemData: PropTypes.arrayOf(PropTypes.object.isRequired)
+  itemData: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    proteins: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
+    calories: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    image_mobile: PropTypes.string.isRequired,
+    image_large: PropTypes.string.isRequired,
+    __v: PropTypes.number.isRequired,
+  }))
 };

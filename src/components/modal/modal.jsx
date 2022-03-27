@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
@@ -6,22 +6,27 @@ import styles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 
 function Modal({ active, setActive, id, children }) {
-  const closeModal = () => {
-    setActive(false);
-  };
 
-  const escButtonHandler = (e) => {
-    if (e.key === "Escape") {
-      closeModal();
-    }
-  };
+  const closeModal = useCallback(
+     () => {
+      setActive(false);
+    },[setActive]
+  )
+
+  const escButtonHandler = useCallback(
+    (e) => {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    },[closeModal]
+  );
 
   useEffect(() => {
     document.addEventListener("keydown", escButtonHandler);
     return () => {
       document.removeEventListener("keydown", escButtonHandler);
     };
-  }, []);
+  }, [escButtonHandler]);
 
   return ReactDOM.createPortal(
     <>
@@ -44,7 +49,7 @@ function Modal({ active, setActive, id, children }) {
 Modal.propTypes = {
   id: PropTypes.string,
   active: PropTypes.bool.isRequired,
-  isConstructor: PropTypes.bool,
-  data: PropTypes.arrayOf(PropTypes.object.isRequired),
+  children:PropTypes.object.isRequired,
+  setActive: PropTypes.func.isRequired
 };
 export default Modal;
