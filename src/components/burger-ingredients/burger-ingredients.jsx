@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useContext} from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -6,8 +6,10 @@ import Modal from "../modal/modal"
 import PropTypes from 'prop-types';
 import IngredientDetails from '../ingredient-details/ingredient-details'
 import styles from "./burger-ingredients.module.css";
+import { BurgerContext } from "../../utils/burger-context";
 
-function BurgerIngredients({ data }) {
+function BurgerIngredients() {
+  const data = useContext(BurgerContext)
   const [current, setCurrent] = useState("one");
 
   const [modalActive, setModalActive] = useState(false);

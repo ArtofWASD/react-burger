@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -7,8 +7,10 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details"
+import { BurgerContext } from "../../utils/burger-context";
 
-function BurgerConstructor({ data }) {
+function BurgerConstructor() {
+  const data = useContext(BurgerContext)
   const [modalActive, setModalActive] = useState(false);
   const firstArrElem = data[0];
   const latestArrElem = data[data.length - 1];
