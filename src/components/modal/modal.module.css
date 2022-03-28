@@ -1,0 +1,22 @@
+.modal {
+    opacity: 0;
+    pointer-events:none;
+}
+.modalActive{
+    margin-top:60px;
+    position: relative;
+    z-index: 1000;
+    background-color:#1C1C21;
+    opacity: 1;
+    width:750px;
+    height:600px;
+    border-radius: 40px;
+    pointer-events: all;
+}
+.modalTitle{
+    font-family: 'JetBrainsMono-Regular';
+    font-size: 36px;
+}
+.modalTitleHide{
+    display: none;
+}  
