@@ -10,12 +10,16 @@ import OrderDetails from "../order-details/order-details";
 import { BurgerContext } from "../../utils/burger-context";
 
 function BurgerConstructor() {
+  const postUrl = `https://norma.nomoreparties.space/api/orders`;
   const data = useContext(BurgerContext);
   const [modalActive, setModalActive] = useState(false);
+  const [orderId, setOrderId] = useState();
   const firstArrElem = data[0];
   const latestArrElem = data[data.length - 1];
   const restArr = data.slice(1, data.length - 1);
   const initialState = { totalPrice: 0 };
+
+  // сумма заказа на основе корзины
 
   const summTotal = restArr
     .map((item) => {
@@ -28,16 +32,16 @@ function BurgerConstructor() {
   function reducer(state, action) {
     switch (action.type) {
       case "addIngridient":
-        return{
-          totalPrice: state.totalPrice + 1
+        return {
+          totalPrice: state.totalPrice + 1,
         };
       case "deleteIngridient":
-        return{
-          totalPrice: state.totalPrice - 1 
+        return {
+          totalPrice: state.totalPrice - 1,
         };
       case "totalPrice":
         return {
-          totalPrice: summTotal + firstArrElem.price + latestArrElem.price,
+          totalPrice: summTotal + firstArrElem.price + firstArrElem.price,
         };
       default:
         throw new Error(`Wrong type of action: ${action.type}`);
@@ -45,6 +49,7 @@ function BurgerConstructor() {
   }
 
   const [total, dispatchTotal] = useReducer(reducer, initialState);
+
   function totalPriceShow() {
     dispatchTotal({ type: "totalPrice" });
   }
@@ -52,6 +57,32 @@ function BurgerConstructor() {
   useEffect(() => {
     totalPriceShow();
   }, []);
+
+  // Пост запрос с ингридиентами
+  const order = {
+    bun: [],
+    ingredients: [],
+  };
+
+  restArr.map((item) => {
+    return order.ingredients.push(item._id);
+  });
+
+  function getOrder() {
+    setOrderId(undefined);
+    fetch(postUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify(order),
+    })
+      .then((response) => {
+        if (response.ok) return response.json();
+      })
+      .then((result) => setOrderId(result.order.number))
+      .catch((e) => console.error(e));
+  }
 
   return (
     <section className="burger-constructor pt-24">
@@ -94,7 +125,7 @@ function BurgerConstructor() {
             type="bottom"
             isLocked={true}
             text={`${firstArrElem.name} (низ)`}
-            price={latestArrElem.price}
+            price={firstArrElem.price}
             thumbnail={firstArrElem.image}
           />
         </section>
@@ -104,17 +135,19 @@ function BurgerConstructor() {
         <span className="pr-8">
           <CurrencyIcon type="primary" />
         </span>
-        <Button
-          type="primary"
-          size="medium"
-          onClick={() => setModalActive(true)}
-        >
-          <p className="text-base">Оформить заказ</p>
-        </Button>
+        <span onClick={getOrder}>
+          <Button
+            type="primary"
+            size="medium"
+            onClick={() => setModalActive(true)}
+          >
+            <p className="text-base">Оформить заказ</p>
+          </Button>
+        </span>
       </div>
       {modalActive && (
         <Modal active={modalActive} setActive={setModalActive}>
-          <OrderDetails />
+          <OrderDetails orderId={orderId}/>
         </Modal>
       )}
     </section>
