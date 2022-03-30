@@ -2,26 +2,25 @@ import {useState, useContext} from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { BurgerContext } from "../../services/burger-context";
 import Modal from "../modal/modal"
-import PropTypes from 'prop-types';
 import IngredientDetails from '../ingredient-details/ingredient-details'
 import styles from "./burger-ingredients.module.css";
-import { BurgerContext } from "../../utils/burger-context";
 
 function BurgerIngredients() {
   const data = useContext(BurgerContext)
   const [current, setCurrent] = useState("one");
-
   const [modalActive, setModalActive] = useState(false);
-
   const [currentIngredientId, setCurrentIngredientId] = useState()
 
   return (
     <section className="flex flex-col ">
+      {/* Заголовок ингридиентов */}
       <div className="pt-10">
         <h1 className="text text_type_main-large">Соберите бургер</h1>
       </div>
       <div>
+        {/* Табы ингридиентов*/}
         <div className="grid grid-cols-3 justify-around py-4">
           <Tab value="one" active={current === "one"} onClick={setCurrent}>
             Булки
@@ -34,7 +33,9 @@ function BurgerIngredients() {
           </Tab>
         </div>
         <div>
+          {/* Содержимое табов начало*/}
           <section className={styles.burgerIngredientsItems}>
+            {/* Секция с булками */}
             <div className="flex flex-col py-4">
               <div>
                 <p className="text-2xl py-4">Булки</p>
@@ -66,6 +67,7 @@ function BurgerIngredients() {
                   
               </div>
             </div>
+            {/* Секция с соусами */}
             <div className="flex flex-col py-4">
               <div>
                 <p className="text-2xl py-4">Соусы</p>
@@ -96,6 +98,7 @@ function BurgerIngredients() {
                   ))}
               </div>
             </div>
+            {/* Секция с начинками */}
             <div className="flex flex-col py-4">
               <div>
                 <p className="text-2xl py-4">Начинки</p>
@@ -127,27 +130,13 @@ function BurgerIngredients() {
               </div>
             </div>
           </section>
+          {/* Содержимое табов конец*/}
         </div>
       </div>
+      {/* Модальное окно с инофрмацией об ингридиенте */}
       {modalActive && <Modal active={modalActive} setActive={setModalActive} id={currentIngredientId}><IngredientDetails itemData={data} itemId={currentIngredientId}/></Modal>}
     </section>
   );
-}
-BurgerIngredients.propTypes={
-  data: PropTypes.arrayOf(PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired,
-  }))
 }
 
 export default BurgerIngredients;

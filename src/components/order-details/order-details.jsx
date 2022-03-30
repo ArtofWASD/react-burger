@@ -22,8 +22,6 @@ function OrderDetails({ orderId }) {
   );
 }
 OrderDetails.propType = {
-  isActive: PropTypes.bool.isRequired,
-  styles: PropTypes.string.isRequired,
   orderId: PropTypes.number.isRequired
 };
 export default OrderDetails;

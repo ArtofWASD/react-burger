@@ -1,33 +1,24 @@
 import { useState, useContext, useReducer, useEffect } from "react";
-import PropTypes from "prop-types";
-import styles from "./burger-constructor.module.css";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { BurgerContext } from "../../services/burger-context";
+import { Orders } from '../../utils/api'
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { BurgerContext } from "../../utils/burger-context";
+import styles from "./burger-constructor.module.css";
 
 function BurgerConstructor() {
-  const postUrl = `https://norma.nomoreparties.space/api/orders`;
+  const postUrl = `${Orders}`;
   const data = useContext(BurgerContext);
   const [modalActive, setModalActive] = useState(false);
-  const [orderId, setOrderId] = useState();
-  const firstArrElem = data[0];
-  const latestArrElem = data[data.length - 1];
-  const restArr = data.slice(1, data.length - 1);
+  const [orderId, setOrderId] = useState(null);
+  const bun = data[0];
+  const ingredients = data.filter(item => item.type !== 'bun')
   const initialState = { totalPrice: 0 };
-
   // сумма заказа на основе корзины
-
-  const summTotal = restArr
-    .map((item) => {
-      return item.price;
-    })
-    .reduce((sum, current) => {
-      return sum + current;
-    });
+  const summTotal = ingredients.reduce((sum, ingredient) => sum + ingredient.price, bun.price *2 );
 
   function reducer(state, action) {
     switch (action.type) {
@@ -41,7 +32,7 @@ function BurgerConstructor() {
         };
       case "totalPrice":
         return {
-          totalPrice: summTotal + firstArrElem.price + firstArrElem.price,
+          totalPrice: summTotal
         };
       default:
         throw new Error(`Wrong type of action: ${action.type}`);
@@ -61,15 +52,13 @@ function BurgerConstructor() {
   // Пост запрос с ингридиентами
   const order = {
     bun: [],
-    ingredients: [],
+    ingredients: ingredients.map(item=>item._id),
   };
 
-  restArr.map((item) => {
-    return order.ingredients.push(item._id);
-  });
-
   function getOrder() {
+
     setOrderId(undefined);
+
     fetch(postUrl, {
       method: "POST",
       headers: {
@@ -78,16 +67,25 @@ function BurgerConstructor() {
       body: JSON.stringify(order),
     })
       .then((response) => {
-        if (response.ok) return response.json();
+        if (response.ok) {return response.json();
+        }
+        throw new Error('Не пришёл ответ от сервера');
       })
-      .then((result) => setOrderId(result.order.number))
+      .then((result) => {
+        if (result.success) {
+           return setOrderId(result.order.number)
+        }
+        throw new Error('Не пришёл номер заказа');
+      })
       .catch((e) => console.error(e));
   }
 
   return (
     <section className="burger-constructor pt-24">
+      {/* Конструктор бургеров начало*/}
       <section className="flex flex-col items-center ">
-        <section className="flex items-center py-2 pr-3" key={firstArrElem._id}>
+        {/* Верхняя булка */}
+        <section className="flex items-center py-2 pr-3" key={bun._id}>
           <div className="pr-2.5 opacity-0">
             <DragIcon type="primary" />
           </div>
@@ -95,12 +93,13 @@ function BurgerConstructor() {
             type="top"
             isLocked={true}
             text="Краторная булка N-200i (верх)"
-            price={firstArrElem.price}
-            thumbnail={firstArrElem.image}
+            price={bun.price}
+            thumbnail={bun.image}
           />
         </section>
+        {/* Тело бургера */}
         <section className={styles.burgerConstructorItems}>
-          {restArr.map((item) => (
+          {ingredients.map((item) => (
             <section className="flex items-center py-2 pr-3" key={item._id}>
               <div className="pr-2.5">
                 <DragIcon type="primary" />
@@ -114,9 +113,10 @@ function BurgerConstructor() {
             </section>
           ))}
         </section>
+        {/* Нижняя булка */}
         <section
           className="flex items-center py-2 pr-3"
-          key={latestArrElem._id}
+          key={bun.length}
         >
           <div className="pr-2.5 opacity-0">
             <DragIcon type="primary" />
@@ -124,17 +124,21 @@ function BurgerConstructor() {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${firstArrElem.name} (низ)`}
-            price={firstArrElem.price}
-            thumbnail={firstArrElem.image}
+            text={`${bun.name} (низ)`}
+            price={bun.price}
+            thumbnail={bun.image}
           />
         </section>
       </section>
+      {/* Конструктор бургеров конец*/}
+      {/* Нижний блок конструктора бургера начало */}
       <div className="burger-constructor_total flex justify-end items-center pt-10 pr-12 gap-2">
+        {/* Цена бургера */}
         <p className={styles.burgerConstructorPrice}>{total.totalPrice}</p>
         <span className="pr-8">
           <CurrencyIcon type="primary" />
         </span>
+        {/* Кнопка "Оформить заказ"*/}
         <span onClick={getOrder}>
           <Button
             type="primary"
@@ -145,6 +149,8 @@ function BurgerConstructor() {
           </Button>
         </span>
       </div>
+      {/* Нижний блок конструктора бургера конец */}
+      {/* Модальное окно с номером заказа */}
       {modalActive && (
         <Modal active={modalActive} setActive={setModalActive}>
           <OrderDetails orderId={orderId}/>
@@ -153,24 +159,5 @@ function BurgerConstructor() {
     </section>
   );
 }
-
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      proteins: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      calories: PropTypes.number.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      __v: PropTypes.number.isRequired,
-    })
-  ),
-};
 
 export default BurgerConstructor;
