@@ -13,7 +13,7 @@ function BurgerIngredients() {
         <h1 className="text text_type_main-large">Соберите бургер</h1>
       </div>
       <div>
-        {/* Табы ингридиентов*/}
+        {/* Табы ингридиентов начало*/}
         <div className="grid grid-cols-3 justify-around py-4">
           <Tab value="one" active={current === "one"} onClick={setCurrent}>
             Булки
@@ -25,11 +25,14 @@ function BurgerIngredients() {
             Начинки
           </Tab>
         </div>
+        {/* Табы ингридиентов конец*/}
+        {/* Ингридиенты начало*/}
         <div className={styles.burgerIngredientsItems}>
         <IngridientsCategory title='Булки'><BurgerIngridient type='bun'/></IngridientsCategory>
         <IngridientsCategory title='Соусы'><BurgerIngridient type='sauce'/></IngridientsCategory>
         <IngridientsCategory title='Начинка'><BurgerIngridient type='main'/></IngridientsCategory>
         </div>
+        {/* Ингридиенты конец*/}
       </div>      
     </section>
   );
