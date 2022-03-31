@@ -9,7 +9,8 @@ export const getIngridients = () => {
       throw new Error("Не пришёл ответ от сервера");
     })
     .then((data) => {
-      if (data.success) return data.data;
+      if (data.success) {return data.data}
+        throw new Error("Данные не поступили");
     });
 };
 
@@ -35,4 +36,3 @@ export const postOrder = (order) => {
     })
     .catch((e) => console.error(e));
 };
-export const Orders = "https://norma.nomoreparties.space/api/orders";
