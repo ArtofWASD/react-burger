@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import AppHeader from "../app-header/app-header";
+import styles from "./app.module.css";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import styles from "./app.module.css";
 import { BurgerContext } from "../../services/burger-context";
 import { getIngridients } from "../../utils/api" 
 
 function App() {
-
   const [ingridients, setIngridients] = useState(null);
 
   useEffect(() => {
