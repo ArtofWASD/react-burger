@@ -1,0 +1,8 @@
+.hidden{
+    padding-right: 10px;
+    opacity: 0
+}
+.visible{
+    padding-right: 10px;
+    opacity: 1
+}

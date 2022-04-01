@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import IngridientsCategory from '../ingridients-category/ingridients-category'
-import BurgerIngridient from "../burger-ingridient/burger-ingridient"
-import styles from "./burger-ingredients.module.css"
+import IngridientsCategory from "../ingridients-category/ingridients-category";
+import BurgerIngridient from "../burger-ingridient/burger-ingridient";
+import styles from "./burger-ingredients.module.css";
 
 function BurgerIngredients() {
   const [current, setCurrent] = useState("one");
@@ -11,15 +11,15 @@ function BurgerIngredients() {
   const sauce = useRef();
   const main = useRef();
 
-  const handlerTabScrollBun = () => {
-    bun.current.scrollIntoView({block: "start", behavior: "smooth"});
-  }
-  const handlerTabScrollSauce = () => {
-    sauce.current.scrollIntoView({block: "start", behavior: "smooth"});
-  }
-  const handlerTabScrollMain = () => {
-    main.current.scrollIntoView({block: "start", behavior: "smooth"});
-  }
+  const handlerTabScrollUpBun = () => {
+    bun.current.scrollIntoView({ block: "start", behavior: "smooth" });
+  };
+  const handlerTabScrollUpSauce = () => {
+    sauce.current.scrollIntoView({ block: "start", behavior: "smooth" });
+  };
+  const handlerTabScrollUpMain = () => {
+    main.current.scrollIntoView({ block: "start", behavior: "smooth" });
+  };
 
   return (
     <section className="flex flex-col ">
@@ -29,32 +29,42 @@ function BurgerIngredients() {
       </div>
       <div>
         {/* Табы ингридиентов начало*/}
-        <div className="grid grid-cols-3 justify-around py-4" >
-          <div onClick={handlerTabScrollBun}>
-          <Tab value="one" active={current === "one"} onClick={setCurrent}>
-            Булки
-          </Tab>
+        <div className="grid grid-cols-3 justify-around py-4">
+          <div onClick={handlerTabScrollUpBun}>
+            <Tab value="one" active={current === "one"} onClick={setCurrent}>
+              Булки
+            </Tab>
           </div>
-          <div onClick={handlerTabScrollSauce}>
-          <Tab value="two" active={current === "two"} onClick={setCurrent}>
-            Соусы
-          </Tab>
+          <div onClick={handlerTabScrollUpSauce}>
+            <Tab value="two" active={current === "two"} onClick={setCurrent}>
+              Соусы
+            </Tab>
           </div>
-          <div onClick={handlerTabScrollMain}>
-          <Tab value="three" active={current === "three"} onClick={setCurrent}>
-            Начинки
-          </Tab>
+          <div onClick={handlerTabScrollUpMain}>
+            <Tab
+              value="three"
+              active={current === "three"}
+              onClick={setCurrent}
+            >
+              Начинки
+            </Tab>
           </div>
         </div>
         {/* Табы ингридиентов конец*/}
         {/* Ингридиенты начало*/}
         <div className={styles.burgerIngredientsItems}>
-        <IngridientsCategory title='Булки' ref={bun}><BurgerIngridient type='bun'/></IngridientsCategory>
-        <IngridientsCategory title='Соусы'  ref={sauce}><BurgerIngridient type='sauce'/></IngridientsCategory>
-        <IngridientsCategory title='Начинка' ref={main}><BurgerIngridient type='main'/></IngridientsCategory>
+          <IngridientsCategory title="Булки" ref={bun}>
+            <BurgerIngridient type="bun" />
+          </IngridientsCategory>
+          <IngridientsCategory title="Соусы" ref={sauce}>
+            <BurgerIngridient type="sauce" />
+          </IngridientsCategory>
+          <IngridientsCategory title="Начинка" ref={main}>
+            <BurgerIngridient type="main" />
+          </IngridientsCategory>
         </div>
         {/* Ингридиенты конец*/}
-      </div>      
+      </div>
     </section>
   );
 }
