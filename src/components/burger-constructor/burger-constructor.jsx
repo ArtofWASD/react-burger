@@ -1,6 +1,4 @@
 import { useState, useContext, useReducer, useEffect } from "react";
-import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { BurgerContext } from "../../services/burger-context";
@@ -62,7 +60,7 @@ function BurgerConstructor() {
     setOrderId(undefined);
     postOrder(order).then(setOrderId);
   }
-
+  
   return (
     <section className="burger-constructor pt-24">
       {/* Конструктор бургеров начало*/}
@@ -74,7 +72,7 @@ function BurgerConstructor() {
           type="top"
           isLocked={true}
           isDragged={false}
-          itemKey={bun._id}
+          key={bun._id}
         />
         {/* Верхняя булка конец */}
 
@@ -87,7 +85,7 @@ function BurgerConstructor() {
               type="undefined"
               isLocked={false}
               isDragged={true}
-              itemKey={item._id}
+              key={item._id}
             />
           ))}
         </section>
@@ -100,7 +98,7 @@ function BurgerConstructor() {
           type="bottom"
           isLocked={true}
           isDragged={false}
-          itemKey={bun.length}
+          key={bun.length}
         />
         {/* Нижняя булка конец */}
       </section>

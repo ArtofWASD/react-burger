@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngridientsCategory from "../ingridients-category/ingridients-category";
 import BurgerIngridient from "../burger-ingridient/burger-ingridient";
@@ -11,14 +11,8 @@ function BurgerIngredients() {
   const sauce = useRef();
   const main = useRef();
 
-  const handlerTabScrollUpBun = () => {
-    bun.current.scrollIntoView({ block: "start", behavior: "smooth" });
-  };
-  const handlerTabScrollUpSauce = () => {
-    sauce.current.scrollIntoView({ block: "start", behavior: "smooth" });
-  };
-  const handlerTabScrollUpMain = () => {
-    main.current.scrollIntoView({ block: "start", behavior: "smooth" });
+  const handlerTabScrollUp = (item) => {
+    item.current.scrollIntoView({ block: "start", behavior: "smooth" });
   };
 
   return (
@@ -30,17 +24,17 @@ function BurgerIngredients() {
       <div>
         {/* Табы ингридиентов начало*/}
         <div className="grid grid-cols-3 justify-around py-4">
-          <div onClick={handlerTabScrollUpBun}>
+          <div onClick={()=>handlerTabScrollUp(bun)}>
             <Tab value="one" active={current === "one"} onClick={setCurrent}>
               Булки
             </Tab>
           </div>
-          <div onClick={handlerTabScrollUpSauce}>
+          <div onClick={()=>handlerTabScrollUp(sauce)}>
             <Tab value="two" active={current === "two"} onClick={setCurrent}>
               Соусы
             </Tab>
           </div>
-          <div onClick={handlerTabScrollUpMain}>
+          <div onClick={()=>handlerTabScrollUp(main)}>
             <Tab
               value="three"
               active={current === "three"}
