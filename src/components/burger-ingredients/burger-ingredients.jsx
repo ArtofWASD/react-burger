@@ -1,4 +1,4 @@
-import {useState} from "react";
+import { useState, useRef, useEffect } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngridientsCategory from '../ingridients-category/ingridients-category'
 import BurgerIngridient from "../burger-ingridient/burger-ingridient"
@@ -6,6 +6,21 @@ import styles from "./burger-ingredients.module.css"
 
 function BurgerIngredients() {
   const [current, setCurrent] = useState("one");
+
+  const bun = useRef();
+  const sauce = useRef();
+  const main = useRef();
+
+  const handlerTabScrollBun = () => {
+    bun.current.scrollIntoView({block: "start", behavior: "smooth"});
+  }
+  const handlerTabScrollSauce = () => {
+    sauce.current.scrollIntoView({block: "start", behavior: "smooth"});
+  }
+  const handlerTabScrollMain = () => {
+    main.current.scrollIntoView({block: "start", behavior: "smooth"});
+  }
+
   return (
     <section className="flex flex-col ">
       {/* Заголовок ингридиентов */}
@@ -14,23 +29,29 @@ function BurgerIngredients() {
       </div>
       <div>
         {/* Табы ингридиентов начало*/}
-        <div className="grid grid-cols-3 justify-around py-4">
+        <div className="grid grid-cols-3 justify-around py-4" >
+          <div onClick={handlerTabScrollBun}>
           <Tab value="one" active={current === "one"} onClick={setCurrent}>
             Булки
           </Tab>
+          </div>
+          <div onClick={handlerTabScrollSauce}>
           <Tab value="two" active={current === "two"} onClick={setCurrent}>
             Соусы
           </Tab>
+          </div>
+          <div onClick={handlerTabScrollMain}>
           <Tab value="three" active={current === "three"} onClick={setCurrent}>
             Начинки
           </Tab>
+          </div>
         </div>
         {/* Табы ингридиентов конец*/}
         {/* Ингридиенты начало*/}
         <div className={styles.burgerIngredientsItems}>
-        <IngridientsCategory title='Булки'><BurgerIngridient type='bun'/></IngridientsCategory>
-        <IngridientsCategory title='Соусы'><BurgerIngridient type='sauce'/></IngridientsCategory>
-        <IngridientsCategory title='Начинка'><BurgerIngridient type='main'/></IngridientsCategory>
+        <IngridientsCategory title='Булки' ref={bun}><BurgerIngridient type='bun'/></IngridientsCategory>
+        <IngridientsCategory title='Соусы'  ref={sauce}><BurgerIngridient type='sauce'/></IngridientsCategory>
+        <IngridientsCategory title='Начинка' ref={main}><BurgerIngridient type='main'/></IngridientsCategory>
         </div>
         {/* Ингридиенты конец*/}
       </div>      
