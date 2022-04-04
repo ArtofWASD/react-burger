@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchData, filterData } from "../../services/reducers/get-data";
+import { fetchData } from "../../services/reducers/get-data";
 import { useDispatch, useSelector } from "react-redux";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -12,9 +12,9 @@ function BurgerIngridient({ type }) {
   const [modalActive, setModalActive] = useState(false);
   const [currentIngredientId, setCurrentIngredientId] = useState();
   const dispatch = useDispatch();
-  const data = useSelector(state=>state.getData.data)
+  const {ingridients, status, error} = useSelector(state=>state.getData)
 
-  const ingridientType = data.filter((item) => {
+  const ingridientType = ingridients.filter((item) => {
     if (item.type === type) {
       return item;
     }
@@ -26,6 +26,7 @@ function BurgerIngridient({ type }) {
 
   return (
     <div className="grid grid-cols-2 gap-3">
+      {error && <h2>{error}</h2>}
       {ingridientType.map((item) => (
         <div
           className="relative gap-2"
@@ -55,7 +56,7 @@ function BurgerIngridient({ type }) {
           setActive={setModalActive}
           id={currentIngredientId}
         >
-          <IngredientDetails itemData={data} itemId={currentIngredientId} />
+          <IngredientDetails itemData={ingridients} itemId={currentIngredientId} />
         </Modal>
       )}
     </div>
