@@ -1,22 +1,28 @@
-import { useState, useContext } from "react";
+import { useState, useEffect } from "react";
+import { fetchData, filterData } from "../../services/reducers/get-data";
+import { useDispatch, useSelector } from "react-redux";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { BurgerContext } from "../../services/burger-context";
 import PropTypes from "prop-types";
 import Modal from "../modal/modal";
-import IngredientDetails from '../ingredient-details/ingredient-details'
-import styles from "./burger-ingridient.module.css"
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import styles from "./burger-ingridient.module.css";
 
 function BurgerIngridient({ type }) {
   const [modalActive, setModalActive] = useState(false);
   const [currentIngredientId, setCurrentIngredientId] = useState();
-  const data = useContext(BurgerContext);
+  const dispatch = useDispatch();
+  const data = useSelector(state=>state.getData.data)
 
   const ingridientType = data.filter((item) => {
     if (item.type === type) {
-       return item
+      return item;
     }
   });
+  
+  useEffect(() => {
+    dispatch(fetchData())
+  }, [dispatch]);
 
   return (
     <div className="grid grid-cols-2 gap-3">
@@ -43,11 +49,19 @@ function BurgerIngridient({ type }) {
         </div>
       ))}
       {/* Модальное окно с инофрмацией об ингридиенте */}
-      {modalActive && <Modal active={modalActive} setActive={setModalActive} id={currentIngredientId}><IngredientDetails itemData={data} itemId={currentIngredientId}/></Modal>}
+      {modalActive && (
+        <Modal
+          active={modalActive}
+          setActive={setModalActive}
+          id={currentIngredientId}
+        >
+          <IngredientDetails itemData={data} itemId={currentIngredientId} />
+        </Modal>
+      )}
     </div>
   );
 }
 BurgerIngridient.propTypes = {
-    type: PropTypes.string.isRequired,
-  };
+  type: PropTypes.string.isRequired,
+};
 export default BurgerIngridient;

@@ -1,29 +1,43 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { API_URL } from "../../utils/api-constant";
 
-const initialState = {
-  data: [],
-}
-
-export const counterSlice = createSlice({
-    initialState,
-    reducers: {
-      increment: (state) => {
-        // Redux Toolkit allows us to write "mutating" logic in reducers. It
-        // doesn't actually mutate the state because it uses the Immer library,
-        // which detects changes to a "draft state" and produces a brand new
-        // immutable state based off those changes
-        state.value += 1
-      },
-      decrement: (state) => {
-        state.value -= 1
-      },
-      incrementByAmount: (state, action) => {
-        state.value += action.payload
-      },
-    },
+export const fetchData = createAsyncThunk("data/fetchData", async () => {
+ return fetch(`${API_URL}/ingredients`)
+  .then((result) => result.json())
+  .then((data)=>{
+    return data.data
   })
-  
-  // Action creators are generated for each case reducer function
-  export const { increment, decrement, incrementByAmount } = counterSlice.actions
-  
-  export default counterSlice.reducer
+});
+
+export const getDataSlice = createSlice({
+  name: "data",
+  initialState: {
+    data: [],
+    status: null,
+    error: null,
+  },
+  reducers: {
+    filterData(state, action) {
+      state.data.filter((item) => {
+        if (item.type === action.payload) {
+          return state.data = item;
+        }
+      });
+    }
+  },
+  extraReducers: {
+    [fetchData.pending]: (state) => {
+      state.error = null;
+      state.status = "Loading";
+    },
+    [fetchData.fulfilled]: (state, action) => {
+      state.status = "resolved";
+      state.data = action.payload
+    },
+    [fetchData.rejected]: (state) => {
+      state.status = "False";
+    },
+  },
+});
+export const {filterData} = getDataSlice.actions;
+export default getDataSlice.reducer;
