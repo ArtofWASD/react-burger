@@ -1,29 +1,30 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API_URL } from "../../utils/api-constant";
 
-export const fetchData = createAsyncThunk("data/fetchData", async () => {
+export const fetchData = createAsyncThunk("ingridients/fetchData", async (_,{rejectWithValue}) => {
  return fetch(`${API_URL}/ingredients`)
-  .then((result) => result.json())
-  .then((data)=>{
-    return data.data
+  .then((response) => {
+    if (response.ok) {
+      return response.json();
+    }
+    throw new Error("Не пришёл ответ от сервера");
   })
+  .then((data) => {
+    if (data.success) {return data.data}
+      throw new Error("Данные не поступили");
+  })
+  .catch((error) => rejectWithValue(error.message))
 });
 
 export const getDataSlice = createSlice({
-  name: "data",
+  name: "ingridients",
   initialState: {
-    data: [],
+    ingridients: [],
     status: null,
     error: null,
   },
   reducers: {
-    filterData(state, action) {
-      state.data.filter((item) => {
-        if (item.type === action.payload) {
-          return state.data = item;
-        }
-      });
-    }
+
   },
   extraReducers: {
     [fetchData.pending]: (state) => {
@@ -32,10 +33,11 @@ export const getDataSlice = createSlice({
     },
     [fetchData.fulfilled]: (state, action) => {
       state.status = "resolved";
-      state.data = action.payload
+      state.ingridients = action.payload
     },
-    [fetchData.rejected]: (state) => {
+    [fetchData.rejected]: (state, action) => {
       state.status = "False";
+      state.error = action.payload
     },
   },
 });

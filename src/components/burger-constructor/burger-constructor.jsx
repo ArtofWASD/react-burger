@@ -3,6 +3,8 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { BurgerContext } from "../../services/burger-context";
 import { postOrder } from "../../utils/api";
+import { fetchData } from "../../services/reducers/get-data";
+import { useDispatch, useSelector } from "react-redux";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
