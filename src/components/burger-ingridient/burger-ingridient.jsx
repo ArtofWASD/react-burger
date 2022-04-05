@@ -12,14 +12,9 @@ function BurgerIngridient({ type }) {
   const [modalActive, setModalActive] = useState(false);
   const [currentIngredientId, setCurrentIngredientId] = useState();
   const dispatch = useDispatch();
-  const {ingridients, status, error} = useSelector(state=>state.getData)
+  const {ingridients, error} = useSelector(state=>state.getData)
+  const ingridientType = ingridients.filter(item=>item.type === type);
 
-  const ingridientType = ingridients.filter((item) => {
-    if (item.type === type) {
-      return item;
-    }
-  });
-  
   useEffect(() => {
     dispatch(fetchData())
   }, [dispatch]);

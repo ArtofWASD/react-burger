@@ -1,8 +1,9 @@
 import doneImg from "../../images/done.svg";
 import PropTypes from "prop-types";
 import styles from "./order-details.module.css";
-
-function OrderDetails({ orderId }) {
+import { useSelector } from "react-redux";
+function OrderDetails() {
+const orderId = useSelector(state=>state.getData.order.number)
   return (
     <>
       {orderId && <div>

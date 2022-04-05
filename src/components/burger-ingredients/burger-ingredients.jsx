@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import { useSelector, useDispatch } from 'react-redux';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngridientsCategory from "../ingridients-category/ingridients-category";
 import BurgerIngridient from "../burger-ingridient/burger-ingridient";
@@ -7,7 +6,6 @@ import styles from "./burger-ingredients.module.css";
 
 function BurgerIngredients() {
   const [current, setCurrent] = useState("one");
-
 
   const bun = useRef();
   const sauce = useRef();

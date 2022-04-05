@@ -2,8 +2,8 @@ import { useState, useContext, useReducer, useEffect } from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { BurgerContext } from "../../services/burger-context";
-import { postOrder } from "../../utils/api";
-import { fetchData } from "../../services/reducers/get-data";
+// import { postOrder } from "../../utils/api";
+import { postOrder } from "../../services/reducers/get-data";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
@@ -13,15 +13,20 @@ import BurgerConstructorItem from "../burger-constructor-item/burger-constructor
 function BurgerConstructor() {
   const data = useContext(BurgerContext);
   const [modalActive, setModalActive] = useState(false);
-  const [orderId, setOrderId] = useState(null);
   const bun = data[0];
   const ingredients = data.filter((item) => item.type !== "bun");
   const initialState = { totalPrice: 0 };
+  const dispatch = useDispatch()
   // сумма заказа на основе корзины
+
   const summTotal = ingredients.reduce(
     (sum, ingredient) => sum + ingredient.price,
     bun.price * 2
   );
+  // const ingredients = useSelector(state=>state.getData.ingredients)  
+  // const summ = dispatch(totalOrderSumm(ingredients))
+
+  // console.log(summ.payload);
 
   function reducer(state, action) {
     switch (action.type) {
@@ -54,15 +59,9 @@ function BurgerConstructor() {
 
   // Пост запрос с ингридиентами
   const order = {
-    bun: [],
     ingredients: ingredients.map((item) => item._id),
   };
 
-  function getOrder() {
-    setOrderId(undefined);
-    postOrder(order).then(setOrderId);
-  }
-  
   return (
     <section className="burger-constructor pt-24">
       {/* Конструктор бургеров начало*/}
@@ -114,7 +113,7 @@ function BurgerConstructor() {
           <CurrencyIcon type="primary" />
         </span>
         {/* Кнопка "Оформить заказ"*/}
-        <span onClick={getOrder}>
+        <span onClick={()=>dispatch(postOrder(order))}>
           <Button
             type="primary"
             size="medium"
@@ -128,7 +127,7 @@ function BurgerConstructor() {
       {/* Модальное окно с номером заказа */}
       {modalActive && (
         <Modal active={modalActive} setActive={setModalActive}>
-          <OrderDetails orderId={orderId} />
+          <OrderDetails />
         </Modal>
       )}
     </section>

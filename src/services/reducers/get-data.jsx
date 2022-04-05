@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API_URL } from "../../utils/api-constant";
 
-export const fetchData = createAsyncThunk("ingridients/fetchData", async (_,{rejectWithValue}) => {
+export const fetchData = createAsyncThunk("data/fetchData", async (_,{rejectWithValue}) => {
  return fetch(`${API_URL}/ingredients`)
   .then((response) => {
     if (response.ok) {
@@ -16,15 +16,41 @@ export const fetchData = createAsyncThunk("ingridients/fetchData", async (_,{rej
   .catch((error) => rejectWithValue(error.message))
 });
 
-export const getDataSlice = createSlice({
-  name: "ingridients",
+export const postOrder = createAsyncThunk("data/postOrder", async (order,{rejectWithValue}) => {
+  return fetch(`${API_URL}/orders`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify(order),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Не пришёл ответ от сервера");
+      })
+      .then((result) => {
+        if (result.success) {
+          return result.order;
+        }
+        throw new Error("Не пришёл номер заказа");
+      })
+      .catch((error) => rejectWithValue(error.message))
+ });
+
+export const dataSlice = createSlice({
+  name: "data",
   initialState: {
     ingridients: [],
+    ingridientItem:{},
+    order:{},
+    constructor:[],
     status: null,
     error: null,
   },
   reducers: {
-
+    
   },
   extraReducers: {
     [fetchData.pending]: (state) => {
@@ -39,7 +65,21 @@ export const getDataSlice = createSlice({
       state.status = "False";
       state.error = action.payload
     },
+    [postOrder.pending]: (state) => {
+      state.error = null;
+      state.status = "Loading";
+    },
+    [postOrder.fulfilled]: (state, action) => {
+      state.status = "resolved";
+      state.order = action.payload
+    },
+    [postOrder.rejected]: (state, action) => {
+      state.status = "False";
+      state.error = action.payload
+    },
   },
 });
-export const {filterData} = getDataSlice.actions;
-export default getDataSlice.reducer;
+
+export const {} = dataSlice.actions;
+
+export default dataSlice.reducer;

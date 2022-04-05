@@ -1,10 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import getDataSlice from "../reducers/get-data";
-import postOrderSlice from "../reducers/post-data"
+import dataSlice from "../reducers/get-data";
 
 export const store = configureStore({
   reducer: {
-    getData: getDataSlice,
-    postOrder: postOrderSlice
+    getData: dataSlice
   },
 });
