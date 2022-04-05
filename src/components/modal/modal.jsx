@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { resetOrderNumber } from "../../services/reducers/get-data";
+import { reset } from "../../services/reducers/get-data";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
@@ -26,7 +26,7 @@ function Modal({ active, setActive, id, children }) {
     document.addEventListener("keydown", escButtonHandler);
     return () => {
       document.removeEventListener("keydown", escButtonHandler);
-      dispatch(resetOrderNumber());
+      dispatch(reset());
     };
   }, [escButtonHandler]);
 

@@ -60,9 +60,13 @@ export const dataSlice = createSlice({
     error: null,
   },
   reducers: {
-    resetOrderNumber(state) {
+    reset(state) {
       state.order.number = "";
+      state.ingridientItem ="";
     },
+    getIngridientItem(state, action){
+      state.ingridientItem = action.payload;
+    }
   },
   extraReducers: {
     [fetchData.pending]: (state) => {
@@ -95,6 +99,6 @@ export const dataSlice = createSlice({
 }
 });
 
-export const { resetOrderNumber } = dataSlice.actions;
+export const { reset, getIngridientItem } = dataSlice.actions;
 
 export default dataSlice.reducer;
