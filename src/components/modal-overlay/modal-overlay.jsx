@@ -1,3 +1,4 @@
+
 import styles from './modal-overlay.module.css';
 
 function ModalOverlay ({isActive, onClose}){
@@ -7,4 +8,3 @@ function ModalOverlay ({isActive, onClose}){
     )
 }
 export default ModalOverlay
-

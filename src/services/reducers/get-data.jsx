@@ -55,18 +55,35 @@ export const dataSlice = createSlice({
     order: {
       number: "",
     },
-    constructor: [],
+    constructor: {
+      ingridients: [],
+      buns:[]
+    },
     status: null,
     error: null,
   },
   reducers: {
     reset(state) {
       state.order.number = "";
-      state.ingridientItem ="";
+      state.ingridientItem = "";
     },
-    getIngridientItem(state, action){
+    getIngridientItem(state, action) {
       state.ingridientItem = action.payload;
-    }
+    },
+    deleteIngridientItem(state, action) {
+      
+    },
+    addIngridientItem(state, action) {
+      state.constructor.ingridients.push(action.payload);
+    },
+    addBunItem(state, action) {
+      if (state.constructor.buns.length < 1) {
+        state.constructor.buns.push(action.payload);
+      }else{
+        return
+      }
+      
+    },
   },
   extraReducers: {
     [fetchData.pending]: (state) => {
@@ -94,11 +111,15 @@ export const dataSlice = createSlice({
       state.error = action.payload;
     },
   },
-  deleteConstructorItem(state, action) {
-    state.ingridients = state.ingridients.filter(ingridients => ingridients.id !== action.payload.id);
-}
 });
 
-export const { reset, getIngridientItem } = dataSlice.actions;
+export const {
+  reset,
+  getIngridientItem,
+  deleteIngridientItem,
+  addIngridientItem,
+  setModalActive,
+  addBunItem
+} = dataSlice.actions;
 
 export default dataSlice.reducer;

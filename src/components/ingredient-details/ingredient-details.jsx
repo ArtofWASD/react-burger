@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { getIngridientItem } from "../../services/reducers/get-data";
 import PropTypes from "prop-types";
 import styles from "./ingredient-details.module.css";

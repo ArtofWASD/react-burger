@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngridientsCategory from "../ingridients-category/ingridients-category";
-import BurgerIngridient from "../burger-ingridient/burger-ingridient";
+import BurgerIngridientList from "../burger-ingridient-list/burger-ingridient-list";
 import styles from "./burger-ingredients.module.css";
 
 function BurgerIngredients() {
@@ -48,13 +48,13 @@ function BurgerIngredients() {
         {/* Ингридиенты начало*/}
         <div className={styles.burgerIngredientsItems}>
           <IngridientsCategory title="Булки" ref={bun}>
-            <BurgerIngridient type="bun" />
+            <BurgerIngridientList type="bun" />
           </IngridientsCategory>
           <IngridientsCategory title="Соусы" ref={sauce}>
-            <BurgerIngridient type="sauce" />
+            <BurgerIngridientList type="sauce" />
           </IngridientsCategory>
           <IngridientsCategory title="Начинка" ref={main}>
-            <BurgerIngridient type="main" />
+            <BurgerIngridientList type="main" />
           </IngridientsCategory>
         </div>
         {/* Ингридиенты конец*/}

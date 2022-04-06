@@ -9,6 +9,7 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 
 function Modal({ active, setActive, id, children }) {
   const dispatch = useDispatch();
+
   const closeModal = useCallback(() => {
     setActive(false);
   }, [setActive]);
