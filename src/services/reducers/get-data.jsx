@@ -57,10 +57,11 @@ export const dataSlice = createSlice({
     },
     constructor: {
       ingridients: [],
-      buns:[]
+      buns: [],
     },
     status: null,
     error: null,
+    total: 0,
   },
   reducers: {
     reset(state) {
@@ -71,19 +72,31 @@ export const dataSlice = createSlice({
       state.ingridientItem = action.payload;
     },
     deleteIngridientItem(state, action) {
-      
+      console.log("deleted");
+      let { inputIndex } = action.payload;
+      state.constructor.ingridients.splice(inputIndex, 1);
     },
     addIngridientItem(state, action) {
       state.constructor.ingridients.push(action.payload);
+      const ingridients = state.constructor.ingridients.reduce((summ, current) => 
+      summ + current.price, state.constructor.buns.reduce((summ, current) => summ + current.price*2, 0)
+    );
+    state.total = ingridients
     },
     addBunItem(state, action) {
       if (state.constructor.buns.length < 1) {
         state.constructor.buns.push(action.payload);
-      }else{
-        return
+        const bunSumm = state.constructor.buns.reduce((summ, current) => summ + current.price*2, 0)
+        state.total = bunSumm
+      } else {
+        return;
       }
-      
     },
+    totalOrderPrice(state) {
+    },
+    updateIngridient(state, action){
+      console.log('update');
+    }
   },
   extraReducers: {
     [fetchData.pending]: (state) => {
@@ -119,7 +132,7 @@ export const {
   deleteIngridientItem,
   addIngridientItem,
   setModalActive,
-  addBunItem
+  addBunItem,
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

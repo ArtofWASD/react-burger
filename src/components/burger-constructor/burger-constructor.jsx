@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import {
@@ -17,16 +17,14 @@ import BurgerConstructorItem from "../burger-constructor-item/burger-constructor
 
 function BurgerConstructor() {
   const [modalActive, setModalActive] = useState(false);
-  const { ingridients, constructor } = useSelector((state) => state.getData);
+
+  const { ingridients, constructor, total } = useSelector((state) => state.getData);
   const bun = constructor.buns;
   const constructorIngredients = ingridients.filter(
     (item) => item.type !== "bun"
   );
   const dispatch = useDispatch();
-  // const orderTotalPrice = constructor.ingridients.reduce(
-  //   (sum, ingredient) => sum + ingredient.price
-  // );
-
+  
   const order = {
     ingredients: constructorIngredients.map((item) => item._id),
   };
@@ -46,15 +44,25 @@ function BurgerConstructor() {
       } else {
         dispatch(addIngridientItem(newIngredient));
       }
-    },
+    }
   });
+
+  const moveCard = useCallback((dragIndex, hoverIndex) => {
+    const dragCard = constructor.ingredients[dragIndex];
+    const newCards = [...constructor.ingredients]
+    newCards.splice(dragIndex, 1)
+    newCards.splice(hoverIndex, 0, dragCard)
+    dispatch({
+    })
+  }, [constructor.ingredients, dispatch]);
+
   return (
     <section
       className={`${isHover ? styles.onHover : ""} pt-24`}
       ref={dropTargerRef}
     >
       {/* Конструктор бургеров начало*/}
-      <section className="flex flex-col items-center ">
+      <section className="flex flex-col items-center h-5/6 justify-center ">
         {/* Верхняя булка начало*/}
         {bun.length > 0 &&
           bun.map((item) => (
@@ -71,6 +79,7 @@ function BurgerConstructor() {
         {/* Тело бургера начало */}
         <section className={styles.burgerConstructorItems}>
           {constructor.ingridients.map((item) => (
+            <span key={item._uniqueId} index={item.index} item={item} moveCard={moveCard}>
             <BurgerConstructorItem
               item={item}
               position=""
@@ -79,6 +88,8 @@ function BurgerConstructor() {
               isDragged={true}
               key={item._uniqueId}
             />
+            </span>
+
           ))}
         </section>
         {/* Тело бургера конец */}
@@ -101,7 +112,7 @@ function BurgerConstructor() {
       {/* Нижний блок конструктора бургера начало */}
       <div className="burger-constructor_total flex justify-end items-center pt-10 pr-12 gap-2">
         {/* Цена бургера */}
-        <p className={styles.burgerConstructorPrice}>0</p>
+        <p className={styles.burgerConstructorPrice}>{total}</p>
         <span className="pr-8">
           <CurrencyIcon type="primary" />
         </span>
