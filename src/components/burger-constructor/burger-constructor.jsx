@@ -3,7 +3,6 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import {
   postOrder,
-  deleteIngridientItem,
   addIngridientItem,
   addBunItem,
 } from "../../services/reducers/get-data";
@@ -38,6 +37,7 @@ function BurgerConstructor() {
       const newIngredient = {
         ...data,
         _uniqueId: uuidv4(),
+        count:0
       };
       if (data.type === "bun") {
         dispatch(addBunItem(newIngredient));

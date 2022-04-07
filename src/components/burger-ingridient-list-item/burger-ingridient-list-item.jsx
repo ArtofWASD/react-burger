@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
@@ -14,7 +14,8 @@ function BurgerIngridientItem({ data }) {
   const [currentIngredientId, setCurrentIngredientId] = useState();
   const dispatch = useDispatch();
   const { _id, name, image_large, price } = data;
-
+  const { counter } = useSelector(state=>state.getData)
+  const countValue = counter.find(item=>item._id === _id)
   const [{ opacity }, dragRef] = useDrag({
     type: "ingredient",
     item: { ...data },
@@ -37,7 +38,7 @@ function BurgerIngridientItem({ data }) {
           setCurrentIngredientId(_id);
         }}
       >
-        <Counter count={1} size="default" />
+        {countValue && <Counter count={countValue.count} size="default" />}
         <img src={image_large} alt={name} />
         <div className="flex items-center justify-center gap-2">
           <p className={styles.cardPrice}>{price}</p>

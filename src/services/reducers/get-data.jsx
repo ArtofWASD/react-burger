@@ -59,6 +59,7 @@ export const dataSlice = createSlice({
       ingridients: [],
       buns: [],
     },
+    counter: [],
     status: null,
     error: null,
     total: 0,
@@ -72,31 +73,62 @@ export const dataSlice = createSlice({
       state.ingridientItem = action.payload;
     },
     deleteIngridientItem(state, action) {
-      console.log("deleted");
       let { inputIndex } = action.payload;
       state.constructor.ingridients.splice(inputIndex, 1);
+      state.total = state.constructor.ingridients.reduce(
+        (summ, current) => summ + current.price,
+        state.constructor.buns.reduce(
+          (summ, current) => summ + current.price * 2,
+          0
+        )
+      );
     },
     addIngridientItem(state, action) {
       state.constructor.ingridients.push(action.payload);
-      const ingridients = state.constructor.ingridients.reduce((summ, current) => 
-      summ + current.price, state.constructor.buns.reduce((summ, current) => summ + current.price*2, 0)
-    );
-    state.total = ingridients
+      state.total = state.constructor.ingridients.reduce(
+        (summ, current) => summ + current.price,
+        state.constructor.buns.reduce(
+          (summ, current) => summ + current.price * 2,
+          0
+        )
+      );
+
+      const counterItem = state.counter.findIndex(
+        (item) => item._id === action.payload._id
+      );
+
+      if (counterItem !== -1) {
+        state.counter[counterItem].count =
+          state.counter[counterItem].count + 1;
+      } else {
+        state.counter.push({
+          _id: action.payload._id,
+          count: 1,
+        });
+      }
     },
     addBunItem(state, action) {
       if (state.constructor.buns.length < 1) {
         state.constructor.buns.push(action.payload);
-        const bunSumm = state.constructor.buns.reduce((summ, current) => summ + current.price*2, 0)
-        state.total = bunSumm
+        state.total = state.constructor.buns.reduce(
+          (summ, current) => summ + current.price * 2,
+          0
+        );
       } else {
-        return;
+        state.constructor.buns.splice(0, 1);
+        state.constructor.buns.push(action.payload);
+        state.total = state.constructor.ingridients.reduce(
+          (summ, current) => summ + current.price,
+          state.constructor.buns.reduce(
+            (summ, current) => summ + current.price * 2,
+            0
+          )
+        );
       }
     },
-    totalOrderPrice(state) {
+    updateIngridient(state, action) {
+      console.log("update");
     },
-    updateIngridient(state, action){
-      console.log('update');
-    }
   },
   extraReducers: {
     [fetchData.pending]: (state) => {
