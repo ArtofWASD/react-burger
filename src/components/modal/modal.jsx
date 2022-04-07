@@ -29,7 +29,7 @@ function Modal({ active, setActive, id, children }) {
       document.removeEventListener("keydown", escButtonHandler);
       dispatch(reset());
     };
-  }, [escButtonHandler]);
+  }, [dispatch, escButtonHandler]);
 
   return ReactDOM.createPortal(
     <>

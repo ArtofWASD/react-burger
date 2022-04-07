@@ -120,6 +120,7 @@ export const dataSlice = createSlice({
     },
     updateIngridient(state, action) {
       console.log(action.payload);
+      console.log(action.payload.dragIndex);
     },
   },
   extraReducers: {
