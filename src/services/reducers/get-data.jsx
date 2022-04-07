@@ -98,6 +98,10 @@ export const dataSlice = createSlice({
       if (state.constructor.buns.length < 1) {
         state.constructor.buns.push(action.payload);
         state.total = state.constructor.buns.reduce((summ, current) => summ + current.price * 2, 0);
+        state.counter.push({
+          _id: action.payload._id,
+          count: 1,
+        })
       } else {
         state.constructor.buns.splice(0, 1);
         state.constructor.buns.push(action.payload);
@@ -105,6 +109,13 @@ export const dataSlice = createSlice({
           (summ, current) => summ + current.price,
           state.constructor.buns.reduce((summ, current) => summ + current.price * 2, 0)
         );
+        let { inputIndex } = action.payload;
+        state.counter.splice(inputIndex, 1);
+        state.counter.push({
+          _id: action.payload._id,
+          count: 1,
+        });  
+      
       }
     },
     updateIngridient(state, action) {

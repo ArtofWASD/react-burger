@@ -24,27 +24,29 @@ function BurgerIngridientItem({ data }) {
   });
 
   return (
-    <div className="relative gap-2" onClick={() => setModalActive(true)} key={_id} ref={dragRef} style={{ opacity }}>
-      <div
-        className="flex flex-col items-center"
-        onClick={() => {
-          setCurrentIngredientId(_id);
-        }}
-      >
-        {countValue && countValue.count !== 0 && <Counter count={countValue.count} size="default" />}
-        <img src={image_large} alt={name} />
-        <div className="flex items-center justify-center gap-2">
-          <p className={styles.cardPrice}>{price}</p>
-          <CurrencyIcon type="primary" />
+    <section>
+      <div className="relative gap-2" onClick={() => setModalActive(true)} key={_id} ref={dragRef} style={{ opacity }}>
+        <div
+          className="flex flex-col items-center"
+          onClick={() => {
+            setCurrentIngredientId(_id);
+          }}
+        >
+          {countValue && countValue.count !== 0 && <Counter count={countValue.count} size="default" />}
+          <img src={image_large} alt={name} />
+          <div className="flex items-center justify-center gap-2">
+            <p className={styles.cardPrice}>{price}</p>
+            <CurrencyIcon type="primary" />
+          </div>
+          <p className="text-center text-base pt-2">{name}</p>
         </div>
-        <p className="text-center text-base pt-2">{name}</p>
       </div>
       {modalActive && (
-        <Modal active={modalActive} setActive={setModalActive} id={currentIngredientId}>
-          <IngredientDetails itemId={currentIngredientId} />
-        </Modal>
-      )}
-    </div>
+          <Modal active={modalActive} setActive={setModalActive} id={currentIngredientId}>
+            <IngredientDetails itemId={currentIngredientId} />
+          </Modal>
+        )}
+    </section>
   );
 }
 
