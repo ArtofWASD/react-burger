@@ -37,9 +37,7 @@ function Modal({ active, setActive, id, children }) {
       <div className={active ? styles.modalActive : styles.modal}>
         <div className="flex justify-between items-center px-7 pt-10">
           <div>
-            <p className={id ? styles.modalTitle : styles.modalTitleHide}>
-              Детали ингридиента
-            </p>
+            <p className={id ? styles.modalTitle : styles.modalTitleHide}>Детали ингридиента</p>
           </div>
           <div onClick={closeModal} className="flex justify-end">
             <CloseIcon type="primary" />

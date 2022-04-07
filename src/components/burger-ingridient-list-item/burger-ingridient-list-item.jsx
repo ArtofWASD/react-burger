@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
@@ -12,10 +12,9 @@ import styles from "../burger-ingridient-list-item/burger-ingridient-list-item.m
 function BurgerIngridientItem({ data }) {
   const [modalActive, setModalActive] = useState(false);
   const [currentIngredientId, setCurrentIngredientId] = useState();
-  const dispatch = useDispatch();
   const { _id, name, image_large, price } = data;
-  const { counter } = useSelector(state=>state.getData)
-  const countValue = counter.find(item=>item._id === _id)
+  const { counter } = useSelector((state) => state.getData);
+  const countValue = counter.find((item) => item._id === _id);
   const [{ opacity }, dragRef] = useDrag({
     type: "ingredient",
     item: { ...data },
@@ -25,13 +24,7 @@ function BurgerIngridientItem({ data }) {
   });
 
   return (
-    <div
-      className="relative gap-2"
-      onClick={() => setModalActive(true)}
-      key={_id}
-      ref={dragRef}
-      style={{ opacity }}
-    >
+    <div className="relative gap-2" onClick={() => setModalActive(true)} key={_id} ref={dragRef} style={{ opacity }}>
       <div
         className="flex flex-col items-center"
         onClick={() => {
@@ -47,11 +40,7 @@ function BurgerIngridientItem({ data }) {
         <p className="text-center text-base pt-2">{name}</p>
       </div>
       {modalActive && (
-        <Modal
-          active={modalActive}
-          setActive={setModalActive}
-          id={currentIngredientId}
-        >
+        <Modal active={modalActive} setActive={setModalActive} id={currentIngredientId}>
           <IngredientDetails itemId={currentIngredientId} />
         </Modal>
       )}

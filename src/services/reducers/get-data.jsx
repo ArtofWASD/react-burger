@@ -1,51 +1,45 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API_URL } from "../../utils/api-constant";
 
-export const fetchData = createAsyncThunk(
-  "data/fetchData",
-  async (_, { rejectWithValue }) => {
-    return fetch(`${API_URL}/ingredients`)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error("Не пришёл ответ от сервера");
-      })
-      .then((data) => {
-        if (data.success) {
-          return data.data;
-        }
-        throw new Error("Данные не поступили");
-      })
-      .catch((error) => rejectWithValue(error.message));
-  }
-);
-
-export const postOrder = createAsyncThunk(
-  "data/postOrder",
-  async (order, { rejectWithValue }) => {
-    return fetch(`${API_URL}/orders`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify(order),
+export const fetchData = createAsyncThunk("data/fetchData", async (_, { rejectWithValue }) => {
+  return fetch(`${API_URL}/ingredients`)
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error("Не пришёл ответ от сервера");
     })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error("Не пришёл ответ от сервера");
-      })
-      .then((result) => {
-        if (result.success) {
-          return result.order;
-        }
-        throw new Error("Не пришёл номер заказа");
-      })
-      .catch((error) => rejectWithValue(error.message));
-  }
-);
+    .then((data) => {
+      if (data.success) {
+        return data.data;
+      }
+      throw new Error("Данные не поступили");
+    })
+    .catch((error) => rejectWithValue(error.message));
+});
+
+export const postOrder = createAsyncThunk("data/postOrder", async (order, { rejectWithValue }) => {
+  return fetch(`${API_URL}/orders`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: JSON.stringify(order),
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error("Не пришёл ответ от сервера");
+    })
+    .then((result) => {
+      if (result.success) {
+        return result.order;
+      }
+      throw new Error("Не пришёл номер заказа");
+    })
+    .catch((error) => rejectWithValue(error.message));
+});
 
 export const dataSlice = createSlice({
   name: "data",
@@ -77,38 +71,22 @@ export const dataSlice = createSlice({
       state.constructor.ingridients.splice(inputIndex, 1);
       state.total = state.constructor.ingridients.reduce(
         (summ, current) => summ + current.price,
-        state.constructor.buns.reduce(
-          (summ, current) => summ + current.price * 2,
-          0
-        )
+        state.constructor.buns.reduce((summ, current) => summ + current.price * 2, 0)
       );
-      const counterItem = state.counter.findIndex(
-        (item) => item._id === action.payload._id
-      );
-      console.log(counterItem);
-      console.log(action.payload);
+      const counterItem = state.counter.findIndex((item) => item._id === action.payload._id);
       if (counterItem !== -1) {
-        state.counter[counterItem].count =
-          state.counter[counterItem].count - 1;
+        state.counter[counterItem].count = state.counter[counterItem].count - 1;
       }
     },
     addIngridientItem(state, action) {
       state.constructor.ingridients.push(action.payload);
       state.total = state.constructor.ingridients.reduce(
         (summ, current) => summ + current.price,
-        state.constructor.buns.reduce(
-          (summ, current) => summ + current.price * 2,
-          0
-        )
+        state.constructor.buns.reduce((summ, current) => summ + current.price * 2, 0)
       );
-
-      const counterItem = state.counter.findIndex(
-        (item) => item._id === action.payload._id
-      );
-
+      const counterItem = state.counter.findIndex((item) => item._id === action.payload._id);
       if (counterItem !== -1) {
-        state.counter[counterItem].count =
-          state.counter[counterItem].count + 1;
+        state.counter[counterItem].count = state.counter[counterItem].count + 1;
       } else {
         state.counter.push({
           _id: action.payload._id,
@@ -119,25 +97,18 @@ export const dataSlice = createSlice({
     addBunItem(state, action) {
       if (state.constructor.buns.length < 1) {
         state.constructor.buns.push(action.payload);
-        state.total = state.constructor.buns.reduce(
-          (summ, current) => summ + current.price * 2,
-          0
-        );
+        state.total = state.constructor.buns.reduce((summ, current) => summ + current.price * 2, 0);
       } else {
         state.constructor.buns.splice(0, 1);
         state.constructor.buns.push(action.payload);
         state.total = state.constructor.ingridients.reduce(
           (summ, current) => summ + current.price,
-          state.constructor.buns.reduce(
-            (summ, current) => summ + current.price * 2,
-            0
-          )
+          state.constructor.buns.reduce((summ, current) => summ + current.price * 2, 0)
         );
       }
-
     },
     updateIngridient(state, action) {
-      console.log("update");
+      console.log(action.payload);
     },
   },
   extraReducers: {
@@ -168,13 +139,6 @@ export const dataSlice = createSlice({
   },
 });
 
-export const {
-  reset,
-  getIngridientItem,
-  deleteIngridientItem,
-  addIngridientItem,
-  setModalActive,
-  addBunItem,
-} = dataSlice.actions;
+export const { reset, getIngridientItem, deleteIngridientItem, addIngridientItem, setModalActive, addBunItem, updateIngridient } = dataSlice.actions;
 
 export default dataSlice.reducer;

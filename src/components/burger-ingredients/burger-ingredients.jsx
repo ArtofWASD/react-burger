@@ -24,22 +24,18 @@ function BurgerIngredients() {
       <div>
         {/* Табы ингридиентов начало*/}
         <div className="grid grid-cols-3 justify-around py-4">
-          <div onClick={()=>handlerTabScrollUp(bun)}>
+          <div onClick={() => handlerTabScrollUp(bun)}>
             <Tab value="one" active={current === "one"} onClick={setCurrent}>
               Булки
             </Tab>
           </div>
-          <div onClick={()=>handlerTabScrollUp(sauce)}>
+          <div onClick={() => handlerTabScrollUp(sauce)}>
             <Tab value="two" active={current === "two"} onClick={setCurrent}>
               Соусы
             </Tab>
           </div>
-          <div onClick={()=>handlerTabScrollUp(main)}>
-            <Tab
-              value="three"
-              active={current === "three"}
-              onClick={setCurrent}
-            >
+          <div onClick={() => handlerTabScrollUp(main)}>
+            <Tab value="three" active={current === "three"} onClick={setCurrent}>
               Начинки
             </Tab>
           </div>
