@@ -16,7 +16,7 @@ function BurgerConstructorItem ({item, position, type, isLocked, isDragged}){
             text={`${item.name} ${position}`}
             price={item.price}
             thumbnail={item.image}
-            handleClose={()=>dispatch(deleteIngridientItem(item._uniqueId))}
+            handleClose={()=>dispatch(deleteIngridientItem(item))}
           />
         </section>
     )

@@ -38,7 +38,7 @@ function BurgerIngridientItem({ data }) {
           setCurrentIngredientId(_id);
         }}
       >
-        {countValue && <Counter count={countValue.count} size="default" />}
+        {countValue && countValue.count !== 0 && <Counter count={countValue.count} size="default" />}
         <img src={image_large} alt={name} />
         <div className="flex items-center justify-center gap-2">
           <p className={styles.cardPrice}>{price}</p>

@@ -82,6 +82,15 @@ export const dataSlice = createSlice({
           0
         )
       );
+      const counterItem = state.counter.findIndex(
+        (item) => item._id === action.payload._id
+      );
+      console.log(counterItem);
+      console.log(action.payload);
+      if (counterItem !== -1) {
+        state.counter[counterItem].count =
+          state.counter[counterItem].count - 1;
+      }
     },
     addIngridientItem(state, action) {
       state.constructor.ingridients.push(action.payload);
@@ -125,6 +134,7 @@ export const dataSlice = createSlice({
           )
         );
       }
+
     },
     updateIngridient(state, action) {
       console.log("update");
