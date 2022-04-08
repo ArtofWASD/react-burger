@@ -13,8 +13,9 @@ function BurgerIngridientItem({ data }) {
   const [modalActive, setModalActive] = useState(false);
   const [currentIngredientId, setCurrentIngredientId] = useState();
   const { _id, name, image_large, price } = data;
-  const { counter } = useSelector((state) => state.getData);
+  const { counter, ingridientModalTitle } = useSelector((state) => state.getData);
   const countValue = counter.find((item) => item._id === _id);
+  
   const [{ opacity }, dragRef] = useDrag({
     type: "ingredient",
     item: { ...data },
@@ -42,7 +43,7 @@ function BurgerIngridientItem({ data }) {
         </div>
       </div>
       {modalActive && (
-          <Modal active={modalActive} setActive={setModalActive} id={currentIngredientId}>
+          <Modal active={modalActive} setActive={setModalActive} id={currentIngredientId} title={ingridientModalTitle}>
             <IngredientDetails itemId={currentIngredientId} />
           </Modal>
         )}

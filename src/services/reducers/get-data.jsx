@@ -1,14 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API_URL } from "../../utils/api-constant";
 
+function checkResponse(response) {
+  if (response.ok) {
+    return response.json();
+  }
+  throw new Error("Не пришёл ответ от сервера");
+}
+
 export const fetchData = createAsyncThunk("data/fetchData", async (_, { rejectWithValue }) => {
   return fetch(`${API_URL}/ingredients`)
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error("Не пришёл ответ от сервера");
-    })
+    .then(checkResponse)
     .then((data) => {
       if (data.success) {
         return data.data;
@@ -26,12 +28,7 @@ export const postOrder = createAsyncThunk("data/postOrder", async (order, { reje
     },
     body: JSON.stringify(order),
   })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error("Не пришёл ответ от сервера");
-    })
+    .then(checkResponse)
     .then((result) => {
       if (result.success) {
         return result.order;
@@ -57,6 +54,7 @@ export const dataSlice = createSlice({
     status: null,
     error: null,
     total: 0,
+    ingridientModalTitle:'Детали ингридиента'
   },
   reducers: {
     reset(state) {

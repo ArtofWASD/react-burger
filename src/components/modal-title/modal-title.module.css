@@ -1,0 +1,7 @@
+.modalTitle{
+    font-family: 'JetBrainsMono-Regular';
+    font-size: 36px;
+}
+.modalTitleHide{
+    display: none;
+}  
