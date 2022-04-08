@@ -5,7 +5,8 @@ import { deleteIngridientItem } from "../../services/reducers/get-data";
 import { useDispatch } from "react-redux";
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-function BurgerConstructorItem({ item, position, type, isLocked, isDragged, index, moveCard, id }) {
+import PropTypes from 'prop-types';
+function BurgerConstructorItem({ item, position, type, isLocked, isDragged, index, moveCard}) {
   const dispatch = useDispatch();
   const ref = useRef(null);
   const [{ handlerId }, drop] = useDrop({
@@ -64,5 +65,14 @@ function BurgerConstructorItem({ item, position, type, isLocked, isDragged, inde
       />
     </section>
   );
+}
+BurgerConstructorItem.propTypes={
+  item: PropTypes.object.isRequired,
+  position: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  isLocked: PropTypes.bool.isRequired,
+  isDragged: PropTypes.bool.isRequired,
+  index: PropTypes.number,
+  moveCard: PropTypes.func
 }
 export default BurgerConstructorItem;

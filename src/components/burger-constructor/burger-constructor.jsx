@@ -69,7 +69,6 @@ function BurgerConstructor() {
               key={item._uniqueId}
               index={index}
               moveCard={moveCard}
-              id={item._uniqueId}
             />
           ))}
         </section>

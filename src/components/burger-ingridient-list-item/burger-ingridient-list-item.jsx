@@ -49,5 +49,7 @@ function BurgerIngridientItem({ data }) {
     </section>
   );
 }
-
+BurgerIngridientItem.propTypes={
+  data: PropTypes.object.isRequired
+}
 export default BurgerIngridientItem;
