@@ -8,7 +8,7 @@ function checkResponse(response) {
   throw new Error("Не пришёл ответ от сервера");
 }
 
-export const fetchData = createAsyncThunk("data/fetchData", async (_, { rejectWithValue }) => {
+export const fetchData = createAsyncThunk("data/fetchData", async (_, { rejectWithValue, dispatch }) => {
   return fetch(`${API_URL}/ingredients`)
     .then(checkResponse)
     .then((data) => {
@@ -20,7 +20,7 @@ export const fetchData = createAsyncThunk("data/fetchData", async (_, { rejectWi
     .catch((error) => rejectWithValue(error.message));
 });
 
-export const postOrder = createAsyncThunk("data/postOrder", async (order, { rejectWithValue }) => {
+export const postOrder = createAsyncThunk("data/postOrder", async (order, { rejectWithValue, dispatch }) => {
   return fetch(`${API_URL}/orders`, {
     method: "POST",
     headers: {
@@ -31,11 +31,13 @@ export const postOrder = createAsyncThunk("data/postOrder", async (order, { reje
     .then(checkResponse)
     .then((result) => {
       if (result.success) {
+        dispatch(dataSlice.actions.resetConstructor())
         return result.order;
       }
       throw new Error("Не пришёл номер заказа");
     })
     .catch((error) => rejectWithValue(error.message));
+    
 });
 
 export const dataSlice = createSlice({
@@ -60,6 +62,11 @@ export const dataSlice = createSlice({
     reset(state) {
       state.order.number = "";
       state.ingridientItem = "";
+    },
+    resetConstructor(state){
+      state.constructor.ingridients = []
+      state.constructor.buns = []
+      state.total = 0
     },
     getIngridientItem(state, action) {
       state.ingridientItem = action.payload;

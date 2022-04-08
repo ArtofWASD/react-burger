@@ -11,36 +11,27 @@ function BurgerIngredients() {
   const sauce = useRef();
   const main = useRef();
   const ingridientsList = useRef();
-  const bunList = useRef();
-  const sauceList = useRef();
-  const mainList = useRef();
 
   const handlerTabScrollUp = (item) => {
     item.current.scrollIntoView({ block: "start", behavior: "smooth" });
   };
+
   useEffect(() => {
-   if (ingridientsList.current) {
-
-  // console.log(`булки ${bunList.current.scrollHeight }`);
-  // console.log(`соусы ${sauceList.current.scrollHeight }`);
-  // console.log(`основное ${mainList.current.scrollHeight }`);
-     ingridientsList.current.addEventListener("scroll", ()=>{
-      const distance = ingridientsList.current.scrollTop
-      console.log(distance);
-      const bunsHeight = Number(bunList.current.scrollHeight);
-      const sauceHeight = Number(sauceList.current.scrollHeight);
-      const mainHeight = Number(mainList.current.scrollHeight);
-
-        if(distance > bunsHeight){
-          console.log('Соусы');
-        }else if(distance >= sauceHeight){
-          console.log('мясо');
-        }else if(distance >= bunsHeight){
-          console.log('булки');
+    if (ingridientsList.current) {
+      ingridientsList.current.addEventListener("scroll", () => {
+        const distance = ingridientsList.current.scrollTop;
+        const bunsHeight = Number(bun.current.offsetHeight);
+        const sauceHeight = Number(sauce.current.offsetHeight);
+        if (distance < bunsHeight) {
+          setCurrent("one");
+        } else if (distance < bunsHeight + sauceHeight) {
+          setCurrent("two");
+        } else if (distance > bunsHeight + sauceHeight) {
+          setCurrent("three");
         }
-      })
-   }
-  })
+      });
+    }
+  });
   return (
     <section className="flex flex-col ">
       {/* Заголовок ингридиентов */}
@@ -70,13 +61,13 @@ function BurgerIngredients() {
         {/* Ингридиенты начало*/}
         <div className={styles.burgerIngredientsItems} ref={ingridientsList}>
           <IngridientsCategory title="Булки" ref={bun}>
-            <BurgerIngridientList type="bun" ref={bunList}/>
+            <BurgerIngridientList type="bun" />
           </IngridientsCategory>
           <IngridientsCategory title="Соусы" ref={sauce}>
-            <BurgerIngridientList type="sauce" ref={sauceList}/>
+            <BurgerIngridientList type="sauce" />
           </IngridientsCategory>
           <IngridientsCategory title="Начинка" ref={main}>
-            <BurgerIngridientList type="main" ref={mainList}/>
+            <BurgerIngridientList type="main" />
           </IngridientsCategory>
         </div>
         {/* Ингридиенты конец*/}

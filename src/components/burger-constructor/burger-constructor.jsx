@@ -38,14 +38,18 @@ function BurgerConstructor() {
     },
   });
 
-  const moveCard = useCallback((dragIndex, hoverIndex) => {
-    const dragCard = constructor.ingridients[dragIndex];
-    const newCards = [...constructor.ingridients]
-    newCards.splice(dragIndex, 1)
-    newCards.splice(hoverIndex, 0, dragCard)
-    dispatch(updateIngridient(newCards))
-  }, [constructor.ingridients, dispatch]);
+  const moveCard = useCallback(
+    (dragIndex, hoverIndex) => {
+      const dragCard = constructor.ingridients[dragIndex];
+      const newCards = [...constructor.ingridients];
+      newCards.splice(dragIndex, 1);
+      newCards.splice(hoverIndex, 0, dragCard);
+      dispatch(updateIngridient(newCards));
+    },
+    [constructor.ingridients, dispatch]
+  );
 
+  const buttonStatus = constructor.buns.length === 0 ? true : false;
   return (
     <section className="pt-24">
       {/* Конструктор бургеров начало*/}
@@ -89,7 +93,7 @@ function BurgerConstructor() {
         </span>
         {/* Кнопка "Оформить заказ"*/}
         <span onClick={() => dispatch(postOrder(order))}>
-          <Button type="primary" size="medium" onClick={() => setModalActive(true)}>
+          <Button type="primary" size="medium" onClick={() => setModalActive(true)} disabled={buttonStatus}>
             <p className="text-base">Оформить заказ</p>
           </Button>
         </span>
