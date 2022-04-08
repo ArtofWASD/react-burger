@@ -29,7 +29,6 @@ function BurgerConstructor() {
       const newIngredient = {
         ...data,
         _uniqueId: uuidv4(),
-        count: 0,
       };
       if (data.type === "bun") {
         dispatch(addBunItem(newIngredient));
