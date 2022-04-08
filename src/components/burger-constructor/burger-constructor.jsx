@@ -40,12 +40,12 @@ function BurgerConstructor() {
   });
 
   const moveCard = useCallback((dragIndex, hoverIndex) => {
-    const dragCard = constructor[dragIndex];
-    const newCards = [...constructor]
+    const dragCard = constructor.ingridients[dragIndex];
+    const newCards = [...constructor.ingridients]
     newCards.splice(dragIndex, 1)
     newCards.splice(hoverIndex, 0, dragCard)
     dispatch(updateIngridient(newCards))
-  }, [constructor, dispatch]);
+  }, [constructor.ingridients, dispatch]);
 
   return (
     <section className="pt-24">
@@ -59,8 +59,18 @@ function BurgerConstructor() {
         {/* Верхняя булка конец */}
         {/* Тело бургера начало */}
         <section className={styles.burgerConstructorItems}>
-          {constructor.ingridients.map((item) => (
-            <BurgerConstructorItem item={item} position="" type="undefined" isLocked={false} isDragged={true} key={item._uniqueId} index={item.index} moveCard={moveCard}/>
+          {constructor.ingridients.map((item, index) => (
+            <BurgerConstructorItem
+              item={item}
+              position=""
+              type="undefined"
+              isLocked={false}
+              isDragged={true}
+              key={item._uniqueId}
+              index={index}
+              moveCard={moveCard}
+              id={item._uniqueId}
+            />
           ))}
         </section>
         {/* Тело бургера конец */}

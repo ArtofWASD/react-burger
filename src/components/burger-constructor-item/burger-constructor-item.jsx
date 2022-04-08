@@ -5,10 +5,9 @@ import { deleteIngridientItem } from "../../services/reducers/get-data";
 import { useDispatch } from "react-redux";
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-function BurgerConstructorItem({ item, position, type, isLocked, isDragged, index, moveCard }) {
+function BurgerConstructorItem({ item, position, type, isLocked, isDragged, index, moveCard, id }) {
   const dispatch = useDispatch();
   const ref = useRef(null);
-
   const [{ handlerId }, drop] = useDrop({
     accept: 'component',
     collect(monitor) {
@@ -39,7 +38,6 @@ function BurgerConstructorItem({ item, position, type, isLocked, isDragged, inde
       item.index = hoverIndex;
     }
   })
-
   const [{ isDragging }, drag] = useDrag({
     type: 'component',
     item: () => ({ id: item.id, index }),
@@ -47,14 +45,12 @@ function BurgerConstructorItem({ item, position, type, isLocked, isDragged, inde
       isDragging: monitor.isDragging(),
     }),
   });
-
   const opacity = isDragging ? 0 : 1;
   if (item.type !== 'bun') drag(drop(ref));
   const preventDefault = (e) => e.preventDefault();
-  drag(drop(ref));
-  
+
   return (
-    <section className="flex items-center py-2 pr-3" ref={ref} style={{ opacity }} data-handler-id={handlerId } onDrop={preventDefault}>
+    <section className="flex items-center py-2 pr-3" ref={ref} style={{ opacity }} data-handler-id={handlerId} onDrop={preventDefault}>
       <div className={isDragged ? styles.visible : styles.hidden}>
         <DragIcon type="primary" />
       </div>
