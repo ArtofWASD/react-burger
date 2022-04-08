@@ -67,6 +67,7 @@ export const dataSlice = createSlice({
       state.constructor.ingridients = []
       state.constructor.buns = []
       state.total = 0
+      state.counter = []
     },
     getIngridientItem(state, action) {
       state.ingridientItem = action.payload;
