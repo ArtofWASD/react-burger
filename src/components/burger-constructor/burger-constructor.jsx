@@ -1,129 +1,99 @@
-import { useState, useContext, useReducer, useEffect } from "react";
-import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useState, useCallback } from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { BurgerContext } from "../../services/burger-context";
-import { postOrder } from "../../utils/api";
+import { postOrder, addIngridientItem, addBunItem, updateIngridient } from "../../services/reducers/get-data";
+import { useDispatch, useSelector } from "react-redux";
+import { useDrop } from "react-dnd";
+import { v4 as uuidv4 } from "uuid";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
+import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
 
 function BurgerConstructor() {
-  const data = useContext(BurgerContext);
   const [modalActive, setModalActive] = useState(false);
-  const [orderId, setOrderId] = useState(null);
-  const bun = data[0];
-  const ingredients = data.filter((item) => item.type !== "bun");
-  const initialState = { totalPrice: 0 };
-  // сумма заказа на основе корзины
-  const summTotal = ingredients.reduce(
-    (sum, ingredient) => sum + ingredient.price,
-    bun.price * 2
-  );
+  const { ingridients, constructor, total } = useSelector((state) => state.getData);
+  const dispatch = useDispatch();
+  const constructorIngredients = ingridients.filter((item) => item.type !== "bun");
 
-  function reducer(state, action) {
-    switch (action.type) {
-      case "addIngridient":
-        return {
-          totalPrice: state.totalPrice + 1,
-        };
-      case "deleteIngridient":
-        return {
-          totalPrice: state.totalPrice - 1,
-        };
-      case "totalPrice":
-        return {
-          totalPrice: summTotal,
-        };
-      default:
-        throw new Error(`Wrong type of action: ${action.type}`);
-    }
-  }
-
-  const [total, dispatchTotal] = useReducer(reducer, initialState);
-
-  function totalPriceShow() {
-    dispatchTotal({ type: "totalPrice" });
-  }
-
-  useEffect(() => {
-    totalPriceShow();
-  }, []);
-
-  // Пост запрос с ингридиентами
   const order = {
-    bun: [],
-    ingredients: ingredients.map((item) => item._id),
+    ingredients: constructorIngredients.map((item) => item._id),
   };
 
-  function getOrder() {
-    setOrderId(undefined);
-    postOrder(order).then(setOrderId);
-  }
+  const [{ isHover }, dropTargerRef] = useDrop({
+    accept: "ingredient",
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+    drop(data) {
+      const newIngredient = {
+        ...data,
+        _uniqueId: uuidv4(),
+      };
+      if (data.type === "bun") {
+        dispatch(addBunItem(newIngredient));
+      } else {
+        dispatch(addIngridientItem(newIngredient));
+      }
+    },
+  });
 
+  const moveCard = useCallback(
+    (dragIndex, hoverIndex) => {
+      const dragCard = constructor.ingridients[dragIndex];
+      const newCards = [...constructor.ingridients];
+      newCards.splice(dragIndex, 1);
+      newCards.splice(hoverIndex, 0, dragCard);
+      dispatch(updateIngridient(newCards));
+    },
+    [constructor.ingridients, dispatch]
+  );
+
+  const buttonStatus = constructor.buns.length === 0 ? true : false;
   return (
-    <section className="burger-constructor pt-24">
+    <section className="pt-24">
       {/* Конструктор бургеров начало*/}
-      <section className="flex flex-col items-center ">
-        {/* Верхняя булка */}
-        <section className="flex items-center py-2 pr-3" key={bun._id}>
-          <div className="pr-2.5 opacity-0">
-            <DragIcon type="primary" />
-          </div>
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text="Краторная булка N-200i (верх)"
-            price={bun.price}
-            thumbnail={bun.image}
-          />
-        </section>
-        {/* Тело бургера */}
+      <section className={`${isHover ? styles.onHover : ""} flex flex-col items-center h-5/6 justify-center `} ref={dropTargerRef}>
+        {/* Верхняя булка начало*/}
+        {constructor.buns.length > 0 &&
+          constructor.buns.map((item) => (
+            <BurgerConstructorItem item={item} position="(верх)" type="top" isLocked={true} isDragged={false} key={item._uniqueId} />
+          ))}
+        {/* Верхняя булка конец */}
+        {/* Тело бургера начало */}
         <section className={styles.burgerConstructorItems}>
-          {ingredients.map((item) => (
-            <section className="flex items-center py-2 pr-3" key={item._id}>
-              <div className="pr-2.5">
-                <DragIcon type="primary" />
-              </div>
-              <ConstructorElement
-                type={undefined}
-                text={item.name}
-                price={item.price}
-                thumbnail={item.image}
-              />
-            </section>
+          {constructor.ingridients.map((item, index) => (
+            <BurgerConstructorItem
+              item={item}
+              position=""
+              type="undefined"
+              isLocked={false}
+              isDragged={true}
+              key={item._uniqueId}
+              index={index}
+              moveCard={moveCard}
+            />
           ))}
         </section>
-        {/* Нижняя булка */}
-        <section className="flex items-center py-2 pr-3" key={bun.length}>
-          <div className="pr-2.5 opacity-0">
-            <DragIcon type="primary" />
-          </div>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={`${bun.name} (низ)`}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
-        </section>
+        {/* Тело бургера конец */}
+        {/* Нижняя булка начало */}
+        {constructor.buns.length > 0 &&
+          constructor.buns.map((item) => (
+            <BurgerConstructorItem item={item} position="(низ)" type="bottom" isLocked={true} isDragged={false} key={item._uniqueId} />
+          ))}
+        {/* Нижняя булка конец */}
       </section>
       {/* Конструктор бургеров конец*/}
       {/* Нижний блок конструктора бургера начало */}
       <div className="burger-constructor_total flex justify-end items-center pt-10 pr-12 gap-2">
         {/* Цена бургера */}
-        <p className={styles.burgerConstructorPrice}>{total.totalPrice}</p>
+        <p className={styles.burgerConstructorPrice}>{total}</p>
         <span className="pr-8">
           <CurrencyIcon type="primary" />
         </span>
         {/* Кнопка "Оформить заказ"*/}
-        <span onClick={getOrder}>
-          <Button
-            type="primary"
-            size="medium"
-            onClick={() => setModalActive(true)}
-          >
+        <span onClick={() => dispatch(postOrder(order))}>
+          <Button type="primary" size="medium" onClick={() => setModalActive(true)} disabled={buttonStatus}>
             <p className="text-base">Оформить заказ</p>
           </Button>
         </span>
@@ -132,7 +102,7 @@ function BurgerConstructor() {
       {/* Модальное окно с номером заказа */}
       {modalActive && (
         <Modal active={modalActive} setActive={setModalActive}>
-          <OrderDetails orderId={orderId} />
+          <OrderDetails />
         </Modal>
       )}
     </section>
