@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { store } from "./services/store";
 import { Provider } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LoginPage, RegisterPage, ForgotPasswordPage, ProfilePage, IngridientsPage, ResetPasswordPage } from "./pages";
+import { LoginPage, RegisterPage, ForgotPasswordPage, ProfilePage, IngridientsPage, ResetPasswordPage, PageNotFoundPage} from "./pages";
 
 import "./index.css";
 
@@ -21,6 +21,7 @@ ReactDOM.render(
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/ingredients/:id" element={<IngridientsPage />} />
+          <Route path="*" element={<PageNotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </Provider>

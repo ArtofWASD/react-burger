@@ -11,7 +11,7 @@ export default function IngredientDetails({ itemId }) {
 
   useEffect(() => {
     dispatch(getIngridientItem(ingridientDetails));
-  }, [dispatch]);
+  }, [dispatch, ingridientDetails]);
 
   return (
     <>
