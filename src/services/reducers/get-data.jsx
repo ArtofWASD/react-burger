@@ -8,7 +8,7 @@ function checkResponse(response) {
   throw new Error("Не пришёл ответ от сервера");
 }
 
-export const fetchData = createAsyncThunk("data/fetchData", async (_, { rejectWithValue, dispatch }) => {
+export const fetchData = createAsyncThunk("data/fetchData", async (_, { rejectWithValue }) => {
   return fetch(`${API_URL}/ingredients`)
     .then(checkResponse)
     .then((data) => {
