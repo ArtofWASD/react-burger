@@ -1,4 +1,4 @@
-import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
 import AppHeader from "../components/app-header/app-header";
 import styles from "../pages/styles.module.css";
@@ -6,14 +6,15 @@ export default function ProfilePage() {
   return (
     <>
       <AppHeader />
-      <section className="grid grid-cols-profile mt-32">
+      <nav className="grid grid-cols-profile grid-rows-2 mt-32">
         <div className="ml-72">
           <ul className="grid gap-4 items-center">
-            {/* <NavLink className={({ isActive }) => isActive ? 'red' : 'blue'}>
-              Профиль
-            </NavLink> */}
-            <li className={`${styles.font} text-2xl h-16 grid items-center`}>Профиль</li>
-            <li className={`${styles.font_grey} text-2xl h-16 grid items-center`}>История заказов</li>
+            <NavLink to="/profile" className={({ isActive }) => (isActive ? `${styles.font}` : `${styles.font_grey}`)}>
+              <li className={`text-2xl h-16 grid items-center`}>Профиль</li>
+            </NavLink>
+            <NavLink to="/history" className={({ isActive }) => (isActive ? `${styles.font}` : `${styles.font_grey}`)}>
+              <li className={`text-2xl h-16 grid items-center`}>История заказов</li>
+            </NavLink>
             <li className={`${styles.font_grey} text-2xl h-16 grid items-center`}>Выход</li>
           </ul>
         </div>
@@ -22,8 +23,14 @@ export default function ProfilePage() {
           <Input placeholder="Логин" icon="EditIcon" type="text" />
           <Input placeholder="Пароль" icon="EditIcon" type="password" />
         </div>
-      </section>
-      <p className={`${styles.font_grey} opacity-40 mt-20 ml-72 w-80 `}>В этом разделе вы можете изменить свои персональные данные</p>
+        <p className={`${styles.font_grey} ml-72 opacity-40 grid mt-20 w-80 col-span-1 row-start-2`}>
+          В этом разделе вы можете изменить свои персональные данные
+        </p>
+        <div className="row-start-2 col-start-2 grid grid-flow-col justify-items-end h-12 items-center mt-6">
+          <p className={`${styles.font_blue} pl-48`}>Отмена</p>
+          <Button>Сохранить</Button>
+        </div>
+      </nav>
     </>
   );
 }

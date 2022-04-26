@@ -4,12 +4,14 @@ import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { postRegisterForm } from "../services/reducers/register";
+import { postRegisterForm } from "../services/reducers/auth";
+
 export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+
   const registerForm = {
     name: name,
     email: email,
@@ -19,8 +21,11 @@ export default function RegisterPage() {
   function registerHandler(e) {
     e.preventDefault();
     dispatch(postRegisterForm(registerForm));
+    setName('');
+    setEmail('');
+    setPassword('');
   }
-  
+
   return (
     <>
       <AppHeader />
