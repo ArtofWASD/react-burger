@@ -6,3 +6,9 @@
 .headerTextActive{
     font-family: 'JetBrainsMono-Regular';
 }
+
+.header{
+    width: 100%;
+    height: 88px;
+    background-color: #1C1C21
+  }

@@ -13,10 +13,12 @@ export default function ForgotPasswordPage() {
   const resetForm = {
     email: emailValue,
   };
+
   function postValue(e) {
     e.preventDefault();
     dispatch(postResetForm(resetForm));
   }
+  
   return (
     <>
       <AppHeader />

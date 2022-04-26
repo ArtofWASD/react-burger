@@ -19,13 +19,13 @@ export const postResetForm = createAsyncThunk("data/postResetForm", async (form,
 export const resetSlice = createSlice({
   name: "reset",
   initialState: {
-    status:null,
+    status:false,
   },
   reducers: {
   },
   extraReducers: {
     [postResetForm.fulfilled]: (state) => {
-        state.status = "resolved";
+        state.status = true;
     },
   },
 });
