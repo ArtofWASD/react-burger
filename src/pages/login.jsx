@@ -10,8 +10,8 @@ export default function LoginPage() {
       <div className="grid justify-center justify-items-center mt-48">
         <p className={`${styles.font} text-center text-2xl`}>Войти</p>
         <form action="" className="grid gap-6 mt-6 justify-items-center">
-          <Input placeholder="E-mail" type="email" size="default"/>
-          <Input placeholder="Пароль" icon="TICons" />
+          <Input placeholder="E-mail" type="email" />
+          <Input placeholder="Пароль" type="password" icon="ShowIcon" />
           <Button className="flex justify-center mb-20 w-40">
             <p>Войти</p>
           </Button>

@@ -22,7 +22,7 @@ function AppHeader() {
           </section>
           <section className="flex gap-2 mr-10">
             <ProfileIcon type="secondary" />
-            <Link to="/login" className={styles.headerText}>
+            <Link to="/profile" className={styles.headerText}>
               Личный кабинет
             </Link>
           </section>

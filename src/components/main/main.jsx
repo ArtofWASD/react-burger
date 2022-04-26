@@ -12,7 +12,9 @@ export default function MainPage() {
   useEffect(() => {
     dispatch(fetchData());
   }, [dispatch]);
+
   const ingridients = useSelector((state) => state.getData);
+  
   return (
     <div className="grid justify-items-center">
         <AppHeader />

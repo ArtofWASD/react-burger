@@ -18,7 +18,7 @@ export default function ForgotPasswordPage() {
     e.preventDefault();
     dispatch(postResetForm(resetForm));
   }
-  
+
   return (
     <>
       <AppHeader />
@@ -31,6 +31,7 @@ export default function ForgotPasswordPage() {
             onChange={(e) => {
               setEmailValue(e.target.value);
             }}
+            value={emailValue}
           />
           <Button
             onClick={(e) => {
@@ -41,7 +42,7 @@ export default function ForgotPasswordPage() {
           </Button>
         </form>
         <p className={`${styles.font_grey} text-center flex justify-center gap-2 py-4 mt-20`}>
-          Вспомнили пароль ?{" "}
+          Вспомнили пароль ?
           <Link to="/login" className={styles.font_blue}>
             Войти
           </Link>

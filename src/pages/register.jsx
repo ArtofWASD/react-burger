@@ -20,7 +20,7 @@ export default function RegisterPage() {
     e.preventDefault();
     dispatch(postRegisterForm(registerForm));
   }
-  console.log(registerForm);
+  
   return (
     <>
       <AppHeader />
@@ -33,6 +33,7 @@ export default function RegisterPage() {
             onChange={(e) => {
               setName(e.target.value);
             }}
+            value={name}
           />
           <Input
             placeholder="E-mail"
@@ -40,6 +41,7 @@ export default function RegisterPage() {
             onChange={(e) => {
               setEmail(e.target.value);
             }}
+            value={email}
           />
           <Input
             placeholder="Пароль"
@@ -48,6 +50,7 @@ export default function RegisterPage() {
             onChange={(e) => {
               setPassword(e.target.value);
             }}
+            value={password}
           />
           <Button
             onClick={(e) => {
