@@ -128,12 +128,8 @@ export const getUserData = createAsyncThunk("data/getUserData", async () => {
       Authorization: "Bearer " + getCookie("token"),
     },
   })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.success) {
-        return data;
-      }
-    })
+    .then(checkResponse)
+    .then((data) => data)
     .catch((e) => {
       console.log(e.message);
     });
@@ -156,6 +152,17 @@ export const logOut = createAsyncThunk("data/logOut", async ()=>{
   })
 })
 
+export const editUserInformation = createAsyncThunk("data/editUserInformation", async (form)=>{
+  await fetch(`${API_URL}/auth/user`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+      Authorization: "Bearer " + getCookie("token"),
+    },
+    body: JSON.stringify(form)
+  }).then(res=>res.json())
+  .then(data=>console.log(data))
+})
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -163,7 +170,7 @@ export const authSlice = createSlice({
     logInData: {
       success: false,
     },
-    userData: {},
+    userData: false,
     logOutData:{}
   },
   reducers: {},

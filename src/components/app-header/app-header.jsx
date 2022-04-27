@@ -1,19 +1,24 @@
 import styles from "./app-header.module.css";
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 
 function AppHeader() {
+  const location = useLocation()
   return (
     <header className={styles.header}>
       <nav className="flex flex-auto justify-center">
         <section className="flex items-center py-4">
           <section className="flex gap-2 mr-6">
-            <BurgerIcon type="primary" />
-            <p className={styles.headerTextActive}>Конструктор</p>
+            <BurgerIcon type={location.pathname==='/' ? 'primary': "secondary"} />
+            <NavLink to="/" className={({ isActive }) => (isActive ? `${styles.headerTextActive}` : `${styles.headerText}`)}>
+              Конструктор
+            </NavLink>
           </section>
           <section className="flex gap-2">
-            <ListIcon type="secondary" />
-            <p className={styles.headerText}>Лента заказов</p>
+            <ListIcon type={location.pathname==='/orders-list' ? 'primary': "secondary"} />
+            <NavLink to="/orders-list" className={({ isActive }) => (isActive ? `${styles.headerTextActive}` : `${styles.headerText}`)}>
+              Лента заказов
+            </NavLink>
           </section>
           <section className="flex ml-56 mr-80">
             <Link to="/">
@@ -21,10 +26,10 @@ function AppHeader() {
             </Link>
           </section>
           <section className="flex gap-2 mr-10">
-            <ProfileIcon type="secondary" />
-            <Link to="/profile" className={styles.headerText}>
+            <ProfileIcon type={location.pathname==='/profile' ? 'primary': "secondary"} />
+            <NavLink to="/profile" className={({ isActive }) => (isActive ? `${styles.headerTextActive}` : `${styles.headerText}`)}>
               Личный кабинет
-            </Link>
+            </NavLink>
           </section>
         </section>
       </nav>
