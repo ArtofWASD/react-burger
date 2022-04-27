@@ -58,7 +58,7 @@ export const postLogIn = createAsyncThunk("data/postLogIn", async (form, { rejec
     .then((data) => {
       if (data.success) {
         const authToken = data.accessToken.split("Bearer ")[1];
-        setCookie("token", authToken, { expires: 180 });
+        setCookie("token", authToken, { expires: 1200 });
         localStorage.setItem("refreshToken", data.refreshToken);
         return data;
       }
@@ -76,7 +76,7 @@ export const getCookieRequest = createAsyncThunk("data/getCookieRequest", async 
   });
 });
 
-export const refreshToken = createAsyncThunk("data/refreshToken", async () => {
+const refreshToken = () => {
   return fetch(`${API_URL}/auth/token`, {
     method: "POST",
     headers: {
@@ -84,21 +84,35 @@ export const refreshToken = createAsyncThunk("data/refreshToken", async () => {
     },
     body: JSON.stringify({token: localStorage.getItem('refreshToken') }),
   })
-    .then(res=>res.json())
-});
+    .then(checkResponse)
 
-export const fetchWithRefresh = createAsyncThunk("data/fetchWithRefresh", async (url) => {
+}
+
+export const fetchWithRefresh = createAsyncThunk("data/fetchWithRefresh", async () => {
   try {
-    const res = await fetch(url);
+    const res = await fetch(`${API_URL}/auth/user`,{
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        "Authorization": "Bearer " + getCookie("token"),
+      },
+    });
     return await checkResponse(res);
   } catch (error) {
     console.log(error.message);
-    if (error) {
+    if (error.message === 'jwt malformed') {
       const refreshData = await refreshToken();
-      console.log(refreshData());
+      console.log(refreshData);
       localStorage.setItem("refreshToken", refreshData.refreshToken);
-      setCookie("token", refreshData.accessToken, { expires: 1200 });
-      const res = await fetch(url);
+      setCookie("token", refreshData.accessToken.split("Bearer ")[1], { expires: 1200 });
+      refreshData.headers.Authorization = refreshData.accessToken
+      const res = await fetch(`${API_URL}/auth/user`,{
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          Authorization: "Bearer " + getCookie("token"),
+        },
+      });
       return await checkResponse(res);
     } else {
       return Promise.reject(error);
@@ -125,6 +139,23 @@ export const getUserData = createAsyncThunk("data/getUserData", async () => {
     });
 });
 
+export const logOut = createAsyncThunk("data/logOut", async ()=>{
+  return fetch(`${API_URL}/auth/logout`,{
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8"
+    },
+    body: JSON.stringify({token: localStorage.getItem('refreshToken') })
+  })
+  .then(checkResponse)
+  .then(data=>{
+    if (data.success) {
+      localStorage.setItem('refreshToken', '')
+      setCookie('token', '', {expires: 0})
+    }
+  })
+})
+
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -133,6 +164,7 @@ export const authSlice = createSlice({
       success: false,
     },
     userData: {},
+    logOutData:{}
   },
   reducers: {},
   extraReducers: {
@@ -144,6 +176,9 @@ export const authSlice = createSlice({
     },
     [getUserData.fulfilled]: (state, action) => {
       state.userData = action.payload;
+    },
+    [logOut.fulfilled]: (state, action) => {
+      state.logOutData = action.payload;
     },
   },
 });
