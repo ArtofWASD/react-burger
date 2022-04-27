@@ -2,7 +2,19 @@ import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-component
 import { NavLink } from "react-router-dom";
 import AppHeader from "../components/app-header/app-header";
 import styles from "../pages/styles.module.css";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserData, fetchWithRefresh, refreshToken } from "../services/reducers/auth";
 export default function ProfilePage() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUserData());
+    dispatch(refreshToken());
+
+  }, [dispatch]);
+
+  // const userData = useSelector((state) => state.authData.userData.user);
+
   return (
     <>
       <AppHeader />
@@ -19,7 +31,7 @@ export default function ProfilePage() {
           </ul>
         </div>
         <div className="grid gap-5 ">
-          <Input placeholder="Имя" icon="EditIcon" type="text" />
+          <Input placeholder="Имя" icon="EditIcon" type="text"  />
           <Input placeholder="Логин" icon="EditIcon" type="text" />
           <Input placeholder="Пароль" icon="EditIcon" type="password" />
         </div>

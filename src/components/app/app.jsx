@@ -1,10 +1,18 @@
+import {useEffect} from 'react'
 import { BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Main from '../main/main'
 import { LoginPage, RegisterPage, ForgotPasswordPage, ProfilePage, IngridientsPage, ResetPasswordPage, PageNotFoundPage} from "../../pages";
+import {getCookieRequest} from '../../services/reducers/auth'
 function App() {
   const isNavigate = useSelector((state) => state.resetData.status)
   const isLogged = useSelector((state) => state.authData.logInData.success)
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCookieRequest())
+  },[dispatch])
+
   return (
       <BrowserRouter>
         <Routes>
