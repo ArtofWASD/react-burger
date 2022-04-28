@@ -26,9 +26,22 @@ function setCookie(name, value, props) {
   }
   document.cookie = updatedCookie;
 }
+
 function getCookie(name) {
   const matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)"));
   return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+const refreshToken = () => {
+  return fetch(`${API_URL}/auth/token`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8"
+    },
+    body: JSON.stringify({token: localStorage.getItem('refreshToken') }),
+  })
+    .then(checkResponse)
+
 }
 
 export const postRegisterForm = createAsyncThunk("data/postRegisterForm", async (form, { rejectWithValue }) => {
@@ -46,7 +59,7 @@ export const postRegisterForm = createAsyncThunk("data/postRegisterForm", async 
     .catch((error) => rejectWithValue(error.message));
 });
 
-export const postLogIn = createAsyncThunk("data/postLogIn", async (form, { rejectWithValue }) => {
+export const LogIn = createAsyncThunk("data/postLogIn", async (form, { rejectWithValue }) => {
   return fetch(`${API_URL}/auth/login`, {
     method: "POST",
     headers: {
@@ -73,20 +86,11 @@ export const getCookieRequest = createAsyncThunk("data/getCookieRequest", async 
       "Content-Type": "application/json;charset=utf-8",
       Authorization: "Bearer " + getCookie("token"),
     },
-  });
-});
-
-const refreshToken = () => {
-  return fetch(`${API_URL}/auth/token`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8"
-    },
-    body: JSON.stringify({token: localStorage.getItem('refreshToken') }),
   })
-    .then(checkResponse)
+  .then(checkResponse)
+  .then(data => data)
 
-}
+});
 
 export const fetchWithRefresh = createAsyncThunk("data/fetchWithRefresh", async () => {
   try {
@@ -99,7 +103,6 @@ export const fetchWithRefresh = createAsyncThunk("data/fetchWithRefresh", async 
     });
     return await checkResponse(res);
   } catch (error) {
-    console.log(error.message);
     if (error.message === 'jwt malformed') {
       const refreshData = await refreshToken();
       console.log(refreshData);
@@ -130,9 +133,6 @@ export const getUserData = createAsyncThunk("data/getUserData", async () => {
   })
     .then(checkResponse)
     .then((data) => data)
-    .catch((e) => {
-      console.log(e.message);
-    });
 });
 
 export const logOut = createAsyncThunk("data/logOut", async ()=>{
@@ -148,6 +148,7 @@ export const logOut = createAsyncThunk("data/logOut", async ()=>{
     if (data.success) {
       localStorage.setItem('refreshToken', '')
       setCookie('token', '', {expires: 0})
+      window.location.reload()
     }
   })
 })
@@ -163,6 +164,7 @@ export const editUserInformation = createAsyncThunk("data/editUserInformation", 
   }).then(res=>res.json())
   .then(data=>console.log(data))
 })
+
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -171,21 +173,24 @@ export const authSlice = createSlice({
       success: false,
     },
     userData: false,
-    logOutData:{}
+    user:false
   },
   reducers: {},
   extraReducers: {
     [postRegisterForm.fulfilled]: (state, action) => {
       state.registerData = action.payload;
     },
-    [postLogIn.fulfilled]: (state, action) => {
+    [LogIn.fulfilled]: (state, action) => {
       state.logInData = action.payload;
     },
     [getUserData.fulfilled]: (state, action) => {
       state.userData = action.payload;
     },
-    [logOut.fulfilled]: (state, action) => {
-      state.logOutData = action.payload;
+    [logOut.fulfilled]: (state) => {
+      state.userData = false;
+    },
+    [getCookieRequest.fulfilled]: (state, action) => {
+      state.user = action.payload;
     },
   },
 });

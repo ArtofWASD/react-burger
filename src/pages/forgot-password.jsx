@@ -24,7 +24,7 @@ export default function ForgotPasswordPage() {
       <AppHeader />
       <div className="grid justify-center mt-48">
         <p className={`${styles.font} text-center text-2xl`}>Восстановление пароля</p>
-        <form action="" className="grid gap-6 justify-items-center mt-6">
+        <form action="submit" onSubmit={(e) => {postValue(e)}} className="grid gap-6 justify-items-center mt-6">
           <Input
             placeholder="Укажите e-mail"
             type="email"
@@ -33,11 +33,7 @@ export default function ForgotPasswordPage() {
             }}
             value={emailValue}
           />
-          <Button
-            onClick={(e) => {
-              postValue(e);
-            }}
-          >
+          <Button>
             <p>Восстановить</p>
           </Button>
         </form>

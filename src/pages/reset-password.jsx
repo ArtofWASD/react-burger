@@ -24,12 +24,14 @@ export default function ResetPasswordPage() {
       <AppHeader />
       <div className="grid justify-center mt-48">
         <p className={`${styles.font} text-center text-2xl`}>Восстановление пароля</p>
-        <form action="" className="grid gap-6 justify-items-center mt-6">
+        <form action="submit" onSubmit={() => resetHandler()} className="grid gap-6 justify-items-center mt-6">
           <Input placeholder="Введите новый пароль" type="password" icon="ShowIcon" onChange={(e) => setPassword(e.target.value)} value={password} />
           <Input placeholder="Введите код из письма" type="text" onChange={(e) => setValidationCode(e.target.value)} value={validationCode} />
-          <Button onClick={() => resetHandler()}>
-            <p>Сохранить</p>
-          </Button>
+          <Link to="/">
+            <Button>
+              <p>Сохранить</p>
+            </Button>
+          </Link>
         </form>
       </div>
       <p className={`${styles.font_grey} text-center flex justify-center gap-2 py-4 mt-20`}>

@@ -5,11 +5,11 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { useDrag } from "react-dnd";
 import PropTypes from "prop-types";
 import Modal from "../modal/modal";
-
+import { Link } from "react-router-dom";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import styles from "../burger-ingridient-list-item/burger-ingridient-list-item.module.css";
 
-function BurgerIngridientItem({ data }) {
+function BurgerIngridientItem({ data, route }) {
   const [modalActive, setModalActive] = useState(false);
   const [currentIngredientId, setCurrentIngredientId] = useState();
   const { _id, name, image_large, price } = data;
@@ -26,6 +26,7 @@ function BurgerIngridientItem({ data }) {
 
   return (
     <section>
+      <Link to={`ingredients/${data._id}`}>
       <div className="relative gap-2" onClick={() => setModalActive(true)} key={_id} ref={dragRef} style={{ opacity }}>
         <div
           className="flex flex-col items-center"
@@ -42,11 +43,12 @@ function BurgerIngridientItem({ data }) {
           <p className="text-center text-base pt-2">{name}</p>
         </div>
       </div>
-      {modalActive && (
+      </Link>
+      {/* {modalActive && (
           <Modal active={modalActive} setActive={setModalActive} id={currentIngredientId} title={ingridientModalTitle}>
             <IngredientDetails itemId={currentIngredientId} />
           </Modal>
-        )}
+        )} */}
     </section>
   );
 }
