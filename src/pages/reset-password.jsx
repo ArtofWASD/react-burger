@@ -1,5 +1,5 @@
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useNavigate, useResolvedPath } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postResetPassword } from "../services/reducers/reset";

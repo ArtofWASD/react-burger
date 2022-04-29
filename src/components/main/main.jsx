@@ -18,7 +18,7 @@ export default function MainPage() {
     <div className="grid justify-items-center">
       <DndProvider backend={HTML5Backend}>
         {ingridients && (
-          <main className="grid grid-cols-2 gap-16 mt-20 absolute">
+          <main className="grid grid-cols-2 gap-16 mt-5 pb-12 absolute">
             <BurgerIngredients />
             <BurgerConstructor />
           </main>

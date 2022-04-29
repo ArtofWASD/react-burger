@@ -5,6 +5,7 @@ import { postOrder, addIngridientItem, addBunItem, updateIngridient } from "../.
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router-dom";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
@@ -15,7 +16,8 @@ function BurgerConstructor() {
   const { ingridients, constructor, total } = useSelector((state) => state.getData);
   const dispatch = useDispatch();
   const constructorIngredients = ingridients.filter((item) => item.type !== "bun");
-
+  const isUser = useSelector((state) => state.authData.userData.success);
+  const navigate = useNavigate()
   const order = {
     ingredients: constructorIngredients.map((item) => item._id),
   };
@@ -49,6 +51,13 @@ function BurgerConstructor() {
     [constructor.ingridients, dispatch]
   );
 
+  function confirmOrder () {
+    if (isUser) {
+      dispatch(postOrder(order))
+    }else{
+      navigate("/login", { replace: true})
+    }
+  }
   const buttonStatus = constructor.buns.length === 0 ? true : false;
   return (
     <section className="pt-24">
@@ -92,7 +101,7 @@ function BurgerConstructor() {
           <CurrencyIcon type="primary" />
         </span>
         {/* Кнопка "Оформить заказ"*/}
-        <span onClick={() => dispatch(postOrder(order))}>
+        <span onClick={() => confirmOrder()}>
           <Button type="primary" size="medium" onClick={() => setModalActive(true)} disabled={buttonStatus}>
             <p className="text-base">Оформить заказ</p>
           </Button>
