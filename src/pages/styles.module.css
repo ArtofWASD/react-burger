@@ -7,5 +7,6 @@
 }
 .font_blue{
     font-family: 'JetBrainsMono-Regular';
-    color: #4C4CFF
+    color: #4C4CFF;
+    cursor: pointer
 }

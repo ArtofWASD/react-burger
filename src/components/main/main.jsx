@@ -1,4 +1,3 @@
-import AppHeader from "../app-header/app-header";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +16,6 @@ export default function MainPage() {
   
   return (
     <div className="grid justify-items-center">
-        <AppHeader />
       <DndProvider backend={HTML5Backend}>
         {ingridients && (
           <main className="grid grid-cols-2 gap-16 mt-20 absolute">

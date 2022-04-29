@@ -1,6 +1,6 @@
-import styles from "./app-header.module.css";
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink, Link, useLocation } from "react-router-dom";
+import styles from "./app-header.module.css";
 
 function AppHeader() {
   const location = useLocation()
@@ -9,7 +9,7 @@ function AppHeader() {
       <nav className="flex flex-auto justify-center">
         <section className="flex items-center py-4">
           <section className="flex gap-2 mr-6">
-            <BurgerIcon type={location.pathname==='/' ? 'primary': "secondary"} />
+            <BurgerIcon type={location.pathname ==='/' ? 'primary': "secondary"} />
             <NavLink to="/" className={({ isActive }) => (isActive ? `${styles.headerTextActive}` : `${styles.headerText}`)}>
               Конструктор
             </NavLink>
@@ -27,7 +27,7 @@ function AppHeader() {
           </section>
           <section className="flex gap-2 mr-10">
             <ProfileIcon type={location.pathname==='/profile' ? 'primary': "secondary"} />
-            <NavLink to="/profile" className={({ isActive }) => (isActive ? `${styles.headerTextActive}` : `${styles.headerText}`)}>
+            <NavLink to='/profile' className={({ isActive }) => (isActive ? `${styles.headerTextActive}` : `${styles.headerText}`)}>
               Личный кабинет
             </NavLink>
           </section>

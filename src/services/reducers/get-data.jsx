@@ -1,12 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API_URL } from "../../utils/api-constant";
-
-function checkResponse(response) {
-  if (response.ok) {
-    return response.json();
-  }
-  throw new Error("Не пришёл ответ от сервера");
-}
+import {checkResponse} from '../../utils/handler-functions'
 
 export const fetchData = createAsyncThunk("data/fetchData", async (_, { rejectWithValue }) => {
   return fetch(`${API_URL}/ingredients`)

@@ -4,7 +4,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchData } from "../services/reducers/get-data";
-import AppHeader from "../components/app-header/app-header";
 
 export default function IngridientsPage() {
   const [modalActive, setModalActive] = useState(true);
@@ -21,9 +20,10 @@ export default function IngridientsPage() {
   }
   useEffect(() => {
     dispatch(fetchData());
-    aaa();
+    isDataGet();
   }, []);
-  function aaa(params) {
+
+  function isDataGet() {
     if (data.length === 0) {
       setIsData(false);
     } else {
@@ -38,11 +38,8 @@ export default function IngridientsPage() {
           <IngredientDetails itemId={id} />
         </Modal>
       ) : (
-        <div className="flex flex-col justify-center items-center">
-          <AppHeader />
-          <div className=" mt-24 w-2/5 ">
+        <div className="flex flex-col justify-center items-center mt-24">
             <IngredientDetails itemId={id} />
-          </div>
         </div>
       )}
     </>

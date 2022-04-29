@@ -1,28 +1,24 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API_URL } from "../../utils/api-constant";
+import { checkResponse} from '../../utils/handler-functions'
 
-const checkResponse = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-};
-
-export const postResetForm = createAsyncThunk("data/postResetForm", async (form, { rejectWithValue }) => {
+export const postResetForm = createAsyncThunk("data/postResetForm", async (form) => {
   return fetch(`${API_URL}/password-reset`, {
     method: "POST",
     headers: { "Content-Type": "application/json;charset=utf-8" },
     body: JSON.stringify(form),
   })
   .then(checkResponse)
-  .then(data => data)
 });
 
-export const postResetPassword =createAsyncThunk("data/postResetPassword", async (form,{rejectWithValue}) =>{
+export const postResetPassword =createAsyncThunk("data/postResetPassword", async (form) =>{
   return fetch(`${API_URL}/password-reset/reset`,{
     method: 'POST',
     headers: {"Content-Type": "application/json;charset=utf-8" },
     body: JSON.stringify(form)
   }).then(checkResponse)
-    .then(data => data)
 })
+
 export const resetSlice = createSlice({
   name: "reset",
   initialState: {

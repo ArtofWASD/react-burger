@@ -1,9 +1,8 @@
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useResolvedPath } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postResetPassword } from "../services/reducers/reset";
-import AppHeader from "../components/app-header/app-header";
 
 import styles from "./styles.module.css";
 
@@ -11,27 +10,26 @@ export default function ResetPasswordPage() {
   const [password, setPassword] = useState("");
   const [validationCode, setValidationCode] = useState("");
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
+  
   const resetForm = {
     password: password,
     token: validationCode,
   };
   function resetHandler() {
     dispatch(postResetPassword(resetForm));
+    navigate("/", { replace: true });
   }
   return (
     <>
-      <AppHeader />
       <div className="grid justify-center mt-48">
         <p className={`${styles.font} text-center text-2xl`}>Восстановление пароля</p>
         <form action="submit" onSubmit={() => resetHandler()} className="grid gap-6 justify-items-center mt-6">
           <Input placeholder="Введите новый пароль" type="password" icon="ShowIcon" onChange={(e) => setPassword(e.target.value)} value={password} />
           <Input placeholder="Введите код из письма" type="text" onChange={(e) => setValidationCode(e.target.value)} value={validationCode} />
-          <Link to="/">
             <Button>
               <p>Сохранить</p>
             </Button>
-          </Link>
         </form>
       </div>
       <p className={`${styles.font_grey} text-center flex justify-center gap-2 py-4 mt-20`}>

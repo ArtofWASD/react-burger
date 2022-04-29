@@ -1,14 +1,12 @@
 import { NavLink } from "react-router-dom";
-import AppHeader from "../components/app-header/app-header";
-import styles from "../pages/styles.module.css";
 import { useDispatch } from "react-redux";
 import { logOut } from "../services/reducers/auth";
+import styles from "../pages/styles.module.css";
 
 export default function Orders() {
     const dispatch = useDispatch();
   return (
     <>
-    <AppHeader />
       <div className="ml-72 mt-32">
         <ul className="grid gap-4 items-center">
           <NavLink to="/profile" end className={({ isActive }) => (isActive ? `${styles.font}` : `${styles.font_grey}`)}>

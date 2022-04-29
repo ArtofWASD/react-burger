@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postResetForm } from "../services/reducers/reset";
-
-import AppHeader from "../components/app-header/app-header";
 import styles from "./styles.module.css";
 
 export default function ForgotPasswordPage() {
@@ -21,7 +19,6 @@ export default function ForgotPasswordPage() {
 
   return (
     <>
-      <AppHeader />
       <div className="grid justify-center mt-48">
         <p className={`${styles.font} text-center text-2xl`}>Восстановление пароля</p>
         <form action="submit" onSubmit={(e) => {postValue(e)}} className="grid gap-6 justify-items-center mt-6">

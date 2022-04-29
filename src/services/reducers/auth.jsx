@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API_URL } from "../../utils/api-constant";
-const checkResponse = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-};
+import { checkResponse } from "../../utils/handler-functions"
 
 function setCookie(name, value, props) {
   props = props || {};
@@ -41,7 +39,6 @@ const refreshToken = () => {
     body: JSON.stringify({token: localStorage.getItem('refreshToken') }),
   })
     .then(checkResponse)
-
 }
 
 export const postRegisterForm = createAsyncThunk("data/postRegisterForm", async (form, { rejectWithValue }) => {
@@ -88,8 +85,6 @@ export const getCookieRequest = createAsyncThunk("data/getCookieRequest", async 
     },
   })
   .then(checkResponse)
-  .then(data => data)
-
 });
 
 export const fetchWithRefresh = createAsyncThunk("data/fetchWithRefresh", async () => {

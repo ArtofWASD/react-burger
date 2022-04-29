@@ -4,9 +4,7 @@ import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
 import PropTypes from "prop-types";
-import Modal from "../modal/modal";
 import { Link } from "react-router-dom";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 import styles from "../burger-ingridient-list-item/burger-ingridient-list-item.module.css";
 
 function BurgerIngridientItem({ data, route }) {
@@ -44,11 +42,6 @@ function BurgerIngridientItem({ data, route }) {
         </div>
       </div>
       </Link>
-      {/* {modalActive && (
-          <Modal active={modalActive} setActive={setModalActive} id={currentIngredientId} title={ingridientModalTitle}>
-            <IngredientDetails itemId={currentIngredientId} />
-          </Modal>
-        )} */}
     </section>
   );
 }
