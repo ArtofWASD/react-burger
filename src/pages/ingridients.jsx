@@ -1,6 +1,6 @@
 import Modal from "../components/modal/modal";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchData } from "../services/reducers/get-data";
@@ -13,28 +13,29 @@ export default function IngridientsPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const ingredient = data.find((item) => item._id === id);
-
+  const location = useLocation();
+  
   function close() {
     setModalActive(false);
     navigate("/", { replace: true });
   }
+
   useEffect(() => {
     dispatch(fetchData());
-    isDataGet();
+    checkPath()
   }, []);
 
-  function isDataGet() {
-    if (data.length === 0) {
-      setIsData(false);
-    } else {
-      setIsData(true);
-    }
-  }
-
+ function checkPath() {
+   if (location.state && location.state.from.pathname === "/") {
+     setIsData(true)
+   }else{
+     setIsData(false)
+   }
+ }
   return (
     <>
       {isData ? (
-        <Modal active={modalActive} setActive={close} id={id} title={ingredient.name}>
+        <Modal active={modalActive} setActive={close} id={id} title={ingredient.name} >
           <IngredientDetails itemId={id} />
         </Modal>
       ) : (
