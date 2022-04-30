@@ -23,7 +23,7 @@ function BurgerIngridientItem({ data, route }) {
   });
   return (
     <section>
-      <Link to={`ingredients/${data._id}`} state={{from:location}}>
+      <Link to={`ingredients/${data._id}`} state={{background:location}}>
       <div className="relative gap-2" onClick={() => setModalActive(true)} key={_id} ref={dragRef} style={{ opacity }}>
         <div
           className="flex flex-col items-center"
