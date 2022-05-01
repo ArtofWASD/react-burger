@@ -1,16 +1,10 @@
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { fetchData } from "../../services/reducers/get-data";
+import { useSelector } from "react-redux";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 
 export default function MainPage() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchData());
-  }, [dispatch]);
 
   const ingridients = useSelector((state) => state.getData);
   

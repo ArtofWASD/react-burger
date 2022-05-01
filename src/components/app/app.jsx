@@ -1,33 +1,28 @@
 import { useEffect } from "react";
-import { BrowserRouter, Routes, Route, useLocation, useNavigate, Router } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  LoginPage,
-  RegisterPage,
-  ForgotPasswordPage,
-  ProfilePage,
-  ResetPasswordPage,
-  PageNotFoundPage,
-  Orders,
-} from "../../pages";
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { LoginPage, RegisterPage, ForgotPasswordPage, ProfilePage, ResetPasswordPage, PageNotFoundPage, Orders } from "../../pages";
 import { getCookieRequest, getUserData } from "../../services/reducers/auth";
+import { fetchData } from "../../services/reducers/get-data";
 import AppHeader from "../app-header/app-header";
 import Main from "../main/main";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { ProtectedRoute } from "../protected-route/ProtectedRoute";
+import { ProtectedUserRoute, ProtectedGuestRoute } from "../protected-route/ProtectedRoute";
 
 function App() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getCookieRequest());
-    dispatch(getUserData());
-  }, []);
-
   function ModalSwitch() {
     const location = useLocation();
     const navigate = useNavigate();
     const background = location.state && location.state.background;
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+      dispatch(getUserData());
+      dispatch(getCookieRequest());
+      dispatch(fetchData());
+    }, []);
+
     const handleModalClose = () => {
       navigate(-1);
     };
@@ -35,28 +30,56 @@ function App() {
     return (
       <>
         <AppHeader />
-        <Routes location={background||location}>
+        <Routes location={background || location}>
           <Route path="/" element={<Main />} />
-          <Route path="/login" element={<LoginPage/>} />
           <Route
             path="/profile"
             element={
-              <ProtectedRoute path="/login">
+              <ProtectedGuestRoute>
                 <ProfilePage />
-              </ProtectedRoute>
+              </ProtectedGuestRoute>
             }
           />
           <Route
             path="/profile/orders"
             element={
-              <ProtectedRoute path="/login">
+              <ProtectedGuestRoute>
                 <Orders />
-              </ProtectedRoute>
+              </ProtectedGuestRoute>
             }
           />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route
+            path="/login"
+            element={
+              <ProtectedUserRoute>
+                <LoginPage />
+              </ProtectedUserRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <ProtectedUserRoute>
+                <RegisterPage />
+              </ProtectedUserRoute>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <ProtectedUserRoute>
+                <ForgotPasswordPage />
+              </ProtectedUserRoute>
+            }
+          />
+          <Route
+            path="/reset-password"
+            element={
+              <ProtectedUserRoute>
+                <ResetPasswordPage />
+              </ProtectedUserRoute>
+            }
+          />
           <Route path="/ingredients/:id" element={<IngredientDetails />} />
           <Route path="*" element={<PageNotFoundPage />} />
         </Routes>

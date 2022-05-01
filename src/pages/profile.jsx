@@ -2,7 +2,7 @@ import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-component
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserData, fetchWithRefresh, logOut, editUserInformation } from "../services/reducers/auth";
+import { fetchWithRefresh, logOut, editUserInformation } from "../services/reducers/auth";
 import styles from "../pages/styles.module.css";
 export default function ProfilePage() {
   const [name, setName] = useState(null);
@@ -12,7 +12,6 @@ export default function ProfilePage() {
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(fetchWithRefresh());
-    dispatch(getUserData());
   }, [dispatch]);
 
   const userData = useSelector((state) => state.authData.userData);
@@ -26,7 +25,6 @@ export default function ProfilePage() {
     e.preventDefault();
     dispatch(editUserInformation(newUserData))
     navigate("/profile", { replace: true });
-    alert('Настройки успешно сохранены')
   }
 
   function cancelInput (){

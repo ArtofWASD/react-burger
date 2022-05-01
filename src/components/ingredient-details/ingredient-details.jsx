@@ -1,20 +1,17 @@
 import { useEffect } from "react";
-import { getIngridientItem, fetchData } from "../../services/reducers/get-data";
+import { getIngridientItem } from "../../services/reducers/get-data";
 import PropTypes from "prop-types";
 import styles from "./ingredient-details.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export default function IngredientDetails() {
   const dispatch = useDispatch();
   const id = useParams()
-  const location = useLocation()
-  console.log(location);
   const { ingridients } = useSelector((state) => state.getData);
   const ingridientDetails = ingridients.filter((item) => item._id === id.id);
 
   useEffect(() => {
-    dispatch(fetchData())
     dispatch(getIngridientItem(ingridientDetails));
   }, [dispatch]);
 

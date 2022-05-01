@@ -1,9 +1,8 @@
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { LogIn } from "../services/reducers/auth";
 import { Link, useNavigate } from "react-router-dom";
-import { getUserData } from "../services/reducers/auth";
 import styles from "./styles.module.css";
 
 export default function LoginPage() {
@@ -11,10 +10,6 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    dispatch(getUserData());
-  }, []);
 
   const logInForm = {
     email: email,
@@ -24,7 +19,7 @@ export default function LoginPage() {
   function logInHandler(e) {
     e.preventDefault();
     dispatch(LogIn(logInForm));
-    navigate("/", { replace: true });
+    navigate('/', { replace: true });
   }
   return (
     <>

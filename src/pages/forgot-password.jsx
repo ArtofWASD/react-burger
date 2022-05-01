@@ -1,5 +1,5 @@
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postResetForm } from "../services/reducers/reset";
@@ -8,6 +8,8 @@ import styles from "./styles.module.css";
 export default function ForgotPasswordPage() {
   const [emailValue, setEmailValue] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation()
   const resetForm = {
     email: emailValue,
   };
@@ -15,6 +17,8 @@ export default function ForgotPasswordPage() {
   function postValue(e) {
     e.preventDefault();
     dispatch(postResetForm(resetForm));
+    navigate("/reset-password", { replace: true, state:location});
+
   }
 
   return (

@@ -100,7 +100,6 @@ export const fetchWithRefresh = createAsyncThunk("data/fetchWithRefresh", async 
   } catch (error) {
     if (error.message === 'jwt malformed') {
       const refreshData = await refreshToken();
-      console.log(refreshData);
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       setCookie("token", refreshData.accessToken.split("Bearer ")[1], { expires: 1200 });
       refreshData.headers.Authorization = refreshData.accessToken
@@ -127,6 +126,7 @@ export const getUserData = createAsyncThunk("data/getUserData", async () => {
     },
   })
     .then(checkResponse)
+    .then(localStorage.setItem('isUser', true))
     .then((data) => data)
 });
 
@@ -142,6 +142,7 @@ export const logOut = createAsyncThunk("data/logOut", async ()=>{
   .then(data=>{
     if (data.success) {
       localStorage.setItem('refreshToken', '')
+      localStorage.setItem('isUser', false)
       setCookie('token', '', {expires: 0})
       window.location.reload()
     }
@@ -183,9 +184,6 @@ export const authSlice = createSlice({
     },
     [logOut.fulfilled]: (state) => {
       state.userData = false;
-    },
-    [getCookieRequest.fulfilled]: (state, action) => {
-      state.user = action.payload;
     },
   },
 });
