@@ -126,7 +126,6 @@ export const getUserData = createAsyncThunk("data/getUserData", async () => {
     },
   })
     .then(checkResponse)
-    .then(localStorage.setItem('isUser', true))
     .then((data) => data)
 });
 
@@ -142,7 +141,6 @@ export const logOut = createAsyncThunk("data/logOut", async ()=>{
   .then(data=>{
     if (data.success) {
       localStorage.setItem('refreshToken', '')
-      localStorage.setItem('isUser', false)
       setCookie('token', '', {expires: 0})
       window.location.reload()
     }
