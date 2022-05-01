@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 const ProtectedGuestRoute = ({ children }) => {
   const location = useLocation();
   const isUser = useSelector((state) => state.authData.userData.success);
-  if (!isUser) {
+  if (isUser && isUser === false) {
     return <Navigate to="/login" state={{ from: location }} />;
   }
   return children;

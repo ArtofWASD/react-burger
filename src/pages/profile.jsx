@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchWithRefresh, logOut, editUserInformation } from "../services/reducers/auth";
 import styles from "../pages/styles.module.css";
 export default function ProfilePage() {
-  const [name, setName] = useState(null);
-  const [login, setLogin] = useState(null);
+  const [name, setName] = useState('');
+  const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ export default function ProfilePage() {
         <div className="grid gap-5 ">
           <Input placeholder="Имя" icon="EditIcon" type="text" onChange={(e)=>setName(e.target.value)}  value={!name && userData ? userData.user.name : name} />
           <Input placeholder="Логин" icon="EditIcon" type="text" onChange={(e)=>setLogin(e.target.value)}  value={!login && userData ? userData.user.email : login}/>
-          <Input placeholder="Пароль" icon="EditIcon" type="password" onChange={(e)=>setPassword(e.target.value)} value={password}/>
+          <Input placeholder="Пароль" icon="EditIcon" type="password" onChange={(e)=>setPassword(e.target.value)} value={password ? password : ''}/>
         </div>
         <div className={newUserData.login || newUserData.name ? "row-start-2 col-start-2 grid grid-flow-col justify-items-end h-12 items-center my-4":"opacity-0"}>
           <p className={`${styles.font_blue} pl-48`} onClick={()=>{cancelInput()}}>Отмена</p>
