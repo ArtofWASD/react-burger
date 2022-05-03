@@ -52,7 +52,7 @@ function BurgerConstructor() {
   );
 
   function confirmOrder () {
-    if (isUser) {
+    if (isUser === true) {
       dispatch(postOrder(order))
     }else{
       navigate("/login", { replace: true})
