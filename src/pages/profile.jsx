@@ -27,6 +27,11 @@ export default function ProfilePage() {
     navigate("/profile", { replace: true });
   }
 
+  function logOutHandler(e){
+    e.preventDefault()
+    dispatch(logOut())
+    navigate('/', { replace: true})
+  }
   function cancelInput (){
     setName(null)
     setLogin(null)
@@ -44,7 +49,7 @@ export default function ProfilePage() {
               <li className={`text-2xl h-16 grid items-center`}>История заказов</li>
             </NavLink>
             <NavLink to="/login">
-              <li className={`${styles.font_grey} text-2xl h-16 grid items-center`} onClick={()=>{dispatch(logOut())}}>Выход</li>
+              <li className={`${styles.font_grey} text-2xl h-16 grid items-center`} onClick={(e)=>logOutHandler(e)}>Выход</li>
             </NavLink>
           </ul>
         </div>

@@ -16,7 +16,6 @@ function App() {
     const navigate = useNavigate();
     const background = location.state && location.state.background;
     const dispatch = useDispatch();
-
     useEffect(() => {
       dispatch(getUserData());
       dispatch(getCookieRequest());

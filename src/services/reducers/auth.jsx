@@ -175,8 +175,11 @@ export const authSlice = createSlice({
       state.userState = true;
       state.userData = action.payload;
     },
-    [getUserData.pending]: (state, action) => { 
+    [getUserData.pending]: (state) => { 
       state.userState = 'loading'
+    },
+    [getUserData.pending]: (state) => { 
+      state.userState = false
     },
     [logOut.fulfilled]: (state) => {
       state.userState = false;
