@@ -16,7 +16,7 @@ function BurgerConstructor() {
   const { ingridients, constructor, total } = useSelector((state) => state.getData);
   const dispatch = useDispatch();
   const constructorIngredients = ingridients.filter((item) => item.type !== "bun");
-  const isUser = useSelector((state) => state.authData.userData.success);
+  const isUser = useSelector((state) => state.authData.userState);
   const navigate = useNavigate()
   const order = {
     ingredients: constructorIngredients.map((item) => item._id),

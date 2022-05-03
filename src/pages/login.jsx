@@ -1,7 +1,7 @@
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { LogIn } from "../services/reducers/auth";
+import { LogIn, getUserData } from "../services/reducers/auth";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
 
@@ -18,6 +18,7 @@ export default function LoginPage() {
 
   function logInHandler(e) {
     e.preventDefault();
+    dispatch(getUserData())
     dispatch(LogIn(logInForm));
     navigate('/', { replace: true });
   }

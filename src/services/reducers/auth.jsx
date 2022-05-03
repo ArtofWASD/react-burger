@@ -162,26 +162,24 @@ export const editUserInformation = createAsyncThunk("data/editUserInformation", 
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
-    registerData: null,
-    logInData: {
-      success: false,
-    },
-    userData: false,
-    user:false
+    userState: false,
+    userData: null
   },
   reducers: {},
   extraReducers: {
-    [postRegisterForm.fulfilled]: (state, action) => {
-      state.registerData = action.payload;
-    },
     [LogIn.fulfilled]: (state, action) => {
-      state.logInData = action.payload;
-    },
-    [getUserData.fulfilled]: (state, action) => {
+      state.userState = true;
       state.userData = action.payload;
     },
+    [getUserData.fulfilled]: (state, action) => { 
+      state.userState = true;
+      state.userData = action.payload;
+    },
+    [getUserData.pending]: (state, action) => { 
+      state.userState = 'loading'
+    },
     [logOut.fulfilled]: (state) => {
-      state.userData = false;
+      state.userState = false;
     },
   },
 });
