@@ -14,8 +14,7 @@
     border-radius: 40px;
 } 
 .modalDone{
-    transition: 0.5s;
-    margin-top: 60px;
+    margin: 40px 0;
     width: 120px;
     height: 120px;
 }
@@ -33,7 +32,6 @@
 }
 
 .modalDoneCocked{
-    margin-top: 60px;
     font-family: 'JetBrainsMono-Regular';
     font-size: 16px;
     color:#F2F2F3;

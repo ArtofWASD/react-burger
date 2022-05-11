@@ -1,0 +1,12 @@
+.font {
+    font-family: 'JetBrainsMono-Regular';
+}
+.font_grey {
+    font-family: 'JetBrainsMono-Regular';
+    color: #8585AD
+}
+.font_blue{
+    font-family: 'JetBrainsMono-Regular';
+    color: #4C4CFF;
+    cursor: pointer
+}

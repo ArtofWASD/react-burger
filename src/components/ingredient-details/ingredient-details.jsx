@@ -3,11 +3,13 @@ import { getIngridientItem } from "../../services/reducers/get-data";
 import PropTypes from "prop-types";
 import styles from "./ingredient-details.module.css";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
-export default function IngredientDetails({ itemId }) {
+export default function IngredientDetails() {
   const dispatch = useDispatch();
+  const id = useParams()
   const { ingridients } = useSelector((state) => state.getData);
-  const ingridientDetails = ingridients.filter((item) => item._id === itemId);
+  const ingridientDetails = ingridients.filter((item) => item._id === id.id);
 
   useEffect(() => {
     dispatch(getIngridientItem(ingridientDetails));
@@ -17,7 +19,7 @@ export default function IngredientDetails({ itemId }) {
     <>
       {ingridientDetails &&
         ingridientDetails.map((item) => (
-          <section key={item._id}>
+          <section key={item._id} className="grid justify-items-center">
             <div className="modal-content grid px-8 pt-5">
               <div className="flex flex-col justify-center">
                 <img src={item.image_large} alt={item.name} />

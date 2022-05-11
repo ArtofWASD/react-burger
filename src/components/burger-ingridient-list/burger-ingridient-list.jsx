@@ -11,7 +11,7 @@ const BurgerIngridientList = React.forwardRef(({type}, ref) =>{
     <div className="grid grid-cols-2 gap-3" ref={ref}>
       {error && <h2>{error}</h2>}
       {ingridientType.map(item=>(
-        <BurgerIngridientItem key={item._id} data={item}/>
+        <BurgerIngridientItem key={item._id} data={item} route={item._id}/>
       ))}
     </div>
   );

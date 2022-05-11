@@ -1,32 +1,111 @@
 import { useEffect } from "react";
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { LoginPage, RegisterPage, ForgotPasswordPage, ProfilePage, ResetPasswordPage, PageNotFoundPage, Orders } from "../../pages";
+import { getCookieRequest, getUserData } from "../../services/reducers/auth";
 import { fetchData } from "../../services/reducers/get-data";
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useDispatch, useSelector } from "react-redux";
 import AppHeader from "../app-header/app-header";
-import styles from "./app.module.css";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import Main from "../main/main";
+import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import { ProtectedUserRoute, ProtectedGuestRoute } from "../protected-route/ProtectedRoute";
 
 function App() {
-  const dispatch = useDispatch() 
-  useEffect(()=>{
-    dispatch(fetchData())
-  },[dispatch])
-  const ingridients = useSelector(state=>state.getData)
-  return (
-    <div className="grid justify-items-center">
-      <header className={styles.header}>
+  function ModalSwitch() {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const background = location.state && location.state.background;
+    const dispatch = useDispatch();
+    useEffect(() => {
+      dispatch(getUserData());
+      dispatch(getCookieRequest());
+      dispatch(fetchData());
+    }, []);
+
+    const handleModalClose = () => {
+      navigate(-1);
+    };
+
+    return (
+      <>
         <AppHeader />
-      </header>
-      <DndProvider backend={HTML5Backend}>
-        {ingridients && <main className="grid grid-cols-2 gap-16 pt-20 absolute">
-          <BurgerIngredients/>
-          <BurgerConstructor/>
-        </main>}
-      </DndProvider>
-    </div>
+        <Routes location={background || location}>
+          <Route path="/" element={<Main />} />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedGuestRoute>
+                <ProfilePage />
+              </ProtectedGuestRoute>
+            }
+          />
+          <Route
+            path="/profile/orders"
+            element={
+              <ProtectedGuestRoute>
+                <Orders />
+              </ProtectedGuestRoute>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <ProtectedUserRoute>
+                <LoginPage />
+              </ProtectedUserRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <ProtectedUserRoute>
+                <RegisterPage />
+              </ProtectedUserRoute>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <ProtectedUserRoute>
+                <ForgotPasswordPage />
+              </ProtectedUserRoute>
+            }
+          />
+          <Route
+            path="/reset-password"
+            element={
+              <ProtectedUserRoute>
+                <ResetPasswordPage />
+              </ProtectedUserRoute>
+            }
+          />
+          <Route path="/ingredients/:id" element={<IngredientDetails />} />
+          <Route path="*" element={<PageNotFoundPage />} />
+        </Routes>
+        {background && (
+          <Routes>
+            <Route
+              path="/ingredients/:id"
+              element={
+                <Modal
+                  active={true}
+                  setActive={() => {
+                    handleModalClose();
+                  }}
+                >
+                  <IngredientDetails />
+                </Modal>
+              }
+            />
+          </Routes>
+        )}
+      </>
+    );
+  }
+  return (
+    <BrowserRouter>
+      <ModalSwitch />
+    </BrowserRouter>
   );
 }
-
 export default App;

@@ -4,18 +4,16 @@ import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
 import PropTypes from "prop-types";
-import Modal from "../modal/modal";
-
-import IngredientDetails from "../ingredient-details/ingredient-details";
+import { Link, useLocation } from "react-router-dom";
 import styles from "../burger-ingridient-list-item/burger-ingridient-list-item.module.css";
 
-function BurgerIngridientItem({ data }) {
+function BurgerIngridientItem({ data, route }) {
   const [modalActive, setModalActive] = useState(false);
   const [currentIngredientId, setCurrentIngredientId] = useState();
   const { _id, name, image_large, price } = data;
-  const { counter, ingridientModalTitle } = useSelector((state) => state.getData);
+  const { counter } = useSelector((state) => state.getData);
   const countValue = counter.find((item) => item._id === _id);
-  
+  const location = useLocation()
   const [{ opacity }, dragRef] = useDrag({
     type: "ingredient",
     item: { ...data },
@@ -23,9 +21,9 @@ function BurgerIngridientItem({ data }) {
       opacity: monitor.isDragging() ? 0.5 : 1,
     }),
   });
-
   return (
     <section>
+      <Link to={`ingredients/${data._id}`} state={{background:location}}>
       <div className="relative gap-2" onClick={() => setModalActive(true)} key={_id} ref={dragRef} style={{ opacity }}>
         <div
           className="flex flex-col items-center"
@@ -42,11 +40,7 @@ function BurgerIngridientItem({ data }) {
           <p className="text-center text-base pt-2">{name}</p>
         </div>
       </div>
-      {modalActive && (
-          <Modal active={modalActive} setActive={setModalActive} id={currentIngredientId} title={ingridientModalTitle}>
-            <IngredientDetails itemId={currentIngredientId} />
-          </Modal>
-        )}
+      </Link>
     </section>
   );
 }
