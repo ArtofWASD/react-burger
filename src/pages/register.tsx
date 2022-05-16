@@ -5,20 +5,25 @@ import { useDispatch } from "react-redux";
 import { postRegisterForm } from "../services/reducers/auth";
 import styles from "./styles.module.css";
 
+type TRegisterForm = {
+  name: string;
+  email: string;
+  password: string;
+}
 export default function RegisterPage() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const registerForm = {
+  const registerForm:TRegisterForm = {
     name: name,
     email: email,
     password: password,
   };
 
-  function registerHandler(e) {
+  function registerHandler(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     dispatch(postRegisterForm(registerForm));
     setName('');

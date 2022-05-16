@@ -1,19 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, FC } from "react";
 import { getIngridientItem } from "../../services/reducers/get-data";
-import PropTypes from "prop-types";
-import styles from "./ingredient-details.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import styles from "./ingredient-details.module.css";
+import { useAppSelector } from '../../utils/hook'
 
-export default function IngredientDetails() {
+const IngredientDetails:FC = () => {
   const dispatch = useDispatch();
   const id = useParams()
-  const { ingridients } = useSelector((state) => state.getData);
+  const { ingridients } = useAppSelector((state) => state.getData);
   const ingridientDetails = ingridients.filter((item) => item._id === id.id);
 
   useEffect(() => {
     dispatch(getIngridientItem(ingridientDetails));
-  }, [dispatch]);
+  }, []);
 
   return (
     <>
@@ -51,6 +51,4 @@ export default function IngredientDetails() {
     </>
   );
 }
-IngredientDetails.propTypes = {
-  id: PropTypes.number,
-};
+export default IngredientDetails

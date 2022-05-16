@@ -1,32 +1,36 @@
-import { useState, useRef, useEffect } from "react";
+import React from "react";
+import { useState, useRef, useEffect, FC } from "react";
+
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngridientsCategory from "../ingridients-category/ingridients-category";
 import BurgerIngridientList from "../burger-ingridient-list/burger-ingridient-list";
 import styles from "./burger-ingredients.module.css";
 
-function BurgerIngredients() {
-  const [current, setCurrent] = useState("one");
+const BurgerIngredients: FC = () => {
+  const [current, setCurrent] = useState<string>("one");
 
-  const bun = useRef();
-  const sauce = useRef();
-  const main = useRef();
-  const ingridientsList = useRef();
+  const bun = useRef<HTMLDivElement>(null);
+  const sauce = useRef<HTMLDivElement>(null);
+  const main = useRef<HTMLDivElement>(null);
+  const ingridientsList = useRef<HTMLDivElement>(null);
 
-  const handlerTabScrollUp = (item) => {
-    item.current.scrollIntoView({ block: "start", behavior: "smooth" });
+  const handlerTabScrollUp = (item: React.RefObject<HTMLDivElement>) => {
+    if (item.current !== null) {
+      item.current.scrollIntoView({ block: "start", behavior: "smooth" });
+    }
   };
 
   useEffect(() => {
     if (ingridientsList.current) {
       ingridientsList.current.addEventListener("scroll", () => {
-        const distance = ingridientsList.current.scrollTop;
-        const bunsHeight = Number(bun.current.offsetHeight);
-        const sauceHeight = Number(sauce.current.offsetHeight);
-        if (distance < bunsHeight) {
+        const distance = ingridientsList.current !== null ? ingridientsList.current.scrollTop : null;
+        const bunsHeight = Number(bun.current !== null ? bun.current.offsetHeight : null);
+        const sauceHeight = Number(sauce.current !== null ? sauce.current.offsetHeight : null);
+        if (distance !== null && distance < bunsHeight) {
           setCurrent("one");
-        } else if (distance < bunsHeight + sauceHeight) {
+        } else if (distance !== null && distance < bunsHeight + sauceHeight) {
           setCurrent("two");
-        } else if (distance > bunsHeight + sauceHeight) {
+        } else if (distance !== null && distance > bunsHeight + sauceHeight) {
           setCurrent("three");
         }
       });
@@ -74,6 +78,6 @@ function BurgerIngredients() {
       </div>
     </section>
   );
-}
+};
 
 export default BurgerIngredients;

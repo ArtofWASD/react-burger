@@ -2,7 +2,8 @@ import { useState, useCallback } from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { postOrder, addIngridientItem, addBunItem, updateIngridient } from "../../services/reducers/get-data";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from '../../utils/hook'
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
@@ -12,12 +13,14 @@ import styles from "./burger-constructor.module.css";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
 
 function BurgerConstructor() {
-  const [modalActive, setModalActive] = useState(false);
-  const { ingridients, constructor, total } = useSelector((state) => state.getData);
+  const [modalActive, setModalActive] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const constructorIngredients = ingridients.filter((item) => item.type !== "bun");
-  const isUser = useSelector((state) => state.authData.userState);
   const navigate = useNavigate()
+  const { ingridients, constructor, total } = useAppSelector((state) => state.getData);
+  const constructorIngredients = ingridients.filter((item) => item.type !== "bun");
+  const isUser = useAppSelector((state) => state.userData.userState);
+  const isLogged = useAppSelector((state) => state.loginData.loginState);
+
   const order = {
     ingredients: constructorIngredients.map((item) => item._id),
   };
@@ -27,7 +30,7 @@ function BurgerConstructor() {
     collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
-    drop(data) {
+    drop(data:any) {
       const newIngredient = {
         ...data,
         _uniqueId: uuidv4(),
@@ -52,7 +55,7 @@ function BurgerConstructor() {
   );
 
   function confirmOrder () {
-    if (isUser === true) {
+    if (isUser === true || isLogged === true) {
       dispatch(postOrder(order))
     }else{
       navigate("/login", { replace: true})
@@ -75,7 +78,7 @@ function BurgerConstructor() {
             <BurgerConstructorItem
               item={item}
               position=""
-              type="undefined"
+              type={undefined}
               isLocked={false}
               isDragged={true}
               key={item._uniqueId}

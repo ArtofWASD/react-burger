@@ -2,20 +2,30 @@ import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { LoginPage, RegisterPage, ForgotPasswordPage, ProfilePage, ResetPasswordPage, PageNotFoundPage, Orders } from "../../pages";
-import { getCookieRequest, getUserData } from "../../services/reducers/auth";
+import { getCookieRequest } from "../../services/reducers/auth";
+import { getUserData } from "../../services/reducers/userInfo";
 import { fetchData } from "../../services/reducers/get-data";
 import AppHeader from "../app-header/app-header";
 import Main from "../main/main";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { ProtectedUserRoute, ProtectedGuestRoute } from "../protected-route/ProtectedRoute";
+import { ProtectedUserRoute, ProtectedGuestRoute } from "../protected-route/protected-route";
 
+type TLocationState = {
+  state:{
+    background?: any
+  }
+}
 function App() {
   function ModalSwitch() {
     const location = useLocation();
     const navigate = useNavigate();
-    const background = location.state && location.state.background;
+    const {state} = location as TLocationState
+    const background = location.state && state.background;
+    console.log(state);
+    
     const dispatch = useDispatch();
+
     useEffect(() => {
       dispatch(getUserData());
       dispatch(getCookieRequest());

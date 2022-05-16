@@ -1,12 +1,19 @@
-import { useEffect, useCallback } from "react";
-
+import { useEffect, useCallback, FC } from "react";
 import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
 import styles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import ModalTitle from "../modal-title/modal-title";
+import { ReactNode } from "react";
 
-function Modal({ active, setActive, children, title }) {
+type TModal = {
+  title?: string;
+  children: ReactNode;
+  active: boolean;
+  setActive: (arg:boolean) => void;
+};
+
+const Modal: FC<TModal> = ({ active, setActive, children, title }) => {
+
   const closeModal = useCallback(() => {
     setActive(false);
   }, [setActive]);
@@ -35,15 +42,7 @@ function Modal({ active, setActive, children, title }) {
         {children}
       </div>
     </>,
-    document.getElementById("modal")
+    (document.getElementById("modal") as HTMLElement)
   );
-}
-
-Modal.propTypes = {
-  id: PropTypes.string,
-  active: PropTypes.bool.isRequired,
-  children: PropTypes.object.isRequired,
-  setActive: PropTypes.func,
-  title: PropTypes.string,
 };
 export default Modal;

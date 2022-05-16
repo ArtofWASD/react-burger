@@ -1,26 +1,30 @@
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { LogIn, getUserData } from "../services/reducers/auth";
+import { logIn } from "../services/reducers/login";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
 
+type TLogInForm ={
+  email:string;
+  password:string;
+}
+
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const logInForm = {
+  const logInForm:TLogInForm = {
     email: email,
     password: password,
   };
 
-  function logInHandler(e) {
+  function logInHandler(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    dispatch(getUserData())
-    dispatch(LogIn(logInForm));
-    navigate('/', { replace: true });
+    dispatch(logIn(logInForm));
+    navigate("/", { replace: true });
   }
   return (
     <>
@@ -34,8 +38,14 @@ export default function LoginPage() {
           className="grid gap-6 mt-6 justify-items-center"
         >
           <Input placeholder="E-mail" type="email" onChange={(e) => setEmail(e.target.value)} value={email ? email : ""} />
-          <Input placeholder="Пароль" type="password" icon="ShowIcon" onChange={(e) => setPassword(e.target.value)} value={password ? password : ""} />
-          <Button className="flex justify-center mb-20 w-40">Войти</Button>
+          <Input
+            placeholder="Пароль"
+            type="password"
+            icon="ShowIcon"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password ? password : ""}
+          />
+          <Button>Войти</Button>
         </form>
       </div>
       <div className="mt-20">

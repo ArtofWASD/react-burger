@@ -1,10 +1,10 @@
 import doneImg from "../../images/done.svg";
 import styles from "./order-details.module.css";
-import { useSelector } from "react-redux";
+import { useAppSelector } from '../../utils/hook';
 
 function OrderDetails() {
 
-  const orderId = useSelector((state) => state.getData.order.number);
+  const orderId = useAppSelector((state) => state.getData.order.number);
 
   return (
     <>

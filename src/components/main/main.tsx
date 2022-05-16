@@ -1,12 +1,12 @@
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useSelector } from "react-redux";
+import { useAppSelector } from '../../utils/hook';
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 
 export default function MainPage() {
 
-  const ingridients = useSelector((state) => state.getData);
+  const ingridients = useAppSelector(state => state.getData);
   
   return (
     <div className="grid justify-items-center">
