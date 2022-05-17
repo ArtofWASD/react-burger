@@ -1,54 +1,78 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./burger-constructor-item.module.css";
 import { deleteIngridientItem } from "../../services/reducers/get-data";
 import { useDispatch } from "react-redux";
-import { useRef } from "react";
+import { useRef, FC, DragEvent } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import PropTypes from 'prop-types';
-function BurgerConstructorItem({ item, position, type, isLocked, isDragged, index, moveCard}) {
+import styles from "./burger-constructor-item.module.css";
+
+type TBurgerConstructorItem = {
+  item: {
+    id: string;
+    type: string;
+    name: string;
+    image: string;
+    price: number;
+  };
+  isLocked: boolean;
+  isDragged: boolean;
+  position: string;
+  type: "top" | "bottom" | undefined;
+  index?: number | undefined;
+  moveCard?:(dragIndex: number, hoverIndex:number| undefined) => void;
+};
+
+const BurgerConstructorItem:FC<TBurgerConstructorItem> = ({ item, position, type, isLocked, isDragged, index, moveCard }) => {
   const dispatch = useDispatch();
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
+
   const [{ handlerId }, drop] = useDrop({
-    accept: 'component',
+    accept: "component",
     collect(monitor) {
       return {
-        handlerId: monitor.getHandlerId()
-      }
+        handlerId: monitor.getHandlerId(),
+      };
     },
-    hover(item, monitor) {
+    hover(item: any, monitor) {
       if (!ref.current) {
         return;
       }
       const dragIndex = item.index;
-      const hoverIndex = index;
+      const hoverIndex= index;
       if (dragIndex === hoverIndex) {
         return;
       }
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset = monitor.getClientOffset();
+      const clientOffset:(any) = monitor.getClientOffset();
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+
+      if (hoverIndex !== undefined && dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
       }
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+
+      if (hoverIndex !== undefined && dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
-      moveCard(dragIndex, hoverIndex);
+      
+      if (moveCard!==undefined) {
+        moveCard(dragIndex, hoverIndex);
+      }
+      
       item.index = hoverIndex;
-    }
-  })
+    },
+  });
   const [{ isDragging }, drag] = useDrag({
-    type: 'component',
+    type: "component",
     item: () => ({ id: item.id, index }),
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });
   const opacity = isDragging ? 0 : 1;
-  if (item.type !== 'bun') drag(drop(ref));
-  const preventDefault = (e) => e.preventDefault();
+  if (item.type !== "bun") drag(drop(ref));
+
+  const preventDefault = (e: DragEvent<HTMLElement>) => e.preventDefault();
 
   return (
     <section className="flex items-center py-2 pr-3" ref={ref} style={{ opacity }} data-handler-id={handlerId} onDrop={preventDefault}>
@@ -65,14 +89,5 @@ function BurgerConstructorItem({ item, position, type, isLocked, isDragged, inde
       />
     </section>
   );
-}
-BurgerConstructorItem.propTypes={
-  item: PropTypes.object.isRequired,
-  position: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  isLocked: PropTypes.bool.isRequired,
-  isDragged: PropTypes.bool.isRequired,
-  index: PropTypes.number,
-  moveCard: PropTypes.func
-}
+};
 export default BurgerConstructorItem;

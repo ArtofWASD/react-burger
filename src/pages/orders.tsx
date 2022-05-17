@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logOut } from "../services/reducers/auth";
+import { logOut } from "../services/reducers/login";
 import styles from "../pages/styles.module.css";
 
 export default function Orders() {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   return (
     <>
       <div className="ml-72 mt-32">

@@ -5,16 +5,21 @@ import { useDispatch } from "react-redux";
 import { postResetForm } from "../services/reducers/reset";
 import styles from "./styles.module.css";
 
+type TResetForm ={
+  email:string
+}
+
 export default function ForgotPasswordPage() {
-  const [emailValue, setEmailValue] = useState("");
+  const [emailValue, setEmailValue] = useState<string>("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation()
-  const resetForm = {
+
+  const resetForm:TResetForm = {
     email: emailValue,
   };
 
-  function postValue(e) {
+  function postValue(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     dispatch(postResetForm(resetForm));
     navigate("/reset-password", { replace: true, state:location});

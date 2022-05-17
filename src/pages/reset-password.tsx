@@ -6,15 +6,25 @@ import { postResetPassword } from "../services/reducers/reset";
 
 import styles from "./styles.module.css";
 
+type TLocationState = {
+  state: {pathname:string};
+}
+
+type TResetForm = {
+  password: string;
+  token: string;
+}
+
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState("");
   const [validationCode, setValidationCode] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  
-  
-  const resetForm = {
+
+  const {state} = location as TLocationState
+
+  const resetForm:TResetForm = {
     password: password,
     token: validationCode,
   };
@@ -23,9 +33,10 @@ export default function ResetPasswordPage() {
     dispatch(postResetPassword(resetForm));
     navigate("/", { replace: true });
   }
+  
   return (
     <>
-      {location.state && location.state.pathname === "/forgot-password" ? (
+      {location.state && state.pathname === "/forgot-password" ? (
         <>
         <div className="grid justify-center mt-48">
         <p className={`${styles.font} text-center text-2xl`}>Восстановление пароля</p>
