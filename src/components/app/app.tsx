@@ -22,8 +22,6 @@ function App() {
     const navigate = useNavigate();
     const {state} = location as TLocationState
     const background = location.state && state.background;
-    console.log(state);
-    
     const dispatch = useDispatch();
 
     useEffect(() => {

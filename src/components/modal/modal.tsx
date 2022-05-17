@@ -19,7 +19,7 @@ const Modal: FC<TModal> = ({ active, setActive, children, title }) => {
   }, [setActive]);
 
   const escButtonHandler = useCallback(
-    (e) => {
+    (e:KeyboardEvent) => {
       if (e.key === "Escape") {
         closeModal();
       }
