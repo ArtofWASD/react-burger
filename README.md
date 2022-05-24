@@ -5,6 +5,7 @@
 ## В проекте используются :
 
 - CRA
+- TypeScript
 - Tailwind Css 3.0
 - Redux-Toolkit
 - React-Drag'n'Drop
