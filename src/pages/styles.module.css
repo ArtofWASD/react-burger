@@ -10,3 +10,21 @@
     color: #4C4CFF;
     cursor: pointer
 }
+.number{
+    font-family: 'iceland';
+    color: white;
+}
+.number_big_glow{
+    font-family: 'iceland';
+    line-height: 1;
+    font-size: 144px;
+    color: white;
+    text-shadow: 
+    0 0 15px #3333FF40,
+    0 0 30px #3333FF40,
+    0 0 45px #3333FF40;
+}
+.number_green {
+    font-family: 'iceland';
+    color: #00cccc;
+}

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { LoginPage, RegisterPage, ForgotPasswordPage, ProfilePage, ResetPasswordPage, PageNotFoundPage, Orders } from "../../pages";
+import { LoginPage, RegisterPage, ForgotPasswordPage, ProfilePage, ResetPasswordPage, PageNotFoundPage, Orders, FeedPage } from "../../pages";
 import { getCookieRequest } from "../../services/reducers/auth";
 import { getUserData } from "../../services/reducers/userInfo";
 import { fetchData } from "../../services/reducers/get-data";
@@ -87,6 +87,7 @@ function App() {
               </ProtectedUserRoute>
             }
           />
+          <Route path="/feed" element={<FeedPage />} />
           <Route path="/ingredients/:id" element={<IngredientDetails />} />
           <Route path="*" element={<PageNotFoundPage />} />
         </Routes>
