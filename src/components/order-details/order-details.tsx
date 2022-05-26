@@ -1,4 +1,5 @@
 import doneImg from "../../images/done.svg";
+import orderimg from "../../images/order.png"
 import styles from "./order-details.module.css";
 import { useAppSelector } from "../../utils/hook";
 
@@ -10,6 +11,7 @@ function OrderDetails() {
       {!orderId ? (
         <div className="flex flex-col justify-center items-center">
           <p className={styles.modalDoneIdTitle}>Формируем ваш заказ </p>
+          <img src={orderimg} alt="" className={styles.modalOrderImg} />
         </div>
       ) : (
         <div className="flex flex-col justify-center items-center">

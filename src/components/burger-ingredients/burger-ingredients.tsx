@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useRef, useEffect, FC } from "react";
-
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngridientsCategory from "../ingridients-category/ingridients-category";
 import BurgerIngridientList from "../burger-ingridient-list/burger-ingridient-list";

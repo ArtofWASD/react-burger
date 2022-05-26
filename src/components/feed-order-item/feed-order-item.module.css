@@ -1,0 +1,30 @@
+.order_body{
+    min-height: 215px;
+    background-color: #1C1C21;
+    border-radius: 40px;
+    margin-bottom: 16px;
+}
+.order_number{
+    font-family: 'iceland';
+    font-size: 28px;
+}
+.order_time{
+    font-family: 'JetBrainsMono-Regular';
+    font-size: 16px;
+    color: #8585AD;
+}
+
+.order_name{
+    font-family: 'JetBrainsMono-Regular';
+    font-size: 24px;
+}
+
+.order_img{
+    height: 64px;
+    width: 64px;
+    background-color: #131316;
+    border: 2px solid;
+    border-color: #801ab2;
+    border-radius: 50%;
+    z-index: auto;
+}
