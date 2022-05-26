@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API_URL } from "../../utils/api-constant";
-import { checkResponse } from "../../utils/handler-functions";
+import { checkResponse, getCookie } from "../../utils/handler-functions";
 
 type TCounter ={
   _id: string,
@@ -24,6 +24,7 @@ type TIngridients ={
 }
 
 type TConstructorItem ={
+  _id: string,
   id:string,
   _uniqueId: string,
   type:string,
@@ -34,7 +35,9 @@ type TConstructorItem ={
   moveCard:() =>void
 
 }
-
+type TOrderIngridients = {
+  _id:string,
+}
 export const fetchData = createAsyncThunk("data/fetchData", async (_, { rejectWithValue }) => {
   return fetch(`${API_URL}/ingredients`)
     .then(checkResponse)
@@ -52,6 +55,7 @@ export const postOrder = createAsyncThunk("data/postOrder", async (order:any, { 
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
+      Authorization: "Bearer " + getCookie("token")
     },
     body: JSON.stringify(order),
   })
@@ -78,6 +82,7 @@ export const dataSlice = createSlice({
       ingridients: [] as Array<TConstructorItem>,
       buns: [] as Array<TConstructorItem>,
     },
+    orderIngridients:[] as Array<TOrderIngridients>,
     counter: [] as Array<TCounter>,
     status: '',
     error: null,
@@ -92,6 +97,7 @@ export const dataSlice = createSlice({
     resetConstructor(state) {
       state.constructor.ingridients = [];
       state.constructor.buns = [];
+      state.orderIngridients= [];
       state.total = 0;
       state.counter = [];
     },
@@ -101,6 +107,7 @@ export const dataSlice = createSlice({
     deleteIngridientItem(state, action) {
       let { inputIndex } = action.payload;
       state.constructor.ingridients.splice(inputIndex, 1);
+      state.orderIngridients.splice(inputIndex, 1);
       state.total = state.constructor.ingridients.reduce(
         (summ, current:any) => summ + current.price,
         state.constructor.buns.reduce((summ, current:any) => summ + current.price * 2, 0)
@@ -112,6 +119,7 @@ export const dataSlice = createSlice({
     },
     addIngridientItem(state, action) {
       state.constructor.ingridients.push(action.payload);
+      state.orderIngridients.push(action.payload._id)
       state.total = state.constructor.ingridients.reduce(
         (summ, current) => summ + current.price,
         state.constructor.buns.reduce((summ, current) => summ + current.price * 2, 0)
@@ -129,6 +137,7 @@ export const dataSlice = createSlice({
     addBunItem(state, action) {
       if (state.constructor.buns.length < 1) {
         state.constructor.buns.push(action.payload);
+        state.orderIngridients.push(action.payload._id)
         state.total = state.constructor.buns.reduce((summ, current) => summ + current.price * 2, 0);
         state.counter.push({
           _id: action.payload._id,
