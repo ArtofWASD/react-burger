@@ -17,12 +17,12 @@ const FeedOrderItem: FC = () => {
           <p>Death Star Starship Main бургер</p>
         </div>
         <div className="order_ingridients grid grid-cols-2 items-center pt-10">
-          <div className="grid grid-flow-col px-6">
+          <div className="order_ingridients_list grid grid-flow-col px-6">
             {images &&
               images.slice(0, 6).map((item, index) => (
-                <>
-                  <img src={item.image_mobile} alt={item.name} className={`${styles.order_img}`} />
-                </>
+                <div className={styles.order_img_border}>
+                  <img src={item.image_mobile} alt={item.name} className={`${styles.order_img}`} style={{zIndex:`${index}`}} />
+                </div>
               ))}
           </div>
           <div className="flex items-center gap-2 justify-self-end pr-6">
