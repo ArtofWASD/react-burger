@@ -30,7 +30,7 @@
 .order_ingridient_img_border{
   background: linear-gradient(#131316, #131316) padding-box,
   linear-gradient(to right,#801ab2, #4c4cff) 100%;
-  border: 5px solid transparent;
+  border: 2px solid transparent;
   border-radius: 50%;
 }
 
@@ -69,6 +69,3 @@
   z-index: 1;
 }
 
-.ingredients_parent > div:nth-child(7) {
-  z-index: 0;
-}

@@ -1,11 +1,18 @@
-import { FC } from "react";
-import { useAppSelector } from "../../utils/hook";
+import { FC, useEffect } from "react";
+import { useAppSelector, useAppDispatch } from "../../utils/hook";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./feed-order-item.module.css";
+import FeedOrderIngridient from '../feed-order-ingridient/feed-order-ingridient'
+import { wsOn } from "../../services/reducers/socket";
 
 const FeedOrderItem: FC = () => {
-  const images = useAppSelector((state) => state.getData.ingridients);
-
+  const ingridients = useAppSelector((state) => state.getData.ingridients);
+  const dispatch = useAppDispatch();
+  
+  useEffect(()=>{
+    dispatch(wsOn())
+  },[])
+  
   return (
     <>
       <div className={styles.order_body}>
@@ -18,12 +25,10 @@ const FeedOrderItem: FC = () => {
         </div>
         <div className="order_ingridients grid grid-cols-2 items-center pt-10">
           <div className={styles.ingredients_parent}>
-            {images &&
-              images.slice(0, 6).map((item) => (
-                <div className={styles.order_ingridient_img_border}>
-                  <img src={item.image_mobile} alt={item.name} className={`${styles.order_ingridient_img}`} />
-                </div>
-              ))}
+            {ingridients && ingridients.map((item, i)=>(
+              <FeedOrderIngridient item={item} key={item._id}/>
+            )
+            )}
           </div>
           <div className="flex items-center gap-2 justify-self-end pr-6">
             <p className={styles.order_number}>480</p>
