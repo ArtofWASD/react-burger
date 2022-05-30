@@ -1,7 +1,14 @@
+import { useEffect } from "react";
 import styles from "./styles.module.css";
 import FeedOrderItem from "../components/feed-order-item/feed-order-item";
+import { fetchFeed } from "../services/reducers/socket";
+import { useAppDispatch } from "../utils/hook";
 
 export default function FeedPage() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchFeed())
+  },[])
   return (
     <div className="grid mx-72 pt-10">
       <div>

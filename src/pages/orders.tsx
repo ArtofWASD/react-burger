@@ -5,8 +5,6 @@ import { logOut } from "../services/reducers/login";
 import FeedOrderItem from '../components/feed-order-item/feed-order-item';
 import styles from "../pages/styles.module.css";
 
-import { wsOn } from "../services/reducers/socket";
-
 export default function Orders() {
   const dispatch = useDispatch();
   return (

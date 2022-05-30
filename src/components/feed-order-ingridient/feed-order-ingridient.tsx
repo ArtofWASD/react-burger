@@ -1,15 +1,24 @@
 import { FC } from "react";
-import styles from "./feed-order-ingridient.module.css"
+import styles from "./feed-order-ingridient.module.css";
 
 type TItem = {
-    item:any
-}
+  item: any;
+  amount: number | undefined;
+};
 
-const FeedOrderIngridient:FC<TItem> = ({item}) => {
+const FeedOrderIngridient: FC<TItem> = ({ item, amount }) => {
   return (
     <>
       <div className={styles.order_ingridient_img_border}>
-        <img src={item.image} alt={item.name} className={`${styles.order_ingridient_img}`} />
+        {amount && amount !== undefined ? (
+          <div>
+            <img src={item.image} alt={item.name} className={`${styles.order_ingridient_img}`} />
+            <div className={`${styles.image_overlay}`} />
+            <p className={`${styles.amount} text-xl`}>+{amount}</p>
+          </div>
+        ) : (
+          <img src={item.image} alt={item.name} className={`${styles.order_ingridient_img}`} />
+        )}
       </div>
     </>
   );

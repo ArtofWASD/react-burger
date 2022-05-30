@@ -3,16 +3,11 @@ import { useAppSelector, useAppDispatch } from "../../utils/hook";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./feed-order-item.module.css";
 import FeedOrderIngridient from "../feed-order-ingridient/feed-order-ingridient";
-import { wsOn } from "../../services/reducers/socket";
 import { Link, useLocation } from "react-router-dom";
+
 const FeedOrderItem: FC = (data) => {
   const ingridients = useAppSelector((state) => state.getData.ingridients);
-  const dispatch = useAppDispatch();
   const location = useLocation()
-  useEffect(() => {
-    dispatch(wsOn());
-  }, []);
-
   return (
     <>
       <Link to={`feed/${data}`} state={{ background: location }}>
@@ -26,7 +21,13 @@ const FeedOrderItem: FC = (data) => {
           </div>
           <div className="order_ingridients grid grid-cols-2 items-center pt-10">
             <div className={styles.ingredients_parent}>
-              {ingridients && ingridients.map((item, i) => <FeedOrderIngridient item={item} key={item._id} />)}
+              {ingridients && ingridients.map((item, i) => {
+                if (i<=5) {
+                  return(
+                    <FeedOrderIngridient item={item} key={item._id} amount= {i === 5 ? ingridients.length -5 : undefined} />
+                  )
+                }
+              })}
             </div>
             <div className="flex items-center gap-2 justify-self-end pr-6">
               <p className={styles.order_number}>480</p>

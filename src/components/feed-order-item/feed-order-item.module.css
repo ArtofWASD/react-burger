@@ -20,8 +20,8 @@
 }
 
 .order_ingridient_img {
-  height: 64px;
-  width: 64px;
+  height: 60px;
+  width: 60px;
   background-color: #131316;
   border-radius: 50%;
   object-fit: cover;
