@@ -10,6 +10,7 @@ import Main from "../main/main";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { ProtectedUserRoute, ProtectedGuestRoute } from "../protected-route/protected-route";
+import FeedOrderInfo from "../feed-order-info/feed-order-info";
 
 type TLocationState = {
   state:{
@@ -56,6 +57,14 @@ function App() {
             }
           />
           <Route
+            path="/profile/orders/:id"
+            element={
+              <ProtectedGuestRoute>
+                <FeedOrderInfo />
+              </ProtectedGuestRoute>
+            }
+          />
+          <Route
             path="/login"
             element={
               <ProtectedUserRoute>
@@ -88,6 +97,7 @@ function App() {
             }
           />
           <Route path="/feed" element={<FeedPage />} />
+          <Route path="/feed/:id" element={<FeedOrderInfo />} />
           <Route path="/ingredients/:id" element={<IngredientDetails />} />
           <Route path="*" element={<PageNotFoundPage />} />
         </Routes>
@@ -103,6 +113,19 @@ function App() {
                   }}
                 >
                   <IngredientDetails />
+                </Modal>
+              }
+            />
+            <Route
+              path="/feed/:id"
+              element={
+                <Modal
+                  active={true}
+                  setActive={() => {
+                    handleModalClose();
+                  }}
+                >
+                  <FeedOrderInfo />
                 </Modal>
               }
             />

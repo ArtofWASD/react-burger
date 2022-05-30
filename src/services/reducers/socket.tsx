@@ -22,13 +22,11 @@ export const socketSlice = createSlice({
   reducers: {
     wsOn(state) {
       const ws = new WebSocket("wss://norma.nomoreparties.space/orders/all");
-      ws.onopen = (event:Event) =>{
-          
-      }
       ws.onmessage = (event:MessageEvent) =>{
-      
-        state.orders = JSON.parse(event.data)
-        
+        const data = JSON.parse(event.data);
+        if (data) {
+          state.orders = data
+        }
       }
       
     },
