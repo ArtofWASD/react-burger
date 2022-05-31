@@ -44,8 +44,6 @@ const FeedOrderItem: FC<TFeedOrderItem> = ({ data }) => {
       day = "Сегодня";
     } else if (currentDate - orderDate === 24 * 60 * 60 * 1000) {
       day = "Вчера";
-    } else if (currentDate - orderDate === -24 * 60 * 60 * 1000) {
-      day = "Завтра";
     }
     const time = new Date(date).toLocaleTimeString("ru-Ru", {
       hour: "2-digit",
