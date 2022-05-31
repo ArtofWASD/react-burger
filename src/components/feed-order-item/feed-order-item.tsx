@@ -28,14 +28,40 @@ const FeedOrderItem: FC<TFeedOrderItem> = ({ data }) => {
     const obj = { ...result, _uniqueId: uuidv4() };
     return obj;
   });
-    
+
+  const summ = filtredIngredients.reduce((acc, obj) => {
+    if (obj.type === "bun") {
+      return acc + obj.price * 2;
+    } 
+    return acc + obj.price;
+  }, 0);
+
+  const formatDate = (date: string): string => {
+    const orderDate = new Date(date).setHours(0, 0, 0, 0);
+    const currentDate = new Date().setHours(0, 0, 0, 0);
+    let day = new Date(orderDate).toLocaleDateString("ru-RU", {});
+    if (orderDate === currentDate) {
+      day = "Сегодня";
+    } else if (currentDate - orderDate === 24 * 60 * 60 * 1000) {
+      day = "Вчера";
+    } else if (currentDate - orderDate === -24 * 60 * 60 * 1000) {
+      day = "Завтра";
+    }
+    const time = new Date(date).toLocaleTimeString("ru-Ru", {
+      hour: "2-digit",
+      minute: "2-digit",
+      timeZoneName: "short",
+    });
+    return `${day}, ${time}`;
+  };
+
   return (
     <>
       <Link to={`/feed/${data._id}`} state={{ background: location }}>
         <div className={styles.order_body} onClick={() => setModalActive(true)}>
           <div className="order_title grid grid-cols-2 items-center px-6 pt-5">
             <p className={styles.order_number}>#{data.number}</p>
-            <p className={`${styles.order_time} justify-self-end`}>{data.createdAt}</p>
+            <p className={`${styles.order_time} justify-self-end`}>{formatDate(data.createdAt)}</p>
           </div>
           <div className={`${styles.order_name} px-6`}>
             <p>{data.name}</p>
@@ -45,12 +71,14 @@ const FeedOrderItem: FC<TFeedOrderItem> = ({ data }) => {
               {filtredIngredients &&
                 filtredIngredients.map((item: any, i: number) => {
                   if (i <= 5) {
-                    return (<FeedOrderIngridient item={item} key={item._uniqueId} amount={i === 5 ? data.ingredients.length - 5 : undefined} />);
+                    return (
+                      <FeedOrderIngridient item={item} key={item._uniqueId} amount={i === 5 ? data.ingredients.length - 5 : undefined} />
+                    );
                   }
                 })}
             </div>
             <div className="flex items-center gap-2 justify-self-end pr-6">
-              <p className={styles.order_number}>480</p>
+              <p className={styles.order_number}>{summ}</p>
               <CurrencyIcon type="primary" />
             </div>
           </div>
