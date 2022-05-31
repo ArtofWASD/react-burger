@@ -38,6 +38,7 @@ type TConstructorItem ={
 type TOrderIngridients = {
   _id:string,
 }
+
 export const fetchData = createAsyncThunk("data/fetchData", async (_, { rejectWithValue }) => {
   return fetch(`${API_URL}/ingredients`)
     .then(checkResponse)

@@ -2,11 +2,14 @@ import { FC } from "react";
 import styles from "./feed-order-ingridient.module.css";
 
 type TItem = {
-  item: any;
+  item: {
+    image: string;
+    name: string;
+  };
   amount: number | undefined;
 };
 
-const FeedOrderIngridient: FC<TItem> = ({ item, amount }) => {
+const FeedOrderIngridient: FC<TItem> = ({ item, amount }) => {  
   return (
     <>
       <div className={styles.order_ingridient_img_border}>

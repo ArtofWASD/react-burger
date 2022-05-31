@@ -1,27 +1,31 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { checkResponse, getCookie } from "../../utils/handler-functions";
-import { API_URL } from "../../utils/api-constant";
 
-
-export const fetchFeed = createAsyncThunk("socket/fetchFeed", async () => {
-  const ws = new WebSocket("wss://norma.nomoreparties.space/orders/all");
-  ws.onmessage = (event: MessageEvent) => {
-    let data = JSON.parse(event.data)
-  };
-});
+type TToken = {
+  token?: string;
+}
 
 export const socketSlice = createSlice({
   name: "socket",
   initialState: {
-    orders:[] as any
+    data:{
+      orders:[],
+      success: false,
+      total: 0,
+      totalToday : 0,
+    }
   },
   reducers: {
-  },
-  extraReducers: (builder) => {
-    builder.addCase(fetchFeed.fulfilled, (state, action:any) => {      
-      state = action.payload;
-    });
+    wsInit(_, action:PayloadAction<TToken>){
+
+    },
+    wsClose(_, action:PayloadAction<TToken>){
+      
+    },
+    addOrders(state, action:any) {
+      state.data = action.payload;
+    },
   },
 });
-
+export const { addOrders, wsInit, wsClose } = socketSlice.actions;
 export default socketSlice.reducer;

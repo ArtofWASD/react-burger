@@ -13,15 +13,15 @@ import { ProtectedUserRoute, ProtectedGuestRoute } from "../protected-route/prot
 import FeedOrderInfo from "../feed-order-info/feed-order-info";
 
 type TLocationState = {
-  state:{
-    background?: any
-  }
-}
+  state: {
+    background?: any;
+  };
+};
 function App() {
   function ModalSwitch() {
     const location = useLocation();
     const navigate = useNavigate();
-    const {state} = location as TLocationState
+    const { state } = location as TLocationState;
     const background = location.state && state.background;
     const dispatch = useDispatch();
 

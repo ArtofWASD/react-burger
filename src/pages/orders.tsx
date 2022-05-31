@@ -30,10 +30,7 @@ export default function Orders() {
         </ul>
       </div>
       <div className={`${styles.orders_list} mr-72 mt-10`}>
-          <FeedOrderItem/>
-          <FeedOrderItem/>
-          <FeedOrderItem/>
-          <FeedOrderItem/>
+
       </div>
     </div>
   );
