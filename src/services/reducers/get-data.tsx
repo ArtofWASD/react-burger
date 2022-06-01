@@ -71,12 +71,17 @@ export const postOrder = createAsyncThunk("data/postOrder", async (order: any, {
 });
 
 export const getOrderByNumber = (number: number) => {
-  return fetch(`${API_URL}/orders/${number}`, {
+  return fetch(`https://norma.nomoreparties.space/api/orders/${number}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
-  }).then((res) => checkResponse(res));
+  }).then((res) => checkResponse(res))
+    .then((data) => {
+    if (data.success) {
+      return data;
+    }
+  })
 };
 
 export const dataSlice = createSlice({
@@ -98,9 +103,7 @@ export const dataSlice = createSlice({
     total: 0,
     ingridientModalTitle: "Детали ингридиента",
     userOrder: {
-      orderId: "",
-      orderName: "",
-      orderIngredients: [],
+
     },
   },
   reducers: {
@@ -176,7 +179,7 @@ export const dataSlice = createSlice({
       state.constructor.ingridients = action.payload;
     },
     getUserOrder(state, action) {
-      state.userOrder.orderIngredients = [];
+      state.userOrder = {};
       state.userOrder = action.payload;
     },
   },

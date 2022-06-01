@@ -61,14 +61,14 @@ const FeedOrderItem: FC<TFeedOrderItem> = ({ data, route }) => {
   const orderObject = {
     ingridients : filtredIngredients,
     orderSumm : summ,
-    orderId : data._id,
+    orderNumber : data.number,
     orderName: data.name,
     orderDate : formatDate(data.createdAt)
   }
   
   return (
     <>
-      <Link to={`${route}/${data._id}`} state={{ background: location }} >
+      <Link to={`${route}/${data.number}`} state={{ background: location }} >
         <div onClick={() => dispatch(getUserOrder(orderObject))}>
         <div className={styles.order_body} onClick={() => setModalActive(true)}>
           <div className="order_title grid grid-cols-2 items-center px-6 pt-5">
