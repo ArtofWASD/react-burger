@@ -70,7 +70,7 @@ export const postOrder = createAsyncThunk("data/postOrder", async (order: any, {
     .catch((error) => rejectWithValue(error.message));
 });
 
-export const getOrderByNumber = (number: number) => {
+export const getOrderByNumber = createAsyncThunk("data/getOrderByNumber", async(number: number) => {
   return fetch(`https://norma.nomoreparties.space/api/orders/${number}`, {
     method: "GET",
     headers: {
@@ -79,10 +79,10 @@ export const getOrderByNumber = (number: number) => {
   }).then((res) => checkResponse(res))
     .then((data) => {
     if (data.success) {
-      return data;
+      return data.orders[0];
     }
   })
-};
+});
 
 export const dataSlice = createSlice({
   name: "data",
@@ -102,9 +102,7 @@ export const dataSlice = createSlice({
     error: null,
     total: 0,
     ingridientModalTitle: "Детали ингридиента",
-    userOrder: {
-
-    },
+    userOrder: {},
   },
   reducers: {
     reset(state) {
@@ -178,10 +176,6 @@ export const dataSlice = createSlice({
     updateIngridient(state, action) {
       state.constructor.ingridients = action.payload;
     },
-    getUserOrder(state, action) {
-      state.userOrder = {};
-      state.userOrder = action.payload;
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchData.pending, (state) => {
@@ -206,9 +200,12 @@ export const dataSlice = createSlice({
     builder.addCase(postOrder.rejected, (state) => {
       state.status = "False";
     });
+    builder.addCase(getOrderByNumber.fulfilled, (state, action) => {
+      state.userOrder = action.payload;
+    })
   },
 });
 
-export const { reset, getIngridientItem, deleteIngridientItem, addIngridientItem, addBunItem, updateIngridient, getUserOrder } = dataSlice.actions;
+export const { reset, getIngridientItem, deleteIngridientItem, addIngridientItem, addBunItem, updateIngridient } = dataSlice.actions;
 
 export default dataSlice.reducer;

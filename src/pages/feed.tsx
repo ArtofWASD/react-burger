@@ -2,6 +2,16 @@ import styles from "./styles.module.css";
 import FeedOrderItem from "../components/feed-order-item/feed-order-item";
 import { useGetOrdersAllQuery } from "../services/reducers/socket";
 
+type TItem = {
+  _id: string;
+  ingredients: [];
+  status: string;
+  name: string;
+  number: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export default function FeedPage() {
   const { data } = useGetOrdersAllQuery();
   return (
@@ -12,7 +22,7 @@ export default function FeedPage() {
       {data !== undefined && data.orders.length !== 0 ? (
         <div className="grid grid-cols-2 justify-center gap-6">
           <div className={`${styles.orders_list} pt-5 order_list pr-20`}>
-            {data.orders.map((item: any) => {
+            {data.orders.map((item: TItem) => {
               return <FeedOrderItem data={item} key={item._id} route={`/feed`} />;
             })}
           </div>
@@ -21,7 +31,7 @@ export default function FeedPage() {
               <div>
                 <div className={`${styles.font} text-2xl pb-5`}>Готовы:</div>
                 <ul>
-                  {data.orders.slice(0, 6).map((item: any) => {
+                  {data.orders.slice(0, 6).map((item: TItem) => {
                     if (item.status === "done") {
                       return (
                         <li className={`${styles.number_green} text-2xl`} key={item._id}>
@@ -35,7 +45,7 @@ export default function FeedPage() {
               <div>
                 <div className={`${styles.font} text-2xl pb-5`}>В работе:</div>
                 <ul>
-                {data.orders.slice(0, 6).map((item: any) => {
+                  {data.orders.slice(0, 6).map((item: TItem) => {
                     if (item.status === "created") {
                       return (
                         <li className={`${styles.number} text-2xl`} key={item._id}>
