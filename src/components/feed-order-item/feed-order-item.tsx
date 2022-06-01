@@ -5,7 +5,7 @@ import styles from "./feed-order-item.module.css";
 import FeedOrderIngridient from "../feed-order-ingridient/feed-order-ingridient";
 import { Link, useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-
+import { formatDate } from "../../utils/handler-functions";
 
 type TFeedOrderItem = {
   data: {
@@ -24,6 +24,7 @@ const FeedOrderItem: FC<TFeedOrderItem> = ({ data, route }) => {
   const [modalActive, setModalActive] = useState<boolean>(false);
   const ingredients = useAppSelector((state) => state.getData.ingridients);
   const location = useLocation();
+  console.log(location);
 
   const filtredIngredients = data.ingredients.map((item) => {
     const result = ingredients.filter((image) => image._id === item)[0];
@@ -37,24 +38,16 @@ const FeedOrderItem: FC<TFeedOrderItem> = ({ data, route }) => {
     } 
     return acc + obj.price;
   }, 0);
-
-  const formatDate = (date: string): string => {
-    const orderDate = new Date(date).setHours(0, 0, 0, 0);
-    const currentDate = new Date().setHours(0, 0, 0, 0);
-    let day = new Date(orderDate).toLocaleDateString("ru-RU", {});
-    if (orderDate === currentDate) {
-      day = "Сегодня";
-    } else if (currentDate - orderDate === 24 * 60 * 60 * 1000) {
-      day = "Вчера";
-    }
-    const time = new Date(date).toLocaleTimeString("ru-Ru", {
-      hour: "2-digit",
-      minute: "2-digit",
-      timeZoneName: "short",
-    });
-    return `${day}, ${time}`;
-  };
   
+  const orderStatus = () => {
+    if (data.status === 'done') {
+      return (<div className={styles.order_status_success}>Выполнен</div>)
+    } else if(data.status === 'created') {
+      return (<div className={styles.order_status_created}>Готовится</div>)
+    } else if(data.status === 'created'){
+
+    }
+  }
   return (
     <>
       <Link to={`${route}/${data.number}`} state={{ background: location }} >
@@ -65,6 +58,9 @@ const FeedOrderItem: FC<TFeedOrderItem> = ({ data, route }) => {
           </div>
           <div className={`${styles.order_name} px-6`}>
             <p>{data.name}</p>
+          </div>
+          <div className="px-6">
+            {location.pathname === '/feed' || location.state !== null ? (<></>):(<div>{orderStatus()}</div>)}
           </div>
           <div className="order_ingridients grid grid-cols-2 items-center py-5">
             <div className={styles.ingredients_parent}>

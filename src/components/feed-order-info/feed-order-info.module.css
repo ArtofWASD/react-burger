@@ -1,0 +1,23 @@
+.feed_order_info_number {
+    font-size: 28px;
+    font-family: "iceland";
+}
+.feed_order_info_text{
+    font-size: 24px;
+    font-family: 'JetBrainsMono-Regular';
+}
+.feed_order_status_success {
+    font-family: 'JetBrainsMono-Regular';
+    font-size: 16px;
+    color:#00cccc
+}
+.feed_order_status_in_work {
+    font-family: 'JetBrainsMono-Regular';
+    font-size: 16px;
+    color:#F2F2F3
+}
+.feed_order_time {
+    font-family: "JetBrainsMono-Regular";
+    font-size: 16px;
+    color: #8585ad;
+  }

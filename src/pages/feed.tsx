@@ -29,9 +29,9 @@ export default function FeedPage() {
           <div className="pt-5">
             <div className="grid grid-cols-2 orders_info">
               <div>
-                <div className={`${styles.font} text-2xl pb-5`}>Готовы:</div>
+                <div className={`${styles.font} text-2xl pb-2`}>Готовы:</div>
                 <ul>
-                  {data.orders.slice(0, 6).map((item: TItem) => {
+                  {data.orders.slice(0, 10).map((item: TItem) => {
                     if (item.status === "done") {
                       return (
                         <li className={`${styles.number_green} text-2xl`} key={item._id}>
@@ -45,7 +45,7 @@ export default function FeedPage() {
               <div>
                 <div className={`${styles.font} text-2xl pb-5`}>В работе:</div>
                 <ul>
-                  {data.orders.slice(0, 6).map((item: TItem) => {
+                  {data.orders.slice(0, 10).map((item: TItem) => {
                     if (item.status === "created") {
                       return (
                         <li className={`${styles.number} text-2xl`} key={item._id}>
@@ -58,10 +58,10 @@ export default function FeedPage() {
               </div>
             </div>
             <div>
-              <div className={`${styles.font} text-2xl pt-14`}>Выполнено за все время:</div>
+              <div className={`${styles.font} text-2xl pt-5`}>Выполнено за все время:</div>
               <span className={`${styles.number_big_glow}`}>{data.total}</span>
             </div>
-            <div className={`${styles.font} text-2xl pt-14`}>Выполнено за сегодня:</div>
+            <div className={`${styles.font} text-2xl pt-5`}>Выполнено за сегодня:</div>
             <span className={`${styles.number_big_glow}`}>{data.totalToday}</span>
           </div>
         </div>

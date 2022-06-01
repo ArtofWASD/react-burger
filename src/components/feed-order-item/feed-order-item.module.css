@@ -13,7 +13,16 @@
   font-size: 16px;
   color: #8585ad;
 }
-
+.order_status_success{
+  font-family: "JetBrainsMono-Regular";
+  font-size: 16px;
+  color: #00CCCC;
+}
+.order_status_created{
+  font-family: "JetBrainsMono-Regular";
+  font-size: 16px;
+  color: #F2F2F3;
+}
 .order_name {
   font-family: "JetBrainsMono-Regular";
   font-size: 24px;

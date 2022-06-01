@@ -1,0 +1,24 @@
+.modal_feed_img{
+    height: 64px;
+    width: 64px;
+    background-color: #131316;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.modal_feed_img_border{
+    position: relative;
+    background: linear-gradient(#131316, #131316) padding-box,
+    linear-gradient(to right,#801ab2, #4c4cff) 100%;
+    border: 2px solid transparent;
+    border-radius: 50%;
+}
+.modal_feed_text{
+    font-family: 'JetBrainsMono-Regular';
+    font-size: 16px;
+    color: #F2F2F3;
+}
+.modal_feed_number{
+    font-family: 'iceland';
+    font-size: 28px;
+    color: #F2F2F3;
+}

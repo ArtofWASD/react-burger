@@ -30,3 +30,20 @@ export const getCookie = (name: string) => {
   const matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)"));
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
+
+export const formatDate = (date: string): string => {
+  const orderDate = new Date(date).setHours(0, 0, 0, 0);
+  const currentDate = new Date().setHours(0, 0, 0, 0);
+  let day = new Date(orderDate).toLocaleDateString("ru-RU", {});
+  if (orderDate === currentDate) {
+    day = "Сегодня";
+  } else if (currentDate - orderDate === 24 * 60 * 60 * 1000) {
+    day = "Вчера";
+  }
+  const time = new Date(date).toLocaleTimeString("ru-Ru", {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZoneName: "short",
+  });
+  return `${day}, ${time}`;
+};

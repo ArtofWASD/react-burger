@@ -38,6 +38,9 @@ type TOrderIngridients = {
   _id: string;
 };
 
+type TUserOrderIngredients = {
+  _id: string;
+};
 export const fetchData = createAsyncThunk("data/fetchData", async (_, { rejectWithValue }) => {
   return fetch(`${API_URL}/ingredients`)
     .then(checkResponse)
@@ -70,18 +73,19 @@ export const postOrder = createAsyncThunk("data/postOrder", async (order: any, {
     .catch((error) => rejectWithValue(error.message));
 });
 
-export const getOrderByNumber = createAsyncThunk("data/getOrderByNumber", async(number: number) => {
+export const getOrderByNumber = createAsyncThunk("data/getOrderByNumber", async (number: number) => {
   return fetch(`https://norma.nomoreparties.space/api/orders/${number}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
-  }).then((res) => checkResponse(res))
-    .then((data) => {
-    if (data.success) {
-      return data.orders[0];
-    }
   })
+    .then((res) => checkResponse(res))
+    .then((data) => {
+      if (data.success) {
+        return data.orders[0];
+      }
+    });
 });
 
 export const dataSlice = createSlice({
@@ -102,7 +106,15 @@ export const dataSlice = createSlice({
     error: null,
     total: 0,
     ingridientModalTitle: "Детали ингридиента",
-    userOrder: {},
+    userOrder: {
+      statusOrder: false,
+      _id: "",
+      ingredients: [] as Array<TUserOrderIngredients>,
+      status: "",
+      number: 0,
+      name: "",
+      createdAt: "",
+    },
   },
   reducers: {
     reset(state) {
@@ -202,7 +214,7 @@ export const dataSlice = createSlice({
     });
     builder.addCase(getOrderByNumber.fulfilled, (state, action) => {
       state.userOrder = action.payload;
-    })
+    });
   },
 });
 
