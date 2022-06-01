@@ -51,3 +51,27 @@
     border-radius: 10px;
     background-color: #8585AD;
 }
+.orders_feed{
+    display: grid;
+    grid-template-columns: 40% 100%;
+    position: absolute;
+}
+.orders_feed_list{
+    max-height: 750px;
+    max-width: 1000px;
+    overflow: auto;
+    scroll-behavior: smooth;
+    padding-right: 8px;
+}
+.orders_feed_list::-webkit-scrollbar {  
+    width: 10px;
+    background-color: #a1a1f1;
+}
+.orders_feed_list::-webkit-scrollbar-track {
+    background-color: #2F2F37;
+    color:#a1a1f1
+  }
+.orders_feed_list::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #8585AD;
+}

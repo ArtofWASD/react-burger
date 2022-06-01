@@ -129,6 +129,19 @@ function App() {
                 </Modal>
               }
             />
+            <Route
+              path="/profile/orders/:id"
+              element={
+                <Modal
+                  active={true}
+                  setActive={() => {
+                    handleModalClose();
+                  }}
+                >
+                  <FeedOrderInfo />
+                </Modal>
+              }
+            />
           </Routes>
         )}
       </>

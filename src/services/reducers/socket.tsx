@@ -26,7 +26,6 @@ export const wsApi = createApi({
       queryFn: () => ({ data: { orders: [], total: 0, totalToday: 0 } }),
       async onCacheEntryAdded(_arg, { updateCachedData, cacheEntryRemoved }) {
         const accessToken = getCookie('token');
-        console.log(accessToken);
         const ws = new WebSocket(`wss://norma.nomoreparties.space/orders?token=${accessToken}`);
         try {
           await updateCachedData;

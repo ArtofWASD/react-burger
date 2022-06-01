@@ -13,7 +13,7 @@ export default function FeedPage() {
         <div className="grid grid-cols-2 justify-center gap-6">
           <div className={`${styles.orders_list} pt-5 order_list pr-20`}>
             {data.orders.map((item: any) => {
-              return <FeedOrderItem data={item} key={item._id} />;
+              return <FeedOrderItem data={item} key={item._id} route={`/feed`} />;
             })}
           </div>
           <div className="pt-5">

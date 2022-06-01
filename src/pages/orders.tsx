@@ -1,14 +1,14 @@
-
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logOut } from "../services/reducers/login";
-import FeedOrderItem from '../components/feed-order-item/feed-order-item';
+import FeedOrderItem from "../components/feed-order-item/feed-order-item";
 import styles from "../pages/styles.module.css";
-
+import { useGetUserOrdersQuery } from "../services/reducers/socket";
 export default function Orders() {
   const dispatch = useDispatch();
+  const { data } = useGetUserOrdersQuery();
   return (
-    <div className='grid grid-cols-2'>
+    <div className={styles.orders_feed}>
       <div className="ml-72 mt-32">
         <ul className="grid gap-4 items-center">
           <NavLink to="/profile" end className={({ isActive }) => (isActive ? `${styles.font}` : `${styles.font_grey}`)}>
@@ -29,8 +29,10 @@ export default function Orders() {
           </NavLink>
         </ul>
       </div>
-      <div className={`${styles.orders_list} mr-72 mt-10`}>
-
+      <div className={`${styles.orders_feed_list} mt-10`}>
+        {data && data.orders.map((item: any) => {
+          return (<FeedOrderItem data={item} key={item._id} route={`/profile/orders`} />);
+        })}
       </div>
     </div>
   );
