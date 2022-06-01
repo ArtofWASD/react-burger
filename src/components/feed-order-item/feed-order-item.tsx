@@ -1,11 +1,10 @@
 import { FC, useState } from "react";
-import { useAppSelector, useAppDispatch } from "../../utils/hook";
+import { useAppSelector } from "../../utils/hook";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./feed-order-item.module.css";
 import FeedOrderIngridient from "../feed-order-ingridient/feed-order-ingridient";
 import { Link, useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { getUserOrder } from "../../services/reducers/get-data";
 
 
 type TFeedOrderItem = {
@@ -18,14 +17,13 @@ type TFeedOrderItem = {
     updatedAt: string;
     _id: string;
   };
-  route: string;
+  route: string|undefined;
 };
 
 const FeedOrderItem: FC<TFeedOrderItem> = ({ data, route }) => {
   const [modalActive, setModalActive] = useState<boolean>(false);
   const ingredients = useAppSelector((state) => state.getData.ingridients);
   const location = useLocation();
-  const dispatch = useAppDispatch();
 
   const filtredIngredients = data.ingredients.map((item) => {
     const result = ingredients.filter((image) => image._id === item)[0];
@@ -33,7 +31,6 @@ const FeedOrderItem: FC<TFeedOrderItem> = ({ data, route }) => {
     return obj;
   });
 
-  
   const summ = filtredIngredients.reduce((acc, obj) => {
     if (obj.type === "bun") {
       return acc + obj.price * 2;
@@ -57,19 +54,10 @@ const FeedOrderItem: FC<TFeedOrderItem> = ({ data, route }) => {
     });
     return `${day}, ${time}`;
   };
-
-  const orderObject = {
-    ingridients : filtredIngredients,
-    orderSumm : summ,
-    orderNumber : data.number,
-    orderName: data.name,
-    orderDate : formatDate(data.createdAt)
-  }
   
   return (
     <>
       <Link to={`${route}/${data.number}`} state={{ background: location }} >
-        <div onClick={() => dispatch(getUserOrder(orderObject))}>
         <div className={styles.order_body} onClick={() => setModalActive(true)}>
           <div className="order_title grid grid-cols-2 items-center px-6 pt-5">
             <p className={styles.order_number}>#{data.number}</p>
@@ -81,7 +69,7 @@ const FeedOrderItem: FC<TFeedOrderItem> = ({ data, route }) => {
           <div className="order_ingridients grid grid-cols-2 items-center py-5">
             <div className={styles.ingredients_parent}>
               {filtredIngredients &&
-                filtredIngredients.map((item: any, i: number) => {
+                filtredIngredients.map((item, i: number) => {
                   if (i <= 5) {
                     return (
                       <FeedOrderIngridient item={item} key={item._uniqueId} amount={i === 5 ? data.ingredients.length - 5 : undefined} />
@@ -95,8 +83,6 @@ const FeedOrderItem: FC<TFeedOrderItem> = ({ data, route }) => {
             </div>
           </div>
         </div>
-        </div>
-
       </Link>
     </>
   );
