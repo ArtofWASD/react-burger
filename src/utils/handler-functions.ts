@@ -75,7 +75,6 @@ export function generateIngredientsWithAmount(allIngredients: Array<TIngredient>
 
   return Object.keys(uniq).map((key: number | string) => {
     const foundIngredient = allIngredients.filter((item) => item._id === key)[0];
-
     return {
       ...foundIngredient,
       _uniqueId: uuidv4(),
