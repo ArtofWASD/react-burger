@@ -1,6 +1,6 @@
 import styles from "./styles.module.css";
 import FeedOrderItem from "../components/feed-order-item/feed-order-item";
-import { useGetOrdersAllQuery } from "../services/reducers/socket";
+import { useGetOrdersQuery } from "../services/reducers/socket";
 
 type TItem = {
   _id: string;
@@ -13,7 +13,7 @@ type TItem = {
 };
 
 export default function FeedPage() {
-  const { data } = useGetOrdersAllQuery();
+  const { data } = useGetOrdersQuery("wss://norma.nomoreparties.space/orders/all");
   return (
     <div className="grid mx-72 pt-10 absolute">
       <div>

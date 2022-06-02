@@ -24,7 +24,6 @@ const FeedOrderItem: FC<TFeedOrderItem> = ({ data, route }) => {
   const [modalActive, setModalActive] = useState<boolean>(false);
   const ingredients = useAppSelector((state) => state.getData.ingridients);
   const location = useLocation();
-  console.log(location);
 
   const filtredIngredients = data.ingredients.map((item) => {
     const result = ingredients.filter((image) => image._id === item)[0];
@@ -44,8 +43,6 @@ const FeedOrderItem: FC<TFeedOrderItem> = ({ data, route }) => {
       return (<div className={styles.order_status_success}>Выполнен</div>)
     } else if(data.status === 'created') {
       return (<div className={styles.order_status_created}>Готовится</div>)
-    } else if(data.status === 'created'){
-
     }
   }
   return (

@@ -1,7 +1,7 @@
 .modalOverlayActive{
     position: absolute;
     z-index: 1;
-    height: max-content;
+    height: 100vh;
     width: 100vw;
     background-color: rgba(0, 0, 0, 0.6);
     opacity: 1;

@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { LoginPage, RegisterPage, ForgotPasswordPage, ProfilePage, ResetPasswordPage, PageNotFoundPage, Orders, FeedPage } from "../../pages";
 import { getCookieRequest } from "../../services/reducers/auth";
 import { getUserData } from "../../services/reducers/userInfo";
@@ -11,6 +10,7 @@ import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { ProtectedUserRoute, ProtectedGuestRoute } from "../protected-route/protected-route";
 import FeedOrderInfo from "../feed-order-info/feed-order-info";
+import { useAppDispatch } from "../../utils/hook";
 
 type TLocationState = {
   state: {
@@ -23,7 +23,7 @@ function App() {
     const navigate = useNavigate();
     const { state } = location as TLocationState;
     const background = location.state && state.background;
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
       dispatch(getUserData());

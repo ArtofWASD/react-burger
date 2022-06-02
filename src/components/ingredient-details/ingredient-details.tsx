@@ -1,12 +1,12 @@
 import { useEffect, FC } from "react";
 import { getIngridientItem } from "../../services/reducers/get-data";
-import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import styles from "./ingredient-details.module.css";
-import { useAppSelector } from '../../utils/hook'
+import { useAppDispatch, useAppSelector } from '../../utils/hook'
 
 const IngredientDetails:FC = () => {
-  const dispatch = useDispatch();
+  
+  const dispatch = useAppDispatch();
   const id = useParams()
   const { ingridients } = useAppSelector((state) => state.getData);
   const ingridientDetails = ingridients.filter((item) => item._id === id.id);

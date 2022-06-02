@@ -3,10 +3,12 @@ import { useDispatch } from "react-redux";
 import { logOut } from "../services/reducers/login";
 import FeedOrderItem from "../components/feed-order-item/feed-order-item";
 import styles from "../pages/styles.module.css";
-import { useGetUserOrdersQuery } from "../services/reducers/socket";
+import { useGetOrdersQuery } from "../services/reducers/socket";
+import { getCookie } from "../utils/handler-functions";
 export default function Orders() {
   const dispatch = useDispatch();
-  const { data } = useGetUserOrdersQuery();
+  const accessToken = getCookie("token")
+  const { data } = useGetOrdersQuery(`wss://norma.nomoreparties.space/orders?token=${accessToken}`);
   return (
     <div className={styles.orders_feed}>
       <div className="ml-72 mt-32">

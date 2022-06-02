@@ -38,9 +38,6 @@ type TOrderIngridients = {
   _id: string;
 };
 
-type TUserOrderIngredients = {
-  _id: string;
-};
 export const fetchData = createAsyncThunk("data/fetchData", async (_, { rejectWithValue }) => {
   return fetch(`${API_URL}/ingredients`)
     .then(checkResponse)
@@ -109,7 +106,7 @@ export const dataSlice = createSlice({
     userOrder: {
       statusOrder: false,
       _id: "",
-      ingredients: [] as Array<TUserOrderIngredients>,
+      ingredients: [],
       status: "",
       number: 0,
       name: "",
