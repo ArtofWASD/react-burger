@@ -30,9 +30,7 @@ const FeedOrderInfo: FC = () => {
   });
 
   const res = generateIngredientsWithAmount(ingredientsAll, order.ingredients);
-  console.log(res);
   
-
   const summ = filtredIngredients.reduce((acc, obj) => {
     if (obj.type === "bun") {
       return acc + obj.price * 2;
