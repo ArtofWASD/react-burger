@@ -50,9 +50,6 @@ export const userInfoSlice =  createSlice({
             state.userState = true;
             state.userData = action.payload;
         });
-        builder.addCase(getUserData.pending, (state)=>{
-            state.userState = false
-        })
     }
 })
 export default userInfoSlice.reducer

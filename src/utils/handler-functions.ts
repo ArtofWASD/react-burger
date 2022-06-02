@@ -1,7 +1,8 @@
+import { v4 as uuidv4 } from "uuid";
 
-export const checkResponse = ((res:Response) => {
+export const checkResponse = (res: Response) => {
   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-});
+};
 
 export const setCookie = (name: string, value: string, props: any) => {
   props = props || {};
@@ -47,3 +48,38 @@ export const formatDate = (date: string): string => {
   });
   return `${day}, ${time}`;
 };
+
+type TIngredient = {
+  _id: string;
+  type: string;
+};
+
+type TIngredientWithAmount = {
+  _uniqueId: string;
+  amount: number;
+  type: string;
+};
+
+export function generateIngredientsWithAmount(allIngredients: Array<TIngredient>, receivedIngredients: Array<string>): Array<TIngredientWithAmount> {
+  const uniq = receivedIngredients
+    .map((name) => {
+      return {
+        count: 1,
+        id: name,
+      };
+    })
+    .reduce((result:any, b: { id: string; count: number }) => {
+      result[b.id] = (result[b.id] || 0) + b.count;
+      return result;
+    }, {});
+
+  return Object.keys(uniq).map((key: number | string) => {
+    const foundIngredient = allIngredients.filter((item) => item._id === key)[0];
+
+    return {
+      ...foundIngredient,
+      _uniqueId: uuidv4(),
+      amount: foundIngredient.type === "bun" ? uniq[key] * 2 : uniq[key],
+    };
+  });
+}
