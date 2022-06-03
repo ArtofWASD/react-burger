@@ -29,8 +29,13 @@ const FeedOrderInfo: FC = () => {
     return obj;
   });
 
+<<<<<<< HEAD
   const res = ingredientsAll.length !== 0 ? generateIngredientsWithAmount(ingredientsAll, order.ingredients) : undefined
 
+=======
+  const res = generateIngredientsWithAmount(ingredientsAll, order.ingredients);
+  
+>>>>>>> 280c9f0703274ffef358b5d4a1f7b6d9fcaeb94e
   const summ = filtredIngredients.reduce((acc, obj) => {
     if (obj.type === "bun") {
       return acc + obj.price * 2;
