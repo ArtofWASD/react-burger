@@ -1,8 +1,13 @@
 .order_body {
   min-height: 215px;
+  transition: 0.3s linear;
   background-color: #1c1c21;
   border-radius: 40px;
   margin-bottom: 16px;
+}
+.order_body:hover {
+  transition: 0.3s linear;
+  background-color: #50505291;
 }
 .order_number {
   font-family: "iceland";

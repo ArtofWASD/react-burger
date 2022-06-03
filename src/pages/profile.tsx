@@ -11,7 +11,6 @@ export default function ProfilePage() {
 
   const [name, setName] = useState<string>("");
   const [login, setLogin] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   
@@ -73,16 +72,15 @@ export default function ProfilePage() {
               icon="EditIcon"
               type="text"
               onChange={(e) => setName(e.target.value)}
-              value={!name && userData ? userData.user.name : name}
+              value={userData.user.name ? userData.user.name : ''}
             />
             <Input
               placeholder="Логин"
               icon="EditIcon"
               type="text"
               onChange={(e) => setLogin(e.target.value)}
-              value={!login && userData ? userData.user.email : login}
+              value={userData.user.email ? userData.user.email : ''}
             />
-            <Input placeholder="Пароль" icon="EditIcon" type="password" onChange={(e) => setPassword(e.target.value)} value={password ? password : ""} />
           </div>
           <div
             className={
