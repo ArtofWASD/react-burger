@@ -25,7 +25,6 @@ export default function LoginPage() {
   function logInHandler(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     dispatch(logIn(logInForm));
-    navigate("/", { replace: true });
   }
   return (
     <>
