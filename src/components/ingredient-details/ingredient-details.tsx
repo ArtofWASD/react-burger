@@ -13,7 +13,7 @@ const IngredientDetails:FC = () => {
 
   useEffect(() => {
     dispatch(getIngridientItem(ingridientDetails));
-  }, [dispatch, ingridientDetails]);
+  }, []);
 
   return (
     <>

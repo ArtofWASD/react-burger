@@ -30,7 +30,7 @@ const ProtectedUserRoute: FC<TProtectedRoute> = ({ children }) => {
   const isLogin = useAppSelector((state) => state.loginData.loginState);
   const { state } = location as TLocationState;
   if (isUser === true || isLogin === true) {
-    return <Navigate to={state.from.pathname} state={{ from: location }} />;
+    return <Navigate to={state !== null ? state.from.pathname : `/`} state={{ from: location }} />;
   }
   return children;
 };

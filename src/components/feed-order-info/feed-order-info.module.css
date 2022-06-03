@@ -3,6 +3,7 @@
     font-family: "iceland";
 }
 .feed_order_info_text{
+    max-width: 700px;
     font-size: 24px;
     font-family: 'JetBrainsMono-Regular';
 }
