@@ -1,18 +1,18 @@
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { fetchWithRefresh } from "../services/reducers/auth";
 import { editUserInformation, getUserData } from "../services/reducers/userInfo";
 import { logOut } from "../services/reducers/login";
-import { useAppSelector } from "../utils/hook";
+import { useAppDispatch, useAppSelector } from "../utils/hook";
 import styles from "../pages/styles.module.css";
 
 export default function ProfilePage() {
+
   const [name, setName] = useState<string>("");
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   
   useEffect(() => {

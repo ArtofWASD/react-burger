@@ -1,12 +1,13 @@
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { logOut } from "../services/reducers/login";
 import FeedOrderItem from "../components/feed-order-item/feed-order-item";
 import styles from "../pages/styles.module.css";
 import { useGetOrdersQuery } from "../services/reducers/socket";
 import { getCookie } from "../utils/handler-functions";
-export default function Orders() {
-  const dispatch = useDispatch();
+import { useAppDispatch } from "../utils/hook";
+
+export default function Orders() {  
+  const dispatch = useAppDispatch();
   const accessToken = getCookie("token")
   const { data } = useGetOrdersQuery(`wss://norma.nomoreparties.space/orders?token=${accessToken}`);
   return (

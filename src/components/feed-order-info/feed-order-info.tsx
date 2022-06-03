@@ -17,11 +17,11 @@ const FeedOrderInfo: FC = () => {
   const ingredientsAll = useAppSelector((state) => state.getData.ingridients);
   const order = useAppSelector((state) => state.getData.userOrder);
   const dispatch = useAppDispatch();
-
+  
   let orderId = Number(id);
   useEffect(() => {
     dispatch(getOrderByNumber(orderId));
-  }, []);
+  }, [dispatch, orderId]);
 
   const filtredIngredients = order.ingredients.map((item) => {
     const result = ingredientsAll.filter((data: TData) => data._id === item)[0];
@@ -29,9 +29,7 @@ const FeedOrderInfo: FC = () => {
     return obj;
   });
 
-  const res = generateIngredientsWithAmount(ingredientsAll, order.ingredients);
-  console.log(res);
-  
+  const res = ingredientsAll.length !== 0 ? generateIngredientsWithAmount(ingredientsAll, order.ingredients) : undefined
 
   const summ = filtredIngredients.reduce((acc, obj) => {
     if (obj.type === "bun") {
@@ -41,31 +39,31 @@ const FeedOrderInfo: FC = () => {
   }, 0);
 
   return (
-    <div className="grid grid-flow-row justify-center px-5">
-      {order.number === orderId ? (
-        <>
-          <div className={`${styles.feed_order_info_number} text-center`}>#{order.number}</div>
-          <div className={`${styles.feed_order_info_text} pt-5`}>{order.name}</div>
-          <div className="pt-2 pb-10">
-            {order.status === "done" ? (
-              <div className={styles.feed_order_status_success}>Выполнен</div>
-            ) : (
-              <div className={styles.feed_order_status_in_work}>В работе</div>
-            )}
-          </div>
-          <div className={`${styles.feed_order_info_text}`}>Состав:</div>
-          <div>{res && res.map((item: any) => <FeedOrderInfoIngredient data={item} key={item._uniqueId} />)}</div>
-          <div className="grid grid-cols-2 justify-between items-center pt-5 pb-2">
-            <div className={styles.feed_order_time}>{formatDate(order.createdAt)}</div>
-            <div className={`${styles.feed_order_info_number} flex items-center gap-2 justify-self-end`}>
-              {summ} <CurrencyIcon type="primary" />
+    <>
+      {orderId === order.number ? (
+        <div className="grid grid-flow-row justify-center px-5">
+            <div className={`${styles.feed_order_info_number} text-center`}>#{order.number}</div>
+            <div className={`${styles.feed_order_info_text} pt-5`}>{order.name}</div>
+            <div className="pt-2 pb-10">
+              {order.status === "done" ? (
+                <div className={styles.feed_order_status_success}>Выполнен</div>
+              ) : (
+                <div className={styles.feed_order_status_in_work}>В работе</div>
+              )}
             </div>
-          </div>
-        </>
+            <div className={`${styles.feed_order_info_text}`}>Состав:</div>
+            <div>{res && res.map((item: any) => <FeedOrderInfoIngredient data={item} key={item._uniqueId} />)}</div>
+            <div className="grid grid-cols-2 justify-between items-center pt-5 pb-2">
+              <div className={styles.feed_order_time}>{formatDate(order.createdAt)}</div>
+              <div className={`${styles.feed_order_info_number} flex items-center gap-2 justify-self-end`}>
+                {summ} <CurrencyIcon type="primary" />
+              </div>
+            </div>
+        </div>
       ) : (
         <></>
       )}
-    </div>
+    </>
   );
 };
 export default FeedOrderInfo;

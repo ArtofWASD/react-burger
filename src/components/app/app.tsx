@@ -29,7 +29,7 @@ function App() {
       dispatch(getUserData());
       dispatch(getCookieRequest());
       dispatch(fetchData());
-    }, []);
+    }, [dispatch]);
 
     const handleModalClose = () => {
       navigate(-1);

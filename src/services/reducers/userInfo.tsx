@@ -3,8 +3,8 @@ import { API_URL } from "../../utils/api-constant";
 import { checkResponse, getCookie } from "../../utils/handler-functions";
 
 type TUpdatedUserInfo ={
-    name: string,
-    login: string,
+    name: string|null,
+    login: string|null,
 }
 
 type TUserData = {
