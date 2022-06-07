@@ -10,3 +10,4 @@
 - Redux-Toolkit
 - React-Drag'n'Drop
 - React-Router v.6
+- webSocket
