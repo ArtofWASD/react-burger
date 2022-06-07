@@ -3,8 +3,9 @@ import { API_URL } from "../../utils/api-constant";
 import { checkResponse, setCookie } from "../../utils/handler-functions"
 
 type TLogInForm = {
-  email: string;
-  password: string;
+  name?: string;
+  email?: string;
+  password?: string;
 }
 
 export const logIn = createAsyncThunk("data/postLogIn", async (form:TLogInForm, { rejectWithValue }) => {

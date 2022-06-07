@@ -1,9 +1,9 @@
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { logIn } from "../services/reducers/login";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
+import { useAppDispatch } from "../utils/hook";
 
 type TLogInForm ={
   email:string;
@@ -11,9 +11,10 @@ type TLogInForm ={
 }
 
 export default function LoginPage() {
+  
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const logInForm:TLogInForm = {
@@ -24,7 +25,6 @@ export default function LoginPage() {
   function logInHandler(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     dispatch(logIn(logInForm));
-    navigate("/", { replace: true });
   }
   return (
     <>

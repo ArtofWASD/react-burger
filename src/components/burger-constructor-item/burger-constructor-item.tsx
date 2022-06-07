@@ -1,10 +1,10 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { deleteIngridientItem } from "../../services/reducers/get-data";
-import { useDispatch } from "react-redux";
 import { useRef, FC, DragEvent } from "react";
-import { useDrag, useDrop } from "react-dnd";
+import { useDrag, useDrop, XYCoord } from "react-dnd";
 import styles from "./burger-constructor-item.module.css";
+import { useAppDispatch } from "../../utils/hook";
 
 type TBurgerConstructorItem = {
   item: {
@@ -19,11 +19,11 @@ type TBurgerConstructorItem = {
   position: string;
   type: "top" | "bottom" | undefined;
   index?: number | undefined;
-  moveCard?:(dragIndex: number, hoverIndex:number| undefined) => void;
+  moveCard?: (dragIndex: number, hoverIndex: number | undefined) => void;
 };
 
-const BurgerConstructorItem:FC<TBurgerConstructorItem> = ({ item, position, type, isLocked, isDragged, index, moveCard }) => {
-  const dispatch = useDispatch();
+const BurgerConstructorItem: FC<TBurgerConstructorItem> = ({ item, position, type, isLocked, isDragged, index, moveCard }) => {
+  const dispatch = useAppDispatch();
   const ref = useRef<HTMLDivElement>(null);
 
   const [{ handlerId }, drop] = useDrop({
@@ -38,27 +38,27 @@ const BurgerConstructorItem:FC<TBurgerConstructorItem> = ({ item, position, type
         return;
       }
       const dragIndex = item.index;
-      const hoverIndex= index;
+      const hoverIndex = index;
       if (dragIndex === hoverIndex) {
         return;
       }
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset:(any) = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const clientOffset: XYCoord | null = monitor.getClientOffset();
+      const hoverClientY : number| null = clientOffset !== null ? clientOffset.y - hoverBoundingRect.top : null;
 
-      if (hoverIndex !== undefined && dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+      if (hoverClientY !== null && hoverIndex !== undefined && dragIndex < hoverIndex && hoverClientY< hoverMiddleY && hoverClientY) {
         return;
       }
 
-      if (hoverIndex !== undefined && dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+      if (hoverClientY !== null && hoverIndex !== undefined && dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
-      
-      if (moveCard!==undefined) {
+
+      if (moveCard !== undefined) {
         moveCard(dragIndex, hoverIndex);
       }
-      
+
       item.index = hoverIndex;
     },
   });

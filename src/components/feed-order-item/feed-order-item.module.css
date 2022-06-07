@@ -1,0 +1,85 @@
+.order_body {
+  min-height: 215px;
+  transition: 0.3s linear;
+  background-color: #1c1c21;
+  border-radius: 40px;
+  margin-bottom: 16px;
+}
+.order_body:hover {
+  transition: 0.3s linear;
+  background-color: #50505291;
+}
+.order_number {
+  font-family: "iceland";
+  font-size: 28px;
+}
+.order_time {
+  font-family: "JetBrainsMono-Regular";
+  font-size: 16px;
+  color: #8585ad;
+}
+.order_status_success{
+  font-family: "JetBrainsMono-Regular";
+  font-size: 16px;
+  color: #00CCCC;
+}
+.order_status_created{
+  font-family: "JetBrainsMono-Regular";
+  font-size: 16px;
+  color: #F2F2F3;
+}
+.order_name {
+  font-family: "JetBrainsMono-Regular";
+  font-size: 24px;
+}
+
+.order_ingridient_img {
+  height: 60px;
+  width: 60px;
+  background-color: #131316;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.order_ingridient_img_border{
+  background: linear-gradient(#131316, #131316) padding-box,
+  linear-gradient(to right,#801ab2, #4c4cff) 100%;
+  border: 2px solid transparent;
+  border-radius: 50%;
+}
+
+.ingredients_parent {
+  display: grid;
+  grid-template-columns: repeat(6, 45px);
+  grid-template-rows: 1fr;
+  padding-left: 40px;
+}
+
+.ingredients_parent > div {
+  margin-left: -20px;
+}
+
+.ingredients_parent > div:nth-child(1) {
+  z-index: 6;
+}
+
+.ingredients_parent > div:nth-child(2) {
+  z-index: 5;
+}
+
+.ingredients_parent > div:nth-child(3) {
+  z-index: 4;
+}
+
+.ingredients_parent > div:nth-child(4) {
+  z-index: 3;
+}
+
+.ingredients_parent > div:nth-child(5) {
+  z-index: 2;
+}
+
+.ingredients_parent > div:nth-child(6) {
+  z-index: 1;
+}
+

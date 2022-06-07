@@ -3,8 +3,8 @@ import { API_URL } from "../../utils/api-constant";
 import { checkResponse, getCookie } from "../../utils/handler-functions";
 
 type TUpdatedUserInfo ={
-    name: string,
-    login: string,
+    name: string|null,
+    login: string|null,
 }
 
 type TUserData = {
@@ -50,9 +50,6 @@ export const userInfoSlice =  createSlice({
             state.userState = true;
             state.userData = action.payload;
         });
-        builder.addCase(getUserData.pending, (state)=>{
-            state.userState = false
-        })
     }
 })
 export default userInfoSlice.reducer

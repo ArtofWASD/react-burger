@@ -1,0 +1,33 @@
+.order_ingridient_img {
+    height: 64px;
+    width: 64px;
+    background-color: #131316;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .order_ingridient_img_border{
+    position: relative;
+    background: linear-gradient(#131316, #131316) padding-box,
+    linear-gradient(to right,#801ab2, #4c4cff) 100%;
+    border: 2px solid transparent;
+    border-radius: 50%;
+  }
+  .amount {
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    font-family: "iceland";
+  }
+
+  .image_overlay {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.6;
+    border-radius: 50%;
+    background: #131316;
+  }

@@ -16,8 +16,8 @@ const AppHeader: FC = () => {
             </NavLink>
           </section>
           <section className="flex gap-2">
-            <ListIcon type={location.pathname === "/orders-list" ? "primary" : "secondary"} />
-            <NavLink to="/orders-list" className={({ isActive }) => (isActive ? `${styles.headerTextActive}` : `${styles.headerText}`)}>
+            <ListIcon type={location.pathname === "/feed" ? "primary" : "secondary"} />
+            <NavLink to="/feed" className={({ isActive }) => (isActive ? `${styles.headerTextActive}` : `${styles.headerText}`)}>
               Лента заказов
             </NavLink>
           </section>

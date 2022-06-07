@@ -1,10 +1,10 @@
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate, useLocation, Navigate } from "react-router-dom";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { postResetPassword } from "../services/reducers/reset";
 
 import styles from "./styles.module.css";
+import { useAppDispatch } from "../utils/hook";
 
 type TLocationState = {
   state: {pathname:string};
@@ -18,7 +18,7 @@ type TResetForm = {
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState("");
   const [validationCode, setValidationCode] = useState("");
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 

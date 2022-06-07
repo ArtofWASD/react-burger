@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { LoginPage, RegisterPage, ForgotPasswordPage, ProfilePage, ResetPasswordPage, PageNotFoundPage, Orders } from "../../pages";
+import { LoginPage, RegisterPage, ForgotPasswordPage, ProfilePage, ResetPasswordPage, PageNotFoundPage, Orders, FeedPage } from "../../pages";
 import { getCookieRequest } from "../../services/reducers/auth";
 import { getUserData } from "../../services/reducers/userInfo";
 import { fetchData } from "../../services/reducers/get-data";
@@ -10,25 +9,27 @@ import Main from "../main/main";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { ProtectedUserRoute, ProtectedGuestRoute } from "../protected-route/protected-route";
+import FeedOrderInfo from "../feed-order-info/feed-order-info";
+import { useAppDispatch } from "../../utils/hook";
 
 type TLocationState = {
-  state:{
-    background?: any
-  }
-}
+  state: {
+    background?: any;
+  };
+};
 function App() {
   function ModalSwitch() {
     const location = useLocation();
     const navigate = useNavigate();
-    const {state} = location as TLocationState
+    const { state } = location as TLocationState;
     const background = location.state && state.background;
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
       dispatch(getUserData());
       dispatch(getCookieRequest());
       dispatch(fetchData());
-    }, []);
+    }, [dispatch]);
 
     const handleModalClose = () => {
       navigate(-1);
@@ -52,6 +53,14 @@ function App() {
             element={
               <ProtectedGuestRoute>
                 <Orders />
+              </ProtectedGuestRoute>
+            }
+          />
+          <Route
+            path="/profile/orders/:id"
+            element={
+              <ProtectedGuestRoute>
+                <FeedOrderInfo />
               </ProtectedGuestRoute>
             }
           />
@@ -87,6 +96,8 @@ function App() {
               </ProtectedUserRoute>
             }
           />
+          <Route path="/feed" element={<FeedPage />} />
+          <Route path="/feed/:id" element={<FeedOrderInfo />} />
           <Route path="/ingredients/:id" element={<IngredientDetails />} />
           <Route path="*" element={<PageNotFoundPage />} />
         </Routes>
@@ -102,6 +113,32 @@ function App() {
                   }}
                 >
                   <IngredientDetails />
+                </Modal>
+              }
+            />
+            <Route
+              path="/feed/:id"
+              element={
+                <Modal
+                  active={true}
+                  setActive={() => {
+                    handleModalClose();
+                  }}
+                >
+                  <FeedOrderInfo />
+                </Modal>
+              }
+            />
+            <Route
+              path="/profile/orders/:id"
+              element={
+                <Modal
+                  active={true}
+                  setActive={() => {
+                    handleModalClose();
+                  }}
+                >
+                  <FeedOrderInfo />
                 </Modal>
               }
             />

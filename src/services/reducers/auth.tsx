@@ -55,7 +55,7 @@ export const fetchWithRefresh = createAsyncThunk("data/fetchWithRefresh", async 
       },
     });
     return await checkResponse(res);
-  } catch (error:any) {
+  } catch (error: any) {
     if (error.message === 'jwt malformed') {
       const refreshData = await refreshToken();
       localStorage.setItem("refreshToken", refreshData.refreshToken);

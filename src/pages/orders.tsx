@@ -1,12 +1,17 @@
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { logOut } from "../services/reducers/login";
+import FeedOrderItem from "../components/feed-order-item/feed-order-item";
 import styles from "../pages/styles.module.css";
+import { useGetOrdersQuery } from "../services/reducers/socket";
+import { getCookie } from "../utils/handler-functions";
+import { useAppDispatch } from "../utils/hook";
 
-export default function Orders() {
-  const dispatch = useDispatch();
+export default function Orders() {  
+  const dispatch = useAppDispatch();
+  const accessToken = getCookie("token")
+  const { data } = useGetOrdersQuery(`wss://norma.nomoreparties.space/orders?token=${accessToken}`);
   return (
-    <>
+    <div className={styles.orders_feed}>
       <div className="ml-72 mt-32">
         <ul className="grid gap-4 items-center">
           <NavLink to="/profile" end className={({ isActive }) => (isActive ? `${styles.font}` : `${styles.font_grey}`)}>
@@ -27,6 +32,11 @@ export default function Orders() {
           </NavLink>
         </ul>
       </div>
-    </>
+      <div className={`${styles.orders_feed_list} mt-10`}>
+        {data && data.orders.map((item: any) => {
+          return (<FeedOrderItem data={item} key={item._id} route={`/profile/orders`} />);
+        })}
+      </div>
+    </div>
   );
 }

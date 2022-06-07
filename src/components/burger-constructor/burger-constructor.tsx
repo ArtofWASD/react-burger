@@ -2,8 +2,7 @@ import { useState, useCallback } from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { postOrder, addIngridientItem, addBunItem, updateIngridient } from "../../services/reducers/get-data";
-import { useDispatch } from "react-redux";
-import { useAppSelector } from '../../utils/hook'
+import { useAppDispatch, useAppSelector } from '../../utils/hook'
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
@@ -13,16 +12,16 @@ import styles from "./burger-constructor.module.css";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
 
 function BurgerConstructor() {
+  
   const [modalActive, setModalActive] = useState<boolean>(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate()
-  const { ingridients, constructor, total } = useAppSelector((state) => state.getData);
-  const constructorIngredients = ingridients.filter((item) => item.type !== "bun");
+  const { constructor, total, orderIngridients } = useAppSelector((state) => state.getData);
   const isUser = useAppSelector((state) => state.userData.userState);
   const isLogged = useAppSelector((state) => state.loginData.loginState);
 
   const order = {
-    ingredients: constructorIngredients.map((item) => item._id),
+    ingredients: orderIngridients
   };
 
   const [{ isHover }, dropTargerRef] = useDrop({

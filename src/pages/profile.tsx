@@ -1,18 +1,17 @@
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { fetchWithRefresh } from "../services/reducers/auth";
 import { editUserInformation, getUserData } from "../services/reducers/userInfo";
 import { logOut } from "../services/reducers/login";
-import { useAppSelector } from "../utils/hook";
+import { useAppDispatch, useAppSelector } from "../utils/hook";
 import styles from "../pages/styles.module.css";
 
 export default function ProfilePage() {
+
   const [name, setName] = useState<string>("");
   const [login, setLogin] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -73,16 +72,15 @@ export default function ProfilePage() {
               icon="EditIcon"
               type="text"
               onChange={(e) => setName(e.target.value)}
-              value={!name && userData ? userData.user.name : name}
+              value={userData.user.name ? userData.user.name : ''}
             />
             <Input
               placeholder="Логин"
               icon="EditIcon"
               type="text"
               onChange={(e) => setLogin(e.target.value)}
-              value={!login && userData ? userData.user.email : login}
+              value={userData.user.email ? userData.user.email : ''}
             />
-            <Input placeholder="Пароль" icon="EditIcon" type="password" onChange={(e) => setPassword(e.target.value)} value={password ? password : ""} />
           </div>
           <div
             className={
