@@ -32,7 +32,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy-script": "npm run build && scp -r ./build/* chunlee@130.193.41.35:/home/chunlee/stellar-frontend" 
   },
   "eslintConfig": {
     "extends": [
