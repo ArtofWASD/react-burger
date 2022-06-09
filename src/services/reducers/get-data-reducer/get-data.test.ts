@@ -5,6 +5,5 @@ test("Should return the initial state", () => {
 });
 
 test("Should handler reset initialState", () => {
-
-  expect(reducer(initialState, reset())).toEqual();
+  expect(reducer(initialState, reset())).toEqual({ ...initialState, order: { number: "" }, ingridientItem: "" });
 });
