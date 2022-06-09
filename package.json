@@ -33,7 +33,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy-script": "npm run build && scp -r ./build/* chunlee@130.193.41.35:/home/chunlee/stellar-frontend" 
+    "deploy-script": "npm run build && scp -r ./build/* chunlee@130.193.41.35:/home/chunlee/stellar-frontend",
+    "cypress:open": "./node_modules/.bin/cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -56,6 +57,8 @@
   "devDependencies": {
     "@types/uuid": "^8.3.4",
     "autoprefixer": "^10.4.4",
+    "cypress": "^10.0.3",
+    "eslint-plugin-cypress": "^2.12.1",
     "postcss": "^8.4.12",
     "tailwindcss": "^3.0.23"
   }
