@@ -1,7 +1,7 @@
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
-import { postResetForm } from "../services/reducers/reset";
+import { postResetForm } from "../services/reducers/reset-reducer/reset";
 import styles from "./styles.module.css";
 import { useAppDispatch } from "../utils/hook";
 

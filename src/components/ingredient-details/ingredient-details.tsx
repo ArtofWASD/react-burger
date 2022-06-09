@@ -1,5 +1,5 @@
 import { useEffect, FC } from "react";
-import { getIngridientItem } from "../../services/reducers/get-data";
+import { getIngridientItem } from "../../services/reducers/get-data-reducer/get-data";
 import { useParams } from "react-router-dom";
 import styles from "./ingredient-details.module.css";
 import { useAppDispatch, useAppSelector } from '../../utils/hook'

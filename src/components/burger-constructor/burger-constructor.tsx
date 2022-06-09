@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { postOrder, addIngridientItem, addBunItem, updateIngridient } from "../../services/reducers/get-data";
+import { postOrder, addIngridientItem, addBunItem, updateIngridient } from "../../services/reducers/get-data-reducer/get-data";
 import { useAppDispatch, useAppSelector } from '../../utils/hook'
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";

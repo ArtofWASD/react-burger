@@ -1,6 +1,6 @@
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import { logIn } from "../services/reducers/login";
+import { logIn } from "../services/reducers/login-reducer/login";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
 import { useAppDispatch } from "../utils/hook";

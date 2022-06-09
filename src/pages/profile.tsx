@@ -1,9 +1,9 @@
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { fetchWithRefresh } from "../services/reducers/auth";
-import { editUserInformation, getUserData } from "../services/reducers/userInfo";
-import { logOut } from "../services/reducers/login";
+import { fetchWithRefresh } from "../services/reducers/auth-reducer/auth";
+import { editUserInformation, getUserData } from "../services/reducers/user-info-reducer/user-Info";
+import { logOut } from "../services/reducers/login-reducer/login";
 import { useAppDispatch, useAppSelector } from "../utils/hook";
 import styles from "../pages/styles.module.css";
 
