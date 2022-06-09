@@ -13,6 +13,7 @@
     "@types/react-dom": "^17.0.13",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.13.1",
     "cra-template-typescript": "1.1.3",
+    "fetch-mock": "^9.11.0",
     "immutability-helper": "^3.1.1",
     "react": "^17.0.2",
     "react-dnd": "^15.1.2",
@@ -22,6 +23,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
     "redux": "^4.1.2",
+    "redux-mock-store": "^1.5.4",
     "redux-thunk": "^2.4.1",
     "typescript": "^4.6.2",
     "uuid": "^8.3.2",
@@ -34,7 +36,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy-script": "npm run build && scp -r ./build/* chunlee@130.193.41.35:/home/chunlee/stellar-frontend",
-    "cypress:open": "./node_modules/.bin/cypress open"
+    "cypress:open": "./node_modules/.bin/cypress open",
+    "test:watch": "npm test -- --watch"
   },
   "eslintConfig": {
     "extends": [
@@ -59,6 +62,8 @@
     "autoprefixer": "^10.4.4",
     "cypress": "^10.0.3",
     "eslint-plugin-cypress": "^2.12.1",
+    "jest": "^28.1.1",
+    "msw": "^0.42.1",
     "postcss": "^8.4.12",
     "tailwindcss": "^3.0.23"
   }
