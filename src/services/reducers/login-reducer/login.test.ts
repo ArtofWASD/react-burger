@@ -1,6 +1,5 @@
-import React from 'react'
-import {rest} from 'msw'
-//import {setupServer} from 'msw/node'
-import {render, fireEvent, waitFor, screen} from '@testing-library/react'
+import reducer, {initialState, logIn, logOut} from './login'
 
-import { logIn, logOut } from './login'
+test("Should return the initial state", () => {
+    expect(reducer(undefined, { type: "" })).toEqual(initialState);
+  });

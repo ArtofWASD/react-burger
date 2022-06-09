@@ -34,9 +34,37 @@ type TConstructorItem = {
   index: number;
   moveCard: () => void;
 };
+
 type TOrderIngridients = {
   _id: string;
 };
+
+export const initialState = {
+  ingridients: [] as Array<TIngridients>,
+  ingridientItem: {},
+  order: {
+    number: ""
+  },
+  constructor: {
+    ingridients: [] as Array<TConstructorItem>,
+    buns: [] as Array<TConstructorItem>,
+  },
+  orderIngridients: [] as Array<TOrderIngridients>,
+  counter: [] as Array<TCounter>,
+  status: "",
+  error: null,
+  total: 0,
+  ingridientModalTitle: "Детали ингридиента",
+  userOrder: {
+    statusOrder: false,
+    _id: "",
+    ingredients: [],
+    status: "",
+    number: 0,
+    name: "",
+    createdAt: "",
+  }
+}
 
 export const fetchData = createAsyncThunk("data/fetchData", async (_, { rejectWithValue }) => {
   return fetch(`${API_URL}/ingredients`)
@@ -87,32 +115,7 @@ export const getOrderByNumber = createAsyncThunk("data/getOrderByNumber", async 
 
 export const dataSlice = createSlice({
   name: "data",
-  initialState: {
-    ingridients: [] as Array<TIngridients>,
-    ingridientItem: {},
-    order: {
-      number: "",
-    },
-    constructor: {
-      ingridients: [] as Array<TConstructorItem>,
-      buns: [] as Array<TConstructorItem>,
-    },
-    orderIngridients: [] as Array<TOrderIngridients>,
-    counter: [] as Array<TCounter>,
-    status: "",
-    error: null,
-    total: 0,
-    ingridientModalTitle: "Детали ингридиента",
-    userOrder: {
-      statusOrder: false,
-      _id: "",
-      ingredients: [],
-      status: "",
-      number: 0,
-      name: "",
-      createdAt: "",
-    },
-  },
+  initialState,
   reducers: {
     reset(state) {
       state.order.number = "";

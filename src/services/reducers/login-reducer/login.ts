@@ -8,6 +8,10 @@ type TLogInForm = {
   password?: string;
 }
 
+export const initialState = {
+  loginState:false,
+  loginData: null
+}
 export const logIn = createAsyncThunk("data/postLogIn", async (form:TLogInForm, { rejectWithValue }) => {
     return fetch(`${API_URL}/auth/login`, {
       method: "POST",
@@ -48,10 +52,7 @@ export const logIn = createAsyncThunk("data/postLogIn", async (form:TLogInForm, 
 
 export const loginSlice = createSlice({
     name: "login",
-    initialState:{
-        loginState:false,
-        loginData: null
-    },
+    initialState,
     reducers:{},
     extraReducers: (builder) => {
         builder.addCase(logIn.fulfilled, (state, action) => {
