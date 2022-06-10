@@ -119,7 +119,7 @@ export const dataSlice = createSlice({
   reducers: {
     reset(state) {
       state.order.number = "";
-      state.ingridientItem = "";
+      state.ingridientItem = {};
     },
     resetConstructor(state) {
       state.constructor.ingridients = [];
@@ -218,6 +218,6 @@ export const dataSlice = createSlice({
   },
 });
 
-export const { reset, getIngridientItem, deleteIngridientItem, addIngridientItem, addBunItem, updateIngridient } = dataSlice.actions;
+export const { reset, getIngridientItem, deleteIngridientItem, addIngridientItem, addBunItem, updateIngridient, resetConstructor } = dataSlice.actions;
 
 export default dataSlice.reducer;

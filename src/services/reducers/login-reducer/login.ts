@@ -12,6 +12,7 @@ export const initialState = {
   loginState:false,
   loginData: null
 }
+
 export const logIn = createAsyncThunk("data/postLogIn", async (form:TLogInForm, { rejectWithValue }) => {
     return fetch(`${API_URL}/auth/login`, {
       method: "POST",
