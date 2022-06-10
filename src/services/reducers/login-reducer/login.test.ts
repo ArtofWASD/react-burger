@@ -10,7 +10,7 @@ const loginData = {
   },
 };
 
-describe("login", () => {
+describe("logIn", () => {
   test("Set data and loginState when logIn extraReducer is fulfilled", () => {
     const action = { type: logIn.fulfilled.type, payload: loginData, loginState: true };
     const state = reducer(initialState, action);
