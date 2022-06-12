@@ -64,7 +64,7 @@ function BurgerConstructor() {
   return (
     <section className="pt-24">
       {/* Конструктор бургеров начало*/}
-      <section className={`${isHover ? styles.onHover : ""} flex flex-col items-center h-5/6 justify-center `} ref={dropTargerRef}>
+      <section className={`${isHover ? styles.onHover : ""} flex flex-col items-center h-5/6 justify-center `} ref={dropTargerRef} id='constructor_drop_place'>
         {/* Верхняя булка начало*/}
         {constructor.buns.length > 0 &&
           constructor.buns.map((item) => (

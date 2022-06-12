@@ -14,7 +14,7 @@ const ModalTitle: FC<TModalTitle> = ({ title, onClose }) => {
         <div>
           <p className={title ? styles.modalTitle : styles.modalTitleHide}>{title}</p>
         </div>
-        <div onClick={onClose} className="flex justify-end">
+        <div onClick={onClose} className="flex justify-end" id="close_btn">
           <CloseIcon type="primary" />
         </div>
       </div>
