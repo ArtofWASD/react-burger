@@ -1,3 +1,5 @@
+import thunk from "redux-thunk";
+
 import reducer, {
   initialState,
   reset,
@@ -39,52 +41,68 @@ const bun = {
   __v: 0,
 };
 
-test("Should return the initial state", () => {
-  expect(reducer(undefined, { type: "" })).toEqual(initialState);
-});
+const middleware = [thunk];
+export const mockStore = configureMockStore(middleware);
 
-test("Should handler reset initialState", () => {
-  expect(reducer(initialState, reset())).toEqual(initialState);
-});
+describe("getData reducer", () => {
+  
+  // it("should return fetch ingredients data", async() => {
+  //   const store = mockStore(initialState);
+  //   const action = {
+  //     type: "data/fetchData"
+  //   }
+  // })
 
-test("Should handler reset constructor state", () => {
-  expect(reducer(initialState, resetConstructor())).toEqual(initialState);
-});
+  it("Should return the initial state", () => {
+    expect(reducer(undefined, { type: "" })).toEqual(initialState);
+  });
 
-test("Should ingredient item get in modalState", () => {
-  expect(reducer(initialState, getIngridientItem(ingredient))).toEqual({
-    ...initialState,
-    ingridientItem: ingredient,
+  it("Should handler reset initialState", () => {
+    expect(reducer(initialState, reset())).toEqual(initialState);
+  });
+
+  it("Should handler reset constructor state", () => {
+    expect(reducer(initialState, resetConstructor())).toEqual(initialState);
+  });
+
+  it("Should ingredient item get in modalState", () => {
+    expect(reducer(initialState, getIngridientItem(ingredient))).toEqual({
+      ...initialState,
+      ingridientItem: ingredient,
+    });
+  });
+
+  it("Should ingredient item add on constructor", () => {
+    expect(reducer(initialState, addIngridientItem(ingredient))).toEqual({
+      ...initialState,
+      constructor: { buns: [], ingridients: [ingredient] },
+      orderIngridients: [ingredient._id],
+      total: ingredient.price,
+      counter: [{ _id: ingredient._id, count: 1 }],
+    });
+  });
+
+  it("Should bun item add on constructor", () => {
+    expect(reducer(initialState, addBunItem(bun))).toEqual({
+      ...initialState,
+      constructor: { buns: [bun], ingridients: [] },
+      orderIngridients: [bun._id],
+      total: bun.price * 2,
+      counter: [{ _id: bun._id, count: 1 }],
+    });
+  });
+
+  it("Should update ingredient item", () => {
+    expect(reducer(initialState, updateIngridient([ingredient]))).toEqual({
+      ...initialState,
+      constructor: { buns: [], ingridients: [ingredient] },
+    });
+  });
+
+  it("Should delete ingredient from constructor", () => {
+    expect(reducer(initialState, deleteIngridientItem(ingredient))).toEqual({ ...initialState, constructor: { buns: [], ingridients: [] } });
   });
 });
-
-test("Should ingredient item add on constructor", () => {
-  expect(reducer(initialState, addIngridientItem(ingredient))).toEqual({
-    ...initialState,
-    constructor: { buns: [], ingridients: [ingredient] },
-    orderIngridients: [ingredient._id],
-    total: ingredient.price,
-    counter: [{ _id: ingredient._id, count: 1 }],
-  });
-});
-
-test("Should bun item add on constructor", () => {
-  expect(reducer(initialState, addBunItem(bun))).toEqual({
-    ...initialState,
-    constructor: { buns: [bun], ingridients: [] },
-    orderIngridients: [bun._id],
-    total: bun.price * 2,
-    counter: [{ _id: bun._id, count: 1 }],
-  });
-});
-
-test("Should update ingredient item", () => {
-  expect(reducer(initialState, updateIngridient([ingredient]))).toEqual({
-    ...initialState,
-    constructor: { buns: [], ingridients: [ingredient] },
-  });
-});
-
-test("Should delete ingredient from constructor", () => {
-  expect(reducer(initialState, deleteIngridientItem(ingredient))).toEqual({ ...initialState, constructor: { buns: [], ingridients: [] } });
-});
+function configureMockStore(arg0: any[]) {
+  throw new Error("Function not implemented.");
+}
