@@ -1,4 +1,3 @@
-import { checkResponse } from "../../../utils/handler-functions";
 import reducer, { initialState, logIn, logOut } from "./login";
 
 const loginData = {
@@ -16,33 +15,6 @@ it("Should return the initial state", () => {
 });
 
 describe("logIn", () => {
-  // beforeEach(() => {
-  //   jest.spyOn(global, "fetch").mockImplementation(
-  //     jest.fn(() =>
-  //       Promise.resolve({
-  //         json: () =>
-  //           Promise.resolve({
-  //             status: "OK",
-  //           }),
-  //         ok: true,
-  //       })
-  //     ) as jest.Mock
-  //   );
-  // });
-
-  // afterEach(() => {
-  //   jest.restoreAllMocks();
-  // });
-
-  // it("should login", async () => {
-  //   const dispatch = jest.fn();
-  //   const result = await dispatch(logIn({ name: "name", email: "email", password: "password" }));
-  //   console.log(result);
-
-  //   //expect(fetch).toHaveBeenCalledTimes(1);
-  //   expect(result).toEqual(loginData);
-  // });
-
   it("Set data and loginState when logIn extraReducer is fulfilled", () => {
     const action = { type: logIn.fulfilled.type, payload: loginData, loginState: true };
     const state = reducer(initialState, action);
