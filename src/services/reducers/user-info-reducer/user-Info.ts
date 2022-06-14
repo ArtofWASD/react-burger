@@ -54,6 +54,10 @@ export const userInfoSlice = createSlice({
       state.userState = true;
       state.userData = action.payload;
     });
+    builder.addCase(getUserData.rejected, (state) => {
+      state.userState = false;
+      state.userData = { success: false, user: {} } as TUserData;
+    });
   },
 });
 export default userInfoSlice.reducer;

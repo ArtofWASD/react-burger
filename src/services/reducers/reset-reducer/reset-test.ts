@@ -12,4 +12,10 @@ describe("reset reducer", () => {
     const state = reducer({ status: false }, action);
     expect(state).toEqual({ status: true });
   });
+
+  it("set reset state to false while postResetForm is rejected", () => {
+    const action = { type: postResetForm.rejected.type };
+    const state = reducer({ status: false }, action);
+    expect(state).toEqual({ status: false });
+  });
 });

@@ -86,12 +86,39 @@ describe("getData reducer", () => {
   });
 
   it("Should delete ingredient from constructor", () => {
-    expect(reducer(initialState, deleteIngridientItem(ingredient))).toEqual({ ...initialState, constructor: { buns: [], ingridients: [] } });
+    expect(reducer(initialState, deleteIngridientItem(ingredient))).toEqual({
+      ...initialState,
+      constructor: { buns: [], ingridients: [] },
+    });
   });
 
   it("Should get order number", () => {
-    const action = { type: getOrderByNumber.fulfilled.type, payload:{...initialState.userOrder, number: 0}};
+    const action = { type: getOrderByNumber.fulfilled.type, payload: { ...initialState.userOrder, number: 0 } };
     const state = reducer(initialState, action);
     expect(state).toEqual(initialState);
+  });
+
+  it("Should fetch data then reducer has fulfilled", () => {
+    const action = { type: fetchData.fulfilled.type, payload: [ingredient] };
+    const state = reducer(initialState, action);
+    expect(state).toEqual({ ...initialState, ingridients: [ingredient], status: "resolved" });
+  });
+
+  it("Should not fetch data then reducer has rejected", () => {
+    const action = { type: fetchData.rejected.type };
+    const state = reducer(initialState, action);
+    expect(state).toEqual({ ...initialState, status: "false" });
+  });
+
+  it("Should get post order number while post order reducer is fulfilled", () => {
+    const action = { type: postOrder.fulfilled.type, payload: { number: 2222 } };
+    const state = reducer(initialState, action);
+    expect(state).toEqual({ ...initialState, order: { number: 2222 }, status: "resolved" });
+  });
+
+  it("Should not get post order number while post order reducer is rejected", () => {
+    const action = { type: postOrder.rejected.type };
+    const state = reducer(initialState, action);
+    expect(state).toEqual({ ...initialState, status: "false" });
   });
 });

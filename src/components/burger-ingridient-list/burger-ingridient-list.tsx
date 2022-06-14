@@ -8,11 +8,10 @@ type TBurgerIngridientList = {
   ref?: React.Ref<HTMLDivElement>;
 };
 const BurgerIngridientList: FC<TBurgerIngridientList> = React.forwardRef(({ type }, ref) => {
-  const { ingridients, error } = useAppSelector((state) => state.getData);
+  const { ingridients } = useAppSelector((state) => state.getData);
   const ingridientType = ingridients.filter((item) => item.type === type);
   return (
     <div className="grid grid-cols-2 gap-3" ref={ref}>
-      {error && <h2>{error}</h2>}
       {ingridientType.map((item) => (
         <BurgerIngridientItem key={item._id} data={item} route={item._id} />
       ))}

@@ -37,6 +37,9 @@ export const resetSlice = createSlice({
     builder.addCase(postResetForm.fulfilled, (state, action) => {
       state.status = action.payload;
     });
+    builder.addCase(postResetForm.rejected, (state) => {
+      state.status = false;
+    });
   },
 });
 

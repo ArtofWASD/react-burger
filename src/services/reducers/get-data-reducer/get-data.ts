@@ -43,7 +43,7 @@ export const initialState = {
   ingridients: [] as Array<TIngridients>,
   ingridientItem: {},
   order: {
-    number: ""
+    number: "",
   },
   constructor: {
     ingridients: [] as Array<TConstructorItem>,
@@ -52,7 +52,6 @@ export const initialState = {
   orderIngridients: [] as Array<TOrderIngridients>,
   counter: [] as Array<TCounter>,
   status: "",
-  error: null,
   total: 0,
   ingridientModalTitle: "Детали ингридиента",
   userOrder: {
@@ -63,8 +62,8 @@ export const initialState = {
     number: 0,
     name: "",
     createdAt: "",
-  }
-}
+  },
+};
 
 export const fetchData = createAsyncThunk("data/fetchData", async (_, { rejectWithValue }) => {
   return fetch(`${API_URL}/ingredients`)
@@ -190,27 +189,19 @@ export const dataSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchData.pending, (state) => {
-      state.error = null;
-      state.status = "Loading";
-    });
     builder.addCase(fetchData.fulfilled, (state, action) => {
       state.status = "resolved";
       state.ingridients = action.payload;
     });
     builder.addCase(fetchData.rejected, (state) => {
-      state.status = "False";
-    });
-    builder.addCase(postOrder.pending, (state) => {
-      state.error = null;
-      state.status = "Loading";
+      state.status = "false";
     });
     builder.addCase(postOrder.fulfilled, (state, action) => {
       state.status = "resolved";
       state.order = action.payload;
     });
     builder.addCase(postOrder.rejected, (state) => {
-      state.status = "False";
+      state.status = "false";
     });
     builder.addCase(getOrderByNumber.fulfilled, (state, action) => {
       state.userOrder = action.payload;
@@ -218,6 +209,7 @@ export const dataSlice = createSlice({
   },
 });
 
-export const { reset, getIngridientItem, deleteIngridientItem, addIngridientItem, addBunItem, updateIngridient, resetConstructor } = dataSlice.actions;
+export const { reset, getIngridientItem, deleteIngridientItem, addIngridientItem, addBunItem, updateIngridient, resetConstructor } =
+  dataSlice.actions;
 
 export default dataSlice.reducer;

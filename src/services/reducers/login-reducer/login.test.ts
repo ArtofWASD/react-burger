@@ -11,27 +11,35 @@ const loginData = {
   },
 };
 
-describe("logIn", () => {
-  beforeEach(() => {
-    jest.spyOn(global, "fetch").mockImplementation(
-      jest.fn(() =>
-        Promise.resolve({
-          json: () => Promise.resolve({ status: "OK" }),
-          ok: true,
-        })
-      ) as jest.Mock
-    );
-  });
+it("Should return the initial state", () => {
+  expect(reducer(undefined, { type: "" })).toEqual(initialState);
+});
 
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
+describe("logIn", () => {
+  // beforeEach(() => {
+  //   jest.spyOn(global, "fetch").mockImplementation(
+  //     jest.fn(() =>
+  //       Promise.resolve({
+  //         json: () =>
+  //           Promise.resolve({
+  //             status: "OK",
+  //           }),
+  //         ok: true,
+  //       })
+  //     ) as jest.Mock
+  //   );
+  // });
+
+  // afterEach(() => {
+  //   jest.restoreAllMocks();
+  // });
 
   // it("should login", async () => {
-  //   const result = await logIn({ email: "email", password: "password" });
+  //   const dispatch = jest.fn();
+  //   const result = await dispatch(logIn({ name: "name", email: "email", password: "password" }));
   //   console.log(result);
 
-  //   // expect(fetch).toHaveBeenCalledTimes(1);
+  //   //expect(fetch).toHaveBeenCalledTimes(1);
   //   expect(result).toEqual(loginData);
   // });
 
@@ -40,7 +48,7 @@ describe("logIn", () => {
     const state = reducer(initialState, action);
     expect(state).toEqual({ loginData, loginState: true });
   });
-  
+
   it("Set loginState to false when logOut extraReducer is rejected", () => {
     const action = { type: logOut.rejected.type, payload: "error", loginState: false };
     const state = reducer(initialState, action);
@@ -54,8 +62,4 @@ describe("logOut", () => {
     const state = reducer(initialState, action);
     expect(state).toEqual({ ...initialState, loginState: false });
   });
-});
-
-test("Should return the initial state", () => {
-  expect(reducer(undefined, { type: "" })).toEqual(initialState);
 });
