@@ -1,5 +1,3 @@
-import thunk from "redux-thunk";
-
 import reducer, {
   initialState,
   reset,
@@ -9,6 +7,9 @@ import reducer, {
   resetConstructor,
   updateIngridient,
   addBunItem,
+  fetchData,
+  postOrder,
+  getOrderByNumber,
 } from "./get-data";
 
 const ingredient = {
@@ -41,22 +42,7 @@ const bun = {
   __v: 0,
 };
 
-const middleware = [thunk];
-export const mockStore = configureMockStore(middleware);
-
 describe("getData reducer", () => {
-  
-  // it("should return fetch ingredients data", async() => {
-  //   const store = mockStore(initialState);
-  //   const action = {
-  //     type: "data/fetchData"
-  //   }
-  // })
-
-  it("Should return the initial state", () => {
-    expect(reducer(undefined, { type: "" })).toEqual(initialState);
-  });
-
   it("Should handler reset initialState", () => {
     expect(reducer(initialState, reset())).toEqual(initialState);
   });
@@ -102,7 +88,10 @@ describe("getData reducer", () => {
   it("Should delete ingredient from constructor", () => {
     expect(reducer(initialState, deleteIngridientItem(ingredient))).toEqual({ ...initialState, constructor: { buns: [], ingridients: [] } });
   });
+
+  it("Should get order number", () => {
+    const action = { type: getOrderByNumber.fulfilled.type, payload:{...initialState.userOrder, number: 0}};
+    const state = reducer(initialState, action);
+    expect(state).toEqual(initialState);
+  });
 });
-function configureMockStore(arg0: any[]) {
-  throw new Error("Function not implemented.");
-}

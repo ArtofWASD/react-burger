@@ -60,10 +60,14 @@ export const loginSlice = createSlice({
             state.loginState = true;
             state.loginData = action.payload;
         });
+        builder.addCase(logIn.rejected, (state) => {
+            state.loginState = false;
+            state.loginData = null;
+        });
         builder.addCase(logOut.fulfilled, (state) => {
             state.loginState = false;
-        })
-
+            state.loginData = null;
+        });
     }
 })
 
