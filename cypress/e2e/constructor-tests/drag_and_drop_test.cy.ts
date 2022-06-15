@@ -22,6 +22,6 @@ context("Actions", () => {
     cy.get('input[name="password"]').type("123");
     cy.get('button[name="submit"]').click().wait(1000);
     cy.get("button").contains("Оформить заказ").click().wait(16000)
-    cy.get('.order-details_modalDoneIdTitle__elcu3').contains("идентификатор заказа")
+    cy.get('.modal_order_title').contains("идентификатор заказа")
   });
 });

@@ -16,7 +16,7 @@ function OrderDetails() {
       ) : (
         <div className="flex flex-col justify-center items-center">
           <span className={styles.modalDoneId}>{orderId}</span>
-          <p className={styles.modalDoneIdTitle}>идентификатор заказа</p>
+          <p className={`${styles.modalDoneIdTitle} modal_order_title`}>идентификатор заказа</p>
           <div className="modal-done_img">
             <img src={doneImg} alt="" className={styles.modalDone} />
           </div>
