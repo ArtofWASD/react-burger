@@ -6,9 +6,7 @@ import { useAppSelector } from "../../utils/hook";
 
 const AppHeader: FC = () => {
   const location = useLocation();
-  const user = useAppSelector(state => state.userData.userData.user);
-  console.log(user.name);
-  
+  const user = useAppSelector(state => state.userData.userData.user);  
   return (
     <header className={styles.header}>
       <nav className="flex flex-auto justify-center">
