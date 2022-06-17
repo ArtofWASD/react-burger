@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { API_URL } from "../../utils/api-constant";
-import { checkResponse, getCookie } from "../../utils/handler-functions";
+import { API_URL } from "../../../utils/api-constant";
+import { checkResponse, getCookie } from "../../../utils/handler-functions";
 
 type TCounter = {
   _id: string;
@@ -34,8 +34,35 @@ type TConstructorItem = {
   index: number;
   moveCard: () => void;
 };
+
 type TOrderIngridients = {
   _id: string;
+};
+
+export const initialState = {
+  ingridients: [] as Array<TIngridients>,
+  ingridientItem: {},
+  order: {
+    number: "",
+  },
+  constructor: {
+    ingridients: [] as Array<TConstructorItem>,
+    buns: [] as Array<TConstructorItem>,
+  },
+  orderIngridients: [] as Array<TOrderIngridients>,
+  counter: [] as Array<TCounter>,
+  status: "",
+  total: 0,
+  ingridientModalTitle: "Детали ингридиента",
+  userOrder: {
+    statusOrder: false,
+    _id: "",
+    ingredients: [],
+    status: "",
+    number: 0,
+    name: "",
+    createdAt: "",
+  },
 };
 
 export const fetchData = createAsyncThunk("data/fetchData", async (_, { rejectWithValue }) => {
@@ -87,36 +114,11 @@ export const getOrderByNumber = createAsyncThunk("data/getOrderByNumber", async 
 
 export const dataSlice = createSlice({
   name: "data",
-  initialState: {
-    ingridients: [] as Array<TIngridients>,
-    ingridientItem: {},
-    order: {
-      number: "",
-    },
-    constructor: {
-      ingridients: [] as Array<TConstructorItem>,
-      buns: [] as Array<TConstructorItem>,
-    },
-    orderIngridients: [] as Array<TOrderIngridients>,
-    counter: [] as Array<TCounter>,
-    status: "",
-    error: null,
-    total: 0,
-    ingridientModalTitle: "Детали ингридиента",
-    userOrder: {
-      statusOrder: false,
-      _id: "",
-      ingredients: [],
-      status: "",
-      number: 0,
-      name: "",
-      createdAt: "",
-    },
-  },
+  initialState,
   reducers: {
     reset(state) {
       state.order.number = "";
-      state.ingridientItem = "";
+      state.ingridientItem = {};
     },
     resetConstructor(state) {
       state.constructor.ingridients = [];
@@ -187,27 +189,19 @@ export const dataSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchData.pending, (state) => {
-      state.error = null;
-      state.status = "Loading";
-    });
     builder.addCase(fetchData.fulfilled, (state, action) => {
       state.status = "resolved";
       state.ingridients = action.payload;
     });
     builder.addCase(fetchData.rejected, (state) => {
-      state.status = "False";
-    });
-    builder.addCase(postOrder.pending, (state) => {
-      state.error = null;
-      state.status = "Loading";
+      state.status = "false";
     });
     builder.addCase(postOrder.fulfilled, (state, action) => {
       state.status = "resolved";
       state.order = action.payload;
     });
     builder.addCase(postOrder.rejected, (state) => {
-      state.status = "False";
+      state.status = "false";
     });
     builder.addCase(getOrderByNumber.fulfilled, (state, action) => {
       state.userOrder = action.payload;
@@ -215,6 +209,7 @@ export const dataSlice = createSlice({
   },
 });
 
-export const { reset, getIngridientItem, deleteIngridientItem, addIngridientItem, addBunItem, updateIngridient } = dataSlice.actions;
+export const { reset, getIngridientItem, deleteIngridientItem, addIngridientItem, addBunItem, updateIngridient, resetConstructor } =
+  dataSlice.actions;
 
 export default dataSlice.reducer;

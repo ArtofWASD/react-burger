@@ -1,6 +1,6 @@
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import { logIn } from "../services/reducers/login";
+import { logIn } from "../services/reducers/login-reducer/login";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
 import { useAppDispatch } from "../utils/hook";
@@ -37,15 +37,16 @@ export default function LoginPage() {
           }}
           className="grid gap-6 mt-6 justify-items-center"
         >
-          <Input placeholder="E-mail" type="email" onChange={(e) => setEmail(e.target.value)} value={email ? email : ""} />
+          <Input placeholder="E-mail" type="email" name="email" onChange={(e) => setEmail(e.target.value)} value={email ? email : ""} />
           <Input
             placeholder="Пароль"
             type="password"
+            name="password"
             icon="ShowIcon"
             onChange={(e) => setPassword(e.target.value)}
             value={password ? password : ""}
           />
-          <Button>Войти</Button>
+          <Button name="submit">Войти</Button>
         </form>
       </div>
       <div className="mt-20">

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { API_URL } from "../../utils/api-constant";
-import { checkResponse, setCookie, getCookie } from "../../utils/handler-functions"
+import { API_URL } from "../../../utils/api-constant";
+import { checkResponse, setCookie, getCookie } from "../../../utils/handler-functions"
 
 type TRegisterForm ={
   name: string;

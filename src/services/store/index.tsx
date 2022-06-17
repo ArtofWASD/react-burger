@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import dataSlice from "../reducers/get-data";
-import resetSlice from "../reducers/reset";
-import authSlice from "../reducers/auth";
-import loginSlice from "../reducers/login";
-import userInfoSlice from "../reducers/userInfo";
+import dataSlice from "../reducers/get-data-reducer/get-data";
+import resetSlice from "../reducers/reset-reducer/reset";
+import authSlice from "../reducers/auth-reducer/auth";
+import loginSlice from "../reducers/login-reducer/login";
+import userInfoSlice from "../reducers/user-info-reducer/user-Info";
 import { wsApi } from "../reducers/socket";
 
 const store = configureStore({

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { API_URL } from "../../utils/api-constant";
-import { checkResponse } from "../../utils/handler-functions";
+import { API_URL } from "../../../utils/api-constant";
+import { checkResponse } from "../../../utils/handler-functions";
 
 type TResetForm = {
   email: string;
@@ -36,6 +36,9 @@ export const resetSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(postResetForm.fulfilled, (state, action) => {
       state.status = action.payload;
+    });
+    builder.addCase(postResetForm.rejected, (state) => {
+      state.status = false;
     });
   },
 });

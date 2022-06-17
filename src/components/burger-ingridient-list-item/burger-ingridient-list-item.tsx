@@ -33,7 +33,7 @@ const BurgerIngridientItem: FC<TBurgerListItem> = ({ data }) => {
   return (
     <section>
       <Link to={`ingredients/${data._id}`} state={{ background: location }}>
-        <div className="relative gap-2" onClick={() => setModalActive(true)} key={_id} ref={dragRef} style={{ opacity }}>
+        <div className="ingredient-item relative gap-2" onClick={() => setModalActive(true)} key={_id} ref={dragRef} style={{ opacity }} id={_id}>
           <div
             className="flex flex-col items-center"
             onClick={() => {

@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { logOut } from "../services/reducers/login";
+import { logOut } from "../services/reducers/login-reducer/login";
 import FeedOrderItem from "../components/feed-order-item/feed-order-item";
 import styles from "../pages/styles.module.css";
 import { useGetOrdersQuery } from "../services/reducers/socket";

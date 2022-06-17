@@ -1,7 +1,7 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FC, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getOrderByNumber } from "../../services/reducers/get-data";
+import { getOrderByNumber } from "../../services/reducers/get-data-reducer/get-data";
 import { formatDate, generateIngredientsWithAmount } from "../../utils/handler-functions";
 import { useAppDispatch, useAppSelector } from "../../utils/hook";
 import { v4 as uuidv4 } from "uuid";

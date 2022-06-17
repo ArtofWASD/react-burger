@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { postOrder, addIngridientItem, addBunItem, updateIngridient } from "../../services/reducers/get-data";
+import { postOrder, addIngridientItem, addBunItem, updateIngridient } from "../../services/reducers/get-data-reducer/get-data";
 import { useAppDispatch, useAppSelector } from '../../utils/hook'
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
@@ -64,7 +64,7 @@ function BurgerConstructor() {
   return (
     <section className="pt-24">
       {/* Конструктор бургеров начало*/}
-      <section className={`${isHover ? styles.onHover : ""} flex flex-col items-center h-5/6 justify-center `} ref={dropTargerRef}>
+      <section className={`${isHover ? styles.onHover : ""} flex flex-col items-center h-5/6 justify-center `} ref={dropTargerRef} id='constructor_drop_place'>
         {/* Верхняя булка начало*/}
         {constructor.buns.length > 0 &&
           constructor.buns.map((item) => (

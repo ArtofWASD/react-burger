@@ -1,11 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { API_URL } from "../../utils/api-constant";
-import { checkResponse, setCookie } from "../../utils/handler-functions"
+import { API_URL } from "../../../utils/api-constant";
+import { checkResponse, setCookie } from "../../../utils/handler-functions"
 
 type TLogInForm = {
   name?: string;
   email?: string;
   password?: string;
+}
+
+export const initialState = {
+  loginState:false,
+  loginData: null
 }
 
 export const logIn = createAsyncThunk("data/postLogIn", async (form:TLogInForm, { rejectWithValue }) => {
@@ -48,20 +53,21 @@ export const logIn = createAsyncThunk("data/postLogIn", async (form:TLogInForm, 
 
 export const loginSlice = createSlice({
     name: "login",
-    initialState:{
-        loginState:false,
-        loginData: null
-    },
+    initialState,
     reducers:{},
     extraReducers: (builder) => {
         builder.addCase(logIn.fulfilled, (state, action) => {
             state.loginState = true;
             state.loginData = action.payload;
         });
+        builder.addCase(logIn.rejected, (state) => {
+            state.loginState = false;
+            state.loginData = null;
+        });
         builder.addCase(logOut.fulfilled, (state) => {
             state.loginState = false;
-        })
-
+            state.loginData = null;
+        });
     }
 })
 

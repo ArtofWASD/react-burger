@@ -1,6 +1,6 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { deleteIngridientItem } from "../../services/reducers/get-data";
+import { deleteIngridientItem } from "../../services/reducers/get-data-reducer/get-data";
 import { useRef, FC, DragEvent } from "react";
 import { useDrag, useDrop, XYCoord } from "react-dnd";
 import styles from "./burger-constructor-item.module.css";
