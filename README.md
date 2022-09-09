@@ -2,9 +2,9 @@
 
 Дипломный проект курса Яндекс.Практикум "React-разработчик" 
 
-## Проект развёрнут на виртуальной машине развёрнутой в Яндекс.Облако.<br>
+## Проект развёрнут на бесплатном хостинге Vercel<br>
 
-https://chunlee-burgers.nomoreparties.sbs/
+https://react-burger-6oxh0nhmj-artofwasd.vercel.app/
 
 ## В проекте используются :
 
